@@ -1,8 +1,8 @@
-package com.moguhu.baize.common.request.api;
+package com.moguhu.baize.metadata.request.api;
 
 import com.moguhu.baize.common.constants.EnvEnum;
 import com.moguhu.baize.common.constants.StatusEnum;
-import com.moguhu.baize.common.request.BasePageRequest;
+import com.moguhu.baize.metadata.request.BasePageRequest;
 
 /**
  * API 分页查询请求

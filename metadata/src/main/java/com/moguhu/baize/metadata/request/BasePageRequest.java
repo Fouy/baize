@@ -1,4 +1,4 @@
-package com.moguhu.baize.common.request;
+package com.moguhu.baize.metadata.request;
 
 import java.io.Serializable;
 

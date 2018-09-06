@@ -2,10 +2,10 @@ package com.moguhu.baize.service.api.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.moguhu.baize.common.request.api.ApiSaveRequest;
-import com.moguhu.baize.common.request.api.ApiSearchRequest;
-import com.moguhu.baize.common.request.api.ApiUpdateRequest;
-import com.moguhu.baize.common.response.api.ApiResponse;
+import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
+import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
+import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiResponse;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiEntityMapper;

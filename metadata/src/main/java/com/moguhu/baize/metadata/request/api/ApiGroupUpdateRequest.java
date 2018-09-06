@@ -1,4 +1,4 @@
-package com.moguhu.baize.common.request.api;
+package com.moguhu.baize.metadata.request.api;
 
 import com.moguhu.baize.metadata.entity.api.ApiGroupEntity;
 

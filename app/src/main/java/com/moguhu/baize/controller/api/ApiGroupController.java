@@ -1,10 +1,10 @@
 package com.moguhu.baize.controller.api;
 
 import com.alibaba.fastjson.JSON;
-import com.moguhu.baize.common.request.api.ApiGroupSaveRequest;
-import com.moguhu.baize.common.request.api.ApiGroupSearchRequest;
-import com.moguhu.baize.common.request.api.ApiGroupUpdateRequest;
-import com.moguhu.baize.common.response.api.ApiGroupResponse;
+import com.moguhu.baize.metadata.request.api.ApiGroupSaveRequest;
+import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
+import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.common.vo.AjaxResult;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.controller.BaseController;

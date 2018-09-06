@@ -1,7 +1,7 @@
 package com.moguhu.baize.metadata.dao.mapper.api;
 
 
-import com.moguhu.baize.common.request.api.ApiSearchRequest;
+import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
 import com.moguhu.baize.metadata.entity.api.ApiEntity;
 
 import java.util.List;
