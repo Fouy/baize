@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moguhu.baize.metadata.dao.mapper.api.ApiGroupEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.moguhu.baize.metadata.entity.api.ApiGroupEntity" >
+    <id column="group_id" property="groupId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="service_id" property="serviceId" jdbcType="BIGINT" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="ext_info" property="extInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    group_id, create_time, modify_time, `name`, `type`, service_id, info, ext_info
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_group
+    where group_id = #{groupId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from api_group
+    where group_id = #{groupId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.moguhu.baize.metadata.entity.api.ApiGroupEntity" useGeneratedKeys="true" keyProperty="groupId" >
+    insert into api_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        create_time,
+        modify_time,
+      <if test="name != null" >
+        `name`,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="serviceId != null" >
+        service_id,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="extInfo != null" >
+        ext_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        NOW(),
+        NOW(),
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="extInfo != null" >
+        #{extInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateById" parameterType="com.moguhu.baize.metadata.entity.api.ApiGroupEntity" >
+    update api_group
+    <set >
+        modify_time = NOW(),
+      <if test="name != null" >
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="extInfo != null" >
+        ext_info = #{extInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where group_id = #{groupId,jdbcType=BIGINT}
+  </update>
+
+  <!-- 查询列表 -->
+  <select id="queryAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from api_group
+    where 1=1
+    <if test="name != null and name != '' " >
+      and `name` like concat('%', #{name,jdbcType=VARCHAR}, '%')
+    </if>
+  </select>
+
+  <!-- 加锁 -->
+  <select id="lock" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from api_group
+    where group_id = #{groupId,jdbcType=BIGINT} for update
+  </select>
+
+</mapper>

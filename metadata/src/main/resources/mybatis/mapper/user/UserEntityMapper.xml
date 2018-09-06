@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moguhu.baize.metadata.dao.mapper.user.UserEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.moguhu.baize.metadata.entity.user.UserEntity" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    user_id, create_time, modify_time, user_name, real_name, password, phone, email, info
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from `user`
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from `user`
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.moguhu.baize.metadata.entity.user.UserEntity" useGeneratedKeys="true" keyProperty="userId" >
+    insert into `user`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        create_time,
+        modify_time,
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        NOW(),
+        NOW(),
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateById" parameterType="com.moguhu.baize.metadata.entity.user.UserEntity" >
+    update `user`
+    <set >
+        modify_time = NOW(),
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+  <!-- 根据登录名获取用户信息 -->
+  <select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from `user`
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

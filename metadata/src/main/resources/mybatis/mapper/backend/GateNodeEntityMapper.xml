@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moguhu.baize.metadata.dao.mapper.backend.GateNodeEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.moguhu.baize.metadata.entity.backend.GateNodeEntity" >
+    <id column="node_id" property="nodeId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="engine_room" property="engineRoom" jdbcType="VARCHAR" />
+    <result column="node_no" property="nodeNo" jdbcType="VARCHAR" />
+    <result column="ssh_addr" property="sshAddr" jdbcType="VARCHAR" />
+    <result column="ssh_account" property="sshAccount" jdbcType="VARCHAR" />
+    <result column="ssh_pwd" property="sshPwd" jdbcType="VARCHAR" />
+    <result column="detect_ip" property="detectIp" jdbcType="VARCHAR" />
+    <result column="derect_port" property="derectPort" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="reboot_time" property="rebootTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    node_id, create_time, modify_time, engine_room, node_no, ssh_addr, ssh_account, ssh_pwd, 
+    detect_ip, derect_port, status, reboot_time
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gate_node
+    where node_id = #{nodeId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from gate_node
+    where node_id = #{nodeId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.moguhu.baize.metadata.entity.backend.GateNodeEntity" useGeneratedKeys="true" keyProperty="nodeId" >
+    insert into gate_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        create_time,
+        modify_time,
+      <if test="engineRoom != null" >
+        engine_room,
+      </if>
+      <if test="nodeNo != null" >
+        node_no,
+      </if>
+      <if test="sshAddr != null" >
+        ssh_addr,
+      </if>
+      <if test="sshAccount != null" >
+        ssh_account,
+      </if>
+      <if test="sshPwd != null" >
+        ssh_pwd,
+      </if>
+      <if test="detectIp != null" >
+        detect_ip,
+      </if>
+      <if test="derectPort != null" >
+        derect_port,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="rebootTime != null" >
+        reboot_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        NOW(),
+        NOW(),
+      <if test="engineRoom != null" >
+        #{engineRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeNo != null" >
+        #{nodeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sshAddr != null" >
+        #{sshAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="sshAccount != null" >
+        #{sshAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="sshPwd != null" >
+        #{sshPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="detectIp != null" >
+        #{detectIp,jdbcType=VARCHAR},
+      </if>
+      <if test="derectPort != null" >
+        #{derectPort,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="rebootTime != null" >
+        #{rebootTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateById" parameterType="com.moguhu.baize.metadata.entity.backend.GateNodeEntity" >
+    update gate_node
+    <set >
+        modify_time = NOW(),
+      <if test="engineRoom != null" >
+        engine_room = #{engineRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeNo != null" >
+        node_no = #{nodeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sshAddr != null" >
+        ssh_addr = #{sshAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="sshAccount != null" >
+        ssh_account = #{sshAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="sshPwd != null" >
+        ssh_pwd = #{sshPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="detectIp != null" >
+        detect_ip = #{detectIp,jdbcType=VARCHAR},
+      </if>
+      <if test="derectPort != null" >
+        derect_port = #{derectPort,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="rebootTime != null" >
+        reboot_time = #{rebootTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where node_id = #{nodeId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

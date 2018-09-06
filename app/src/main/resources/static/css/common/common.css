@@ -1,0 +1,110 @@
+.showdiv{
+	display: flex;
+	width:800px;
+	height:230px;
+	padding: 12px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content:space-between;
+}
+
+.showdiv-1{
+	display: flex;
+	width:800px;
+	height:500px;
+	padding: 12px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content:space-between;
+}
+
+.showitem{
+	width:230px;
+	height:20px;
+	display: flex;
+    justify-content: left;
+    align-content:space-between;
+}
+
+.showitem-2{
+	width:430px;
+	height:20px;
+	display: flex;
+    justify-content: left;
+    align-content:space-between;
+}
+
+.showitem-1{
+	width:350px;
+	height:20px;
+	display: flex;
+    justify-content: left;
+    align-content:space-between;
+}
+
+
+.showdiv > .long{
+	width:800px;
+	height:20px;
+	display: flex;
+    justify-content: left;
+    align-content:space-between;
+}
+
+.showdiv-1 > .long{
+	width:800px;
+	height:20px;
+	display: flex;
+    justify-content: left;
+    align-content:space-between;
+}
+
+.showdiv-1 > .area{
+	width:800px;
+	height:50px;
+	display: flex;
+    justify-content: left;
+    align-content:space-between;
+}
+
+.showlabel{
+	width:100px;
+	font-weight:bold;
+}
+
+.showlabel-1{
+	width:150px;
+	font-weight:bold;
+}
+
+
+.showitem .long{
+	width:678px;
+}
+
+.showitem-1 .long{
+	width:678px;
+}
+
+.showitem-1 .area{
+	width:678px;
+	height:50px;
+}
+
+.showitem-1 .imgs{
+	width:678px;
+	display: flex;
+	height:60px;
+    justify-content: left;
+    align-content:space-between;
+}
+
+.imgs .img{
+	width:100px;
+	height:100px;
+	margin-right:20px;
+}
+
+.row-margin-top {
+	margin-top: 10px
+}

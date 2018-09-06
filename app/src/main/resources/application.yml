@@ -1,0 +1,80 @@
+server:
+  port: 61112
+  tomcat:
+    max-threads: 10
+  connection-timeout: 50000
+
+
+spring:
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    content-type: text/html; charset=utf-8
+    enabled: true
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/bai_ze?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    tomcat:
+        initSQL: SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# MyBatis
+mybatis:
+  type-aliases-package: com.moguhu.baize.metadata.entity
+  mapperLocations: classpath:mybatis/mapper/*/*.xml
+  config-location: classpath:/mybatis/mybatis-config.xml
+
+logging:
+  config: classpath:logback.xml
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+# common thread pool
+common:
+  threadpool:
+    es:
+      coreSize: 10
+      maxPoolSize: 200
+      keepAliveTime: 100
+      queueSize: 100
+
+# JWT config
+baize:
+  security:
+    token:
+      expiration-time: 1440 # 分钟 (1d)
+      refresh-exp-time: 2880 # 分钟 (2d)
+      issuer: http://baize.moguhu.com
+      signing-key: baize
+
+# jetcache config
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  remote:
+    default:
+      type: redis
+      keyConvertor: fastjson
+      valueEncoder: java
+      valueDecoder: java
+      poolConfig:
+        minIdle: 10
+        maxIdle: 100
+        maxTotal: 300
+      host: 127.0.0.1
+      port: 6379

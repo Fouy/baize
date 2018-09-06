@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Expires" CONTENT="0"/>
+	<meta http-equiv="Cache-Control" CONTENT="no-cache"/>
+	<meta http-equiv="Pragma" CONTENT="no-cache"/>
+    <title>类目管理</title>
+    <link rel="shortcut icon" href="/favicon.ico"/> 
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
+    <link href="/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+    <link href="/css/animate.css" rel="stylesheet"/>
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <!-- Panel Other -->
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>类目管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <!-- Example Events -->
+                        <div class="example-wrap">
+                            <div class="example">
+                                <!-- toolbar -->
+                                <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                    <div class="col-md-6">
+                                        <label class="col-sm-5 control-label">类目名称：</label>
+                                        <div class="col-sm-7">
+                                            <input class="form-control" name="categoryName" placeholder="请输入名称" type="text" id="categoryName"/>
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-5">-->
+                                        <!--<label class="col-sm-5 control-label">类目编码：</label>-->
+                                        <!--<div class="col-sm-7">-->
+                                            <!--<input class="form-control" name="categoryCode" placeholder="请输入编码" type="text" id="categoryCode"/>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    
+                                    <div class="col-md-6">
+                                        <div class="col-sm-12 col-sm-offset-3">
+                                            <button class="btn btn-primary btn-sm" onclick="search()">搜索</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="addWin()" >
+                                          	  新增
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- table -->
+                                <table id="exampleTableEvents" data-mobile-responsive="true">
+                                </table>
+
+                            </div>
+                        </div>
+                        <!-- End Example Events -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Other -->
+    </div>
+
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="/js/content.js?v=1.0.0"></script>
+
+    <!-- Bootstrap table -->
+    <script src="/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+	<script src="/js/common/date.format.js"></script>
+    <!-- Peity -->
+    <script src="/js/busi/goodscategory/main.js"></script>
+
+</body>
+
+</html>
