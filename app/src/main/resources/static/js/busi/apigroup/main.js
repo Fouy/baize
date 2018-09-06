@@ -133,7 +133,7 @@ function delWin(groupId){
             if (isConfirm){
                 var param = {};
                 param.groupId = groupId;
-                $.post("/apigroup/del", param, function(result) {
+                $.post("/apigroup/delete", param, function(result) {
                     if (result.code == "1000") {
                         swal(tip+"成功！", result.msg, "success");
                     } else {

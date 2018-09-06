@@ -6,7 +6,7 @@
     <meta http-equiv="Expires" CONTENT="0"/>
 	<meta http-equiv="Cache-Control" CONTENT="no-cache"/>
 	<meta http-equiv="Pragma" CONTENT="no-cache"/>
-    <title>子类目管理-新增</title>
+    <title>API分组-新增</title>
     <link rel="shortcut icon" href="/favicon.ico"/> 
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
     <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
@@ -19,29 +19,36 @@
 
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>新增子类目</h5>
+            <h5>新增API分组</h5>
         </div>
         <div class="ibox-content">
             <form class="form-horizontal m-t" id="addForm">
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">子类目名称：</label>
+                    <label class="col-sm-3 control-label">分组名称：</label>
                     <div class="col-sm-8">
-                        <input id="categoryName" name="categoryName" class="form-control" type="text"/>
-                        <input id="parentId" name="parentId" class="form-control" type="hidden"/>
+                        <input id="name" name="name" class="form-control" type="text"/>
                     </div>
                 </div>
-                <!--<div class="form-group">-->
-                    <!--<label class="col-sm-3 control-label">子类目编码：</label>-->
-                    <!--<div class="col-sm-8">-->
-                        <!--<input id="categoryCode" name="categoryCode" class="form-control" type="text"/>-->
-                        <!--<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 类目编码不可重复</span>-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">排序：</label>
+                    <label class="col-sm-3 control-label">类型：</label>
                     <div class="col-sm-8">
-                        <input id="order" name="order" class="form-control" type="text"/>
+                        <select class="form-control m-b" name="type" id="type">
+                            <option value="">--请选择--</option>
+                            <option value="COMMON">普通</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">服务ID：</label>
+                    <div class="col-sm-8">
+                        <input id="serviceId" name="serviceId" class="form-control" type="text"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">描述说明：</label>
+                    <div class="col-sm-8">
+                        <input id="info" name="info" class="form-control" type="text"/>
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
@@ -50,7 +57,7 @@
             <div class="form-group" style="margin-bottom: 50px;">
                 <div class="col-sm-8 col-sm-offset-3">
                     <button class="btn btn-primary btn-sm" onclick="saveAdd()">保存</button>
-                    <button class="btn btn-white btn-sm" onclick="closeAdd()">取消</button>
+                    <button class="btn btn-white btn-sm" onclick="close()">取消</button>
                 </div>
             </div>
         </div>
@@ -67,14 +74,11 @@
     <script src="/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="/js/plugins/validate/messages_zh.min.js"></script>
 
-    <!-- CKEditor -->
-    <script src="/ckeditor/ckeditor.js"></script>
-
     <!-- Toastr script -->
     <script src="/js/plugins/toastr/toastr.min.js"></script>
 
     <script src="/js/common/common.js"></script>
-    <script src="/js/busi/goodscategory/childadd.js"></script>
+    <script src="/js/busi/apigroup/add.js"></script>
 
 </body>
 

@@ -6,7 +6,7 @@
     <meta http-equiv="Expires" CONTENT="0"/>
 	<meta http-equiv="Cache-Control" CONTENT="no-cache"/>
 	<meta http-equiv="Pragma" CONTENT="no-cache"/>
-    <title>子类管理</title>
+    <title>API管理</title>
     <link rel="shortcut icon" href="/favicon.ico"/> 
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
     <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
@@ -23,7 +23,7 @@
         <!-- Panel Other -->
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>类目管理</h5>
+                <h5>API管理</h5>
             </div>
             <div class="ibox-content">
                 <div class="row row-lg">
@@ -32,11 +32,22 @@
                         <div class="example-wrap">
                             <div class="example">
                                 <!-- toolbar -->
-                                <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                <div id="exampleTableEventsToolbar" role="group">
+                                    <div class="col-md-6">
+                                        <label class="col-sm-6 control-label">分组名称：</label>
+                                        <div class="col-sm-6">
+                                            <input class="form-control" style="width: 200px;" name="name" placeholder="请输入名称" type="text" id="name"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-primary btn-sm" onclick="search()" style="margin-left: 60px; margin-top: 2px;">搜索</button>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
-                                        <input class="form-control" name="parentId" placeholder="请输入名称" type="hidden" id="parentId"/>
                                         <button type="button" class="btn btn-primary btn-sm" onclick="addWin()" >
-                                          	  新增
+                                            新建分组
                                         </button>
                                     </div>
                                 </div>
@@ -70,8 +81,7 @@
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
 	<script src="/js/common/date.format.js"></script>
     <!-- Peity -->
-    <script src="/js/common/common.js"></script>
-    <script src="/js/busi/goodscategory/child.js"></script>
+    <script src="/js/busi/api/main.js"></script>
 
 </body>
 
