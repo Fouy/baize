@@ -72,8 +72,12 @@ public class ApiGroupServiceImpl implements ApiGroupService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long groupId) {
-        apiGroupEntityMapper.deleteById(groupId);
+        int count = apiGroupEntityMapper.deleteById(groupId);
+        if (count != 1) {
+            throw new RuntimeException("wrong count error!");
+        }
     }
 
     @Override

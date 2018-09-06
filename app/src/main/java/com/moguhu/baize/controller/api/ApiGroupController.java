@@ -1,13 +1,13 @@
 package com.moguhu.baize.controller.api;
 
 import com.alibaba.fastjson.JSON;
+import com.moguhu.baize.common.vo.AjaxResult;
+import com.moguhu.baize.common.vo.PageListDto;
+import com.moguhu.baize.controller.BaseController;
 import com.moguhu.baize.metadata.request.api.ApiGroupSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
-import com.moguhu.baize.common.vo.AjaxResult;
-import com.moguhu.baize.common.vo.PageListDto;
-import com.moguhu.baize.controller.BaseController;
 import com.moguhu.baize.service.api.ApiGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,11 +96,31 @@ public class ApiGroupController extends BaseController {
     @ResponseBody
     public AjaxResult update(ApiGroupUpdateRequest request) {
         try {
+            if (null == request.getGroupId()) {
+                return AjaxResult.error("参数有误");
+            }
+
             apiGroupService.updateById(request);
             return AjaxResult.success();
         } catch (Exception e) {
             logger.error("更新信息失败, request={}, e={}", JSON.toJSONString(request), e);
             return AjaxResult.error("更新信息失败");
+        }
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public AjaxResult delete(Long groupId) {
+        try {
+            if (null == groupId) {
+                return AjaxResult.error("参数有误");
+            }
+
+            apiGroupService.deleteById(groupId);
+            return AjaxResult.success();
+        } catch (Exception e) {
+            logger.error("删除信息失败, groupId={}, e={}", JSON.toJSONString(groupId), e);
+            return AjaxResult.error("删除信息失败");
         }
     }
 
