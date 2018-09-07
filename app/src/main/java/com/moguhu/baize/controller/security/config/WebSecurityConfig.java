@@ -91,11 +91,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(VERIFY_CODE_GENERATE_POINT).permitAll() // Token refresh end-point
             .and()
             .authorizeRequests()
-            .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points
-            .antMatchers("/index").authenticated() // Protected API End-points
-            .and()
-            .addFilterBefore(buildLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(buildTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
+//            .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points
+//            .antMatchers("/index").authenticated() // Protected API End-points
+            .and();
+//            .addFilterBefore(buildLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+//            .addFilterBefore(buildTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     private LoginProcessingFilter buildLoginProcessingFilter() throws Exception {

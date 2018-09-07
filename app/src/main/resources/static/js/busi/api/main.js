@@ -29,27 +29,71 @@
         searchOnEnterKey: true,
         columns: [{
             field: 'name',
-            title: '分组名称',
+            title: 'API名称',
             align: 'center'
         }, {
-            field: 'type',
-            title: '类型',
+            field: 'groupName',
+            title: '分组',
+            align: 'center'
+        }, {
+            field: 'path',
+            title: '路径',
+            align: 'center'
+        }, {
+            field: 'methods',
+            title: '请求方式',
+            align: 'center'
+        }, {
+            field: 'status',
+            title: '状态',
             align: 'center',
             formatter:function(value, row, index) {
-                if (value && value == 'COMMON') {
-                    return '普通';
+                if (value && value == 'ON') {
+                    return '启用';
+                } else if (value && value == 'OFF') {
+                    return '停用';
                 }
             }
         }, {
-            field: 'serviceId',
-            title: '服务ID',
+            field: 'version',
+            title: '版本',
+            align: 'center'
+        }, {
+            field: 'env',
+            title: '环境',
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'DEV') {
+                    return '开发';
+                } else if (value && value == 'TEST') {
+                    return '测试';
+                } else if (value && value == 'UAT') {
+                    return '预发布';
+                } else if (value && value == 'ONLINE') {
+                    return '生产';
+                }
+            }
+        }, {
+            field: 'cached',
+            title: '是否缓存',
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'YES') {
+                    return '是';
+                } else if (value && value == 'NO') {
+                    return '否';
+                }
+            }
+        }, {
+            field: 'protocol',
+            title: '支持协议',
             align: 'center'
         }, {
             field: 'info',
             title: '描述说明',
             align: 'center'
         }, {
-            field: 'groupId',
+            field: 'apiId',
             title: '操作',
             align: 'center',
             formatter:function(value, row, index) {
@@ -60,7 +104,6 @@
                 a = a +     '<ul class="dropdown-menu">';
                 a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
                 a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=childWin('+value+')>API管理</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;
@@ -86,28 +129,13 @@ function addWin(){
 }
 
 // 编辑窗口
-function editWin(groupId){
+function editWin(apiId){
     parent.layer.open({
         type: 2,
         title: '编辑',
         skin: 'layui-layer-rim', //加上边框
         area: ['1000px', '650px'], //宽高
-        content: '/api/edit.html?groupId='+groupId,
-        end: function () {
-            search();
-        }
-    });
-}
-
-// 子类目窗口
-function childWin(groupId){
-    //页面层
-    parent.layer.open({
-        type: 2,
-        title: '子类目',
-        skin: 'layui-layer-rim', //加上边框
-        area: ['1000px', '650px'], //宽高
-        content: '/api/child.html?groupId='+groupId,
+        content: '/api/edit.html?apiId='+apiId,
         end: function () {
             search();
         }
@@ -116,9 +144,9 @@ function childWin(groupId){
 
 /**
  * 删除
- * @param groupId
+ * @param apiId
  */
-function delWin(groupId){
+function delWin(apiId){
     swal({
             title: "您确定要删除这条记录吗",
             type: "warning",
@@ -132,7 +160,7 @@ function delWin(groupId){
         function (isConfirm) {
             if (isConfirm){
                 var param = {};
-                param.groupId = groupId;
+                param.apiId = apiId;
                 $.post("/api/delete", param, function(result) {
                     if (result.code == "1000") {
                         swal(tip+"成功！", result.msg, "success");
