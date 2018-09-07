@@ -1194,6 +1194,18 @@ button.dim:active:before {
     color: #FFFFFF;
 }
 
+.label-running,
+.badge-running {
+    background-color: #00ff00;
+    color: #FFFFFF;
+}
+
+.label-down,
+.badge-down {
+    background-color: #646464;
+    color: #FFFFFF;
+}
+
 .label-warning,
 .badge-warning {
     background-color: #f8ac59;

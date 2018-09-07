@@ -1,5 +1,7 @@
 package com.moguhu.baize.metadata.entity.backend;
 
+import com.moguhu.baize.common.constants.backend.NodeStatusEnum;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -56,6 +58,8 @@ public class GateNodeEntity implements Serializable {
 
     /**
      * 状态：已创建 CREATED 收集中 COLLECTING 运行中 RUNNING  已关闭 CLOSED.
+     *
+     * @see NodeStatusEnum
      */
     private String status;
 

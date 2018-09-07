@@ -2,6 +2,9 @@ package com.moguhu.baize.metadata.dao.mapper.backend;
 
 
 import com.moguhu.baize.metadata.entity.backend.GateNodeEntity;
+import com.moguhu.baize.metadata.request.backend.GateNodeSearchRequest;
+
+import java.util.List;
 
 public interface GateNodeEntityMapper {
     /**
@@ -23,4 +26,19 @@ public interface GateNodeEntityMapper {
      * 通过id修改表gate_node.
      */
     int updateById(GateNodeEntity record);
+
+    /**
+     * 查询列表
+     *
+     * @param request
+     * @return
+     */
+    List<GateNodeEntity> queryAll(GateNodeSearchRequest request);
+
+    /**
+     * 加锁
+     *
+     * @param nodeId
+     */
+    void lock(Long nodeId);
 }
