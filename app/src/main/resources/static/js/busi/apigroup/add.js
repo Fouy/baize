@@ -34,7 +34,7 @@ function saveAdd() {
     $.post("/apigroup/save", data, function (result) {
         if (result.code == '1000') {
             parent.toastr.success("提示信息", result.msg);
-            close();
+            closeWin();
         } else {
             toastr.error("错误信息", result.msg);
         }

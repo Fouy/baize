@@ -38,7 +38,7 @@ $().ready(function () {
 });
 
 // 提交按钮
-function save() {
+function saveEdit() {
     if (!$('#editForm').valid()) {
         toastr.error("编辑", "参数有误");
         return;
@@ -53,7 +53,7 @@ function save() {
     $.post("/apigroup/update", data, function (result) {
         if (result.code == '1000') {
             parent.toastr.success("提示信息", result.msg);
-            close();
+            closeWin();
         } else {
             toastr.error("错误信息", result.msg);
         }

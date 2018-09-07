@@ -135,9 +135,9 @@ function delWin(groupId){
                 param.groupId = groupId;
                 $.post("/apigroup/delete", param, function(result) {
                     if (result.code == "1000") {
-                        swal(tip+"成功！", result.msg, "success");
+                        swal("删除成功！", result.msg, "success");
                     } else {
-                        swal(tip+"失败！", result.msg, "error");
+                        swal("删除失败！", result.msg, "error");
                     }
                     search();
                 }, 'json');

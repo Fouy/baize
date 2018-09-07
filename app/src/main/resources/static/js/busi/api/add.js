@@ -1,5 +1,8 @@
 //以下为添加页面内容
 $().ready(function () {
+    // 初始化switchery
+    var elem = document.querySelector('.js-switch');
+    var init = new Switchery(elem);
     // 增加校验
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#addForm").validate({
@@ -34,7 +37,7 @@ function saveAdd() {
     $.post("/apigroup/save", data, function (result) {
         if (result.code == '1000') {
             parent.toastr.success("提示信息", result.msg);
-            close();
+            closeWin();
         } else {
             toastr.error("错误信息", result.msg);
         }
