@@ -1,9 +1,11 @@
 package com.moguhu.baize.metadata.entity.backend;
 
+import com.moguhu.baize.common.constants.StatusEnum;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class ServiceEntity implements Serializable {
+public class GateServiceEntity implements Serializable {
     /**
      * 主键ID.
      */
@@ -25,14 +27,16 @@ public class ServiceEntity implements Serializable {
     private String name;
 
     /**
-     * HOST.
+     * 服务编码.
      */
-    private String host;
+    private String serviceCode;
 
     /**
-     * 端口.
+     * 状态：启用 ON 停用 OFF.
+     *
+     * @see StatusEnum
      */
-    private String port;
+    private String status;
 
     /**
      * 扩展信息.
@@ -73,27 +77,27 @@ public class ServiceEntity implements Serializable {
         this.name = name;
     }
 
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
     public String getExtInfo() {
         return extInfo;
     }
 
     public void setExtInfo(String extInfo) {
         this.extInfo = extInfo;
+    }
+
+    public String getServiceCode() {
+        return serviceCode;
+    }
+
+    public void setServiceCode(String serviceCode) {
+        this.serviceCode = serviceCode;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

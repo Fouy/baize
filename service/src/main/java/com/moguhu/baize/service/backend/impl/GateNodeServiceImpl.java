@@ -51,9 +51,9 @@ public class GateNodeServiceImpl implements GateNodeService {
     }
 
     @Override
-    public GateNodeResponse selectById(Long GateNodeId) {
+    public GateNodeResponse selectById(Long nodeId) {
         GateNodeResponse response = new GateNodeResponse();
-        GateNodeEntity entity = gateNodeEntityMapper.selectById(GateNodeId);
+        GateNodeEntity entity = gateNodeEntityMapper.selectById(nodeId);
         if (entity != null) {
             response = DozerUtil.map(entity, GateNodeResponse.class);
         }
