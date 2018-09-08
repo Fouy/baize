@@ -61,6 +61,8 @@ baize:
       refresh-exp-time: 2880 # 分钟 (2d)
       issuer: http://baize.moguhu.com
       signing-key: baize
+  registry: # zk address
+      hosts: 127.0.0.1
 
 # jetcache config
 jetcache:

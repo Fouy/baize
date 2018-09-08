@@ -5,16 +5,19 @@ import com.github.pagehelper.PageHelper;
 import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
+import com.moguhu.baize.core.task.SingleServiceSyncTask;
 import com.moguhu.baize.metadata.dao.mapper.backend.GateServiceEntityMapper;
 import com.moguhu.baize.metadata.entity.backend.GateServiceEntity;
 import com.moguhu.baize.metadata.request.backend.GateServiceSaveRequest;
 import com.moguhu.baize.metadata.request.backend.GateServiceSearchRequest;
 import com.moguhu.baize.metadata.request.backend.GateServiceUpdateRequest;
 import com.moguhu.baize.metadata.response.backend.GateServiceResponse;
+import com.moguhu.baize.service.CommonThreadService;
 import com.moguhu.baize.service.backend.GateServiceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -31,6 +34,12 @@ import java.util.List;
 public class GateServiceServiceImpl implements GateServiceService {
 
     private static final Logger logger = LoggerFactory.getLogger(GateServiceServiceImpl.class);
+
+    @Autowired
+    private CommonThreadService commonThreadService;
+
+    @Autowired
+    private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
     @Autowired
     private GateServiceEntityMapper gateServiceEntityMapper;
@@ -88,6 +97,11 @@ public class GateServiceServiceImpl implements GateServiceService {
     @Override
     @Transactional
     public void option(Long serviceId, String status) {
+        // 创建 sync task
+        SingleServiceSyncTask task = new SingleServiceSyncTask(serviceId);
+        autowireCapableBeanFactory.autowireBean(task);
+        commonThreadService.submit(task);
+
         GateServiceEntity param = new GateServiceEntity();
         param.setServiceId(serviceId);
         param.setStatus(status);

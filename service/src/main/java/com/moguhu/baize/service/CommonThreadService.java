@@ -48,7 +48,7 @@ public class CommonThreadService {
     @Value("${common.threadpool.es.queueSize}")
     private String ES_QUEUE_SIZE;
 
-    // 加载大转盘线程池
+    // 加载线程池
     @PostConstruct
     public void init() {
         if (threadPool == null) {
@@ -87,7 +87,7 @@ public class CommonThreadService {
             try {
                 threadPool.shutdown();
             } catch (Exception e) {
-                logger.error(" Common executor service shutdown failed!", e);
+                logger.error(" Common executor task shutdown failed!", e);
             }
         }
     }
