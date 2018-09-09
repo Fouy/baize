@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * 网关节点管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/6.
  */
 @RestController
 @RequestMapping("/gatenode")

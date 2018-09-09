@@ -41,14 +41,16 @@ public class SingleServiceSyncTask implements Callable<Long> {
     private GateServiceService gateServiceService;
 
     private Long serviceId;
+    private String status;
 
     /**
      * service zk path
      */
     private String servicePath;
 
-    public SingleServiceSyncTask(Long serviceId) {
+    public SingleServiceSyncTask(Long serviceId, String status) {
         this.serviceId = serviceId;
+        this.status = status;
     }
 
     @Override
@@ -59,9 +61,9 @@ public class SingleServiceSyncTask implements Callable<Long> {
             GateServiceResponse gateService = gateServiceService.selectById(serviceId);
             servicePath = ZookeeperKey.BAIZE_ZUUL + "/" + gateService.getServiceCode();
 
-            if (StatusEnum.ON.name().equals(gateService.getStatus())) {
+            if (StatusEnum.ON.name().equals(status)) {
                 this.push2Zk();
-            } else if (StatusEnum.OFF.name().equals(gateService.getStatus())) {
+            } else if (StatusEnum.OFF.name().equals(status)) {
                 this.deletePath(servicePath);
             }
 

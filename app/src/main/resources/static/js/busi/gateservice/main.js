@@ -44,9 +44,9 @@
             align: 'center',
             formatter:function(value, row, index) {
                 if (value && value == 'ON') {
-                    return '<span class="label label-running">启用</span>';
+                    return '<span class="label label-running">已上线</span>';
                 } else if (value && value == 'OFF') {
-                    return '<span class="label label-down">停用</span>';
+                    return '<span class="label label-down">已下线</span>';
                 }
             }
         }, {
@@ -60,10 +60,11 @@
 
                 if (row.status == 'OFF') {
                     a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>上线</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
                 } else if (row.status == 'ON') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>停用</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>下线</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=instanceWin('+value+')>查看实例</a></li>';
                 }
 
                 a = a +     '</ul>';
@@ -98,6 +99,20 @@ function editWin(serviceId){
         skin: 'layui-layer-rim', //加上边框
         area: ['1000px', '650px'], //宽高
         content: '/gateservice/edit.html?serviceId='+serviceId,
+        end: function () {
+            search();
+        }
+    });
+}
+
+// 编辑窗口
+function instanceWin(serviceId){
+    parent.layer.open({
+        type: 2,
+        title: '服务实例',
+        skin: 'layui-layer-rim', //加上边框
+        area: ['1000px', '650px'], //宽高
+        content: '/gateinstance/main.html?serviceId='+serviceId,
         end: function () {
             search();
         }
@@ -143,9 +158,9 @@ function delWin(serviceId){
 function statusWin(serviceId, status){
     var tip = '';
     if (status == 'ON') {
-        tip = '启用';
+        tip = '上线';
     } else {
-        tip = '停用';
+        tip = '下线';
     }
 
     swal({

@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * 网关服务管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/8.
  */
 @RestController
 @RequestMapping("/gateservice")
@@ -136,6 +136,10 @@ public class GateServiceController extends BaseController {
         try {
             if (StatusEnum.resolve(status) == null || null == serviceId) {
                 return AjaxResult.error("参数有误");
+            }
+            GateServiceResponse gateServiceEntity = gateServiceService.selectById(serviceId);
+            if (null == gateServiceEntity) {
+                return AjaxResult.error("服务不存在");
             }
 
             gateServiceService.option(serviceId, status);
