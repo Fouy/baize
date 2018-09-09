@@ -70,7 +70,7 @@ public class StartInitContext {
             }
 
             try {
-                client.createNode(ZookeeperKey.BAIZE_MANAGER_NODES + "/" + ip + "_" + port, "", CreateMode.EPHEMERAL);
+                client.createNode(ZookeeperKey.BAIZE_MANAGER_NODES + "/" + ip + ":" + port, "", CreateMode.EPHEMERAL);
                 logger.info(" Manager: ip:{}, port:{}, 注册成功.", ip, port);
             } catch (Exception e) {
                 logger.error("Manager 注册ZK 失败, 停止启动, e={}", e);
