@@ -39,6 +39,10 @@
             title: '服务编码',
             align: 'center'
         }, {
+            field: 'hosts',
+            title: '后端服务HOSTS',
+            align: 'center'
+        }, {
             field: 'status',
             title: '状态',
             align: 'center',

@@ -7,12 +7,13 @@
     <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="service_code" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="hosts" property="hosts" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="ext_info" property="extInfo" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    service_id, create_time, modify_time, `name`, service_code, `status`, ext_info
+    service_id, create_time, modify_time, `name`, service_code, hosts, `status`, ext_info
   </sql>
   
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -38,6 +39,9 @@
       <if test="serviceCode != null" >
         service_code,
       </if>
+      <if test="hosts != null" >
+        hosts,
+      </if>
       <if test="status != null" >
         `status`,
       </if>
@@ -53,6 +57,9 @@
       </if>
       <if test="serviceCode != null" >
         #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hosts != null" >
+        #{hosts,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
@@ -72,6 +79,9 @@
       </if>
       <if test="serviceCode != null" >
         service_code = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hosts != null" >
+        hosts = #{hosts,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         `status` = #{status,jdbcType=VARCHAR},

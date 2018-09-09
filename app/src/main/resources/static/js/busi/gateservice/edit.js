@@ -6,11 +6,13 @@ $().ready(function () {
     $("#editForm").validate({
         rules: {
             name: "required",
-            serviceCode: "required"
+            serviceCode: "required",
+            hosts: "required"
         },
         messages: {
             name: icon + "请输入服务名称",
-            serviceCode: icon + "请输入服务编码"
+            serviceCode: icon + "请输入服务编码",
+            hosts: icon + "请输入HOSTS"
         }
     });
 
@@ -26,6 +28,7 @@ $().ready(function () {
         }
         $('#name').val(entity.name);
         $('#serviceCode').val(entity.serviceCode);
+        $('#hosts').val(entity.hosts);
     }, 'json');
 
 
@@ -42,6 +45,7 @@ function saveEdit() {
     data.serviceId = $('#serviceId').val();
     data.name = $('#name').val();
     data.serviceCode = $('#serviceCode').val();
+    data.hosts = $('#hosts').val();
     $.post("/gateservice/update", data, function (result) {
         if (result.code == '1000') {
             parent.toastr.success("提示信息", result.msg);

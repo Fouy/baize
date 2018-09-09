@@ -18,6 +18,7 @@ public class ZookeeperKey {
     public static final String SERVICECODE_APIGROUP = "apigroup";
     public static final String SERVICECODE_COMPONENT = "component";
     public static final String SERVICECODE_REFRESH = "refresh";
+    public static final String SERVICECODE_BACKHOSTS = "backhosts";
 
 
     public static final String BAIZE_MANAGER = BAIZE + "/manager";

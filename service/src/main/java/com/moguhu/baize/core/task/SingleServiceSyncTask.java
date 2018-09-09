@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +34,7 @@ public class SingleServiceSyncTask implements Callable<Long> {
         serviceChildSet.add(ZookeeperKey.SERVICECODE_APIGROUP);
         serviceChildSet.add(ZookeeperKey.SERVICECODE_COMPONENT);
         serviceChildSet.add(ZookeeperKey.SERVICECODE_REFRESH);
+        serviceChildSet.add(ZookeeperKey.SERVICECODE_BACKHOSTS);
     }
 
     @Autowired
@@ -47,6 +50,10 @@ public class SingleServiceSyncTask implements Callable<Long> {
      * service zk path
      */
     private String servicePath;
+    /**
+     * back service
+     */
+    private GateServiceResponse gateService;
 
     public SingleServiceSyncTask(Long serviceId, String status) {
         this.serviceId = serviceId;
@@ -58,7 +65,7 @@ public class SingleServiceSyncTask implements Callable<Long> {
         logger.info("single gate service sync task begin ...");
         long startTime = System.currentTimeMillis();
         try {
-            GateServiceResponse gateService = gateServiceService.selectById(serviceId);
+            gateService = gateServiceService.selectById(serviceId);
             servicePath = ZookeeperKey.BAIZE_ZUUL + "/" + gateService.getServiceCode();
 
             if (StatusEnum.ON.name().equals(status)) {
@@ -113,6 +120,16 @@ public class SingleServiceSyncTask implements Callable<Long> {
             serviceChildSet.forEach(childNode -> {
                 if (!serviceChild.contains(childNode)) {
                     client.createNode(servicePath + "/" + childNode, "", CreateMode.PERSISTENT);
+                }
+                // backhosts 写入后端服务HOSTS
+                if (ZookeeperKey.SERVICECODE_BACKHOSTS.equals(childNode)) {
+                    try {
+                        String backHostsPath = servicePath + "/" + childNode + "/" + URLEncoder.encode(gateService.getHosts(), "UTF-8") ;
+                        client.createNode(backHostsPath, "", CreateMode.PERSISTENT);
+                    } catch (UnsupportedEncodingException e) {
+                        logger.error("创建 backhosts 失败, e={}", e);
+                        throw new RuntimeException("create backhosts failed", e);
+                    }
                 }
             });
         }

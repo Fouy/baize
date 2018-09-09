@@ -32,6 +32,11 @@ public class GateServiceEntity implements Serializable {
     private String serviceCode;
 
     /**
+     * 后端服务HOSTS , 分隔.
+     */
+    private String hosts;
+
+    /**
      * 状态：启用 ON 停用 OFF.
      *
      * @see StatusEnum
@@ -99,5 +104,13 @@ public class GateServiceEntity implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getHosts() {
+        return hosts;
+    }
+
+    public void setHosts(String hosts) {
+        this.hosts = hosts;
     }
 }
