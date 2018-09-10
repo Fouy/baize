@@ -1,5 +1,7 @@
 package com.moguhu.baize.metadata.entity.api;
 
+import com.moguhu.baize.common.constants.StatusEnum;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -33,6 +35,13 @@ public class ApiGroupEntity implements Serializable {
      * 服务ID.
      */
     private Long serviceId;
+
+    /**
+     * 状态：启用 ON 停用 OFF.
+     *
+     * @see StatusEnum
+     */
+    private String status;
 
     /**
      * 描述说明.
@@ -108,5 +117,13 @@ public class ApiGroupEntity implements Serializable {
 
     public void setExtInfo(String extInfo) {
         this.extInfo = extInfo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

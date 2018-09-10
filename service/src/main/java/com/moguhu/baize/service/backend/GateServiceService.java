@@ -7,6 +7,8 @@ import com.moguhu.baize.metadata.request.backend.GateServiceSearchRequest;
 import com.moguhu.baize.metadata.request.backend.GateServiceUpdateRequest;
 import com.moguhu.baize.metadata.response.backend.GateServiceResponse;
 
+import java.util.List;
+
 /**
  * 网关服务 管理
  *
@@ -58,4 +60,11 @@ public interface GateServiceService {
      * @param status
      */
     void option(Long serviceId, String status);
+
+    /**
+     * 查询可用服务列表
+     *
+     * @return
+     */
+    List<GateServiceResponse> all();
 }

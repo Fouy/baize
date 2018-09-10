@@ -1,11 +1,11 @@
 package com.moguhu.baize.service.api;
 
 
+import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.request.api.ApiGroupSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
-import com.moguhu.baize.common.vo.PageListDto;
 
 /**
  * API分组 管理
@@ -50,4 +50,12 @@ public interface ApiGroupService {
      * @param request
      */
     void save(ApiGroupSaveRequest request);
+
+    /**
+     * 停启用
+     *
+     * @param groupId
+     * @param status
+     */
+    void option(Long groupId, String status);
 }

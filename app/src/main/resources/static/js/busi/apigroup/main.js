@@ -49,6 +49,17 @@
             title: '描述说明',
             align: 'center'
         }, {
+            field: 'status',
+            title: '状态',
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'ON') {
+                    return '<span class="label label-running">已启用</span>';
+                } else if (value && value == 'OFF') {
+                    return '<span class="label label-down">已停用</span>';
+                }
+            }
+        }, {
             field: 'groupId',
             title: '操作',
             align: 'center',
@@ -58,9 +69,17 @@
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=childWin('+value+')>API管理</a></li>';
+
+                if (row.status == 'ON') {
+                    a = a +     '<li><a href="javascript:void(0)" onclick=childWin('+value+')>API管理</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>停用</a></li>';
+                } else if (row.status == 'OFF') {
+                    a = a +     '<li><a href="javascript:void(0)" onclick=childWin('+value+')>API管理</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';
+                }
+
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;
@@ -112,6 +131,46 @@ function childWin(groupId){
             search();
         }
     });
+}
+
+/**
+ * 停启用
+ * @param groupId
+ * @param status
+ */
+function statusWin(groupId, status){
+    var tip = '';
+    if (status == 'ON') {
+        tip = '启用';
+    } else {
+        tip = '停用';
+    }
+
+    swal({
+            title: "您确定要"+tip+"这条记录吗",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是的，我要"+tip+"！",
+            cancelButtonText: "让我再考虑一下…",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function (isConfirm) {
+            if (isConfirm){
+                var param = {};
+                param.groupId = groupId;
+                param.status = status;
+                $.post("/apigroup/option", param, function(result) {
+                    if (result.code == "1000") {
+                        swal(tip+"成功！", result.msg, "success");
+                    } else {
+                        swal(tip+"失败！", result.msg, "error");
+                    }
+                    search();
+                }, 'json');
+            }
+        });
 }
 
 /**

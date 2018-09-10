@@ -108,4 +108,16 @@ public class GateServiceServiceImpl implements GateServiceService {
         gateServiceEntityMapper.lock(serviceId);
         gateServiceEntityMapper.updateById(param);
     }
+
+    @Override
+    public List<GateServiceResponse> all() {
+        GateServiceSearchRequest param = new GateServiceSearchRequest();
+        param.setStatus(StatusEnum.ON.name());
+        List<GateServiceEntity> entityList = gateServiceEntityMapper.queryAll(param);
+        List<GateServiceResponse> list = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            list = DozerUtil.mapList(entityList, GateServiceResponse.class);
+        }
+        return list;
+    }
 }

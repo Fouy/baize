@@ -2,14 +2,15 @@ package com.moguhu.baize.service.api.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.moguhu.baize.metadata.request.api.ApiGroupSaveRequest;
-import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
-import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
-import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
+import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiGroupEntityMapper;
 import com.moguhu.baize.metadata.entity.api.ApiGroupEntity;
+import com.moguhu.baize.metadata.request.api.ApiGroupSaveRequest;
+import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
+import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.service.api.ApiGroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +84,18 @@ public class ApiGroupServiceImpl implements ApiGroupService {
     @Override
     @Transactional
     public void save(ApiGroupSaveRequest request) {
+        request.setStatus(StatusEnum.OFF.name());
         apiGroupEntityMapper.insert(request);
+    }
+
+    @Override
+    @Transactional
+    public void option(Long groupId, String status) {
+        ApiGroupEntity param = new ApiGroupEntity();
+        param.setGroupId(groupId);
+        param.setStatus(status);
+        apiGroupEntityMapper.lock(groupId);
+        apiGroupEntityMapper.updateById(param);
     }
 
 }

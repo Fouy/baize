@@ -17,7 +17,33 @@ $().ready(function () {
         }
     });
 
+    initGateService();
+
 });
+
+/**
+ * 初始化网关服务
+ */
+function initGateService() {
+    // 初始化select
+    var serviceId = $("#serviceId");
+    serviceId.empty();
+    var optAll = $('<option></option>');
+    optAll.attr('value', '');
+    optAll.append('--请选择--');
+    optAll.appendTo(serviceId);
+
+    $.get("/gateservice/all", {}, function(result) {
+        var data = eval(result);
+        var list = data.data;
+        for(var i = 0; i < list.length; i++) {
+            var opt = $('<option></option>');
+            opt.attr('value', list[i].serviceId);
+            opt.append(list[i].name);
+            opt.appendTo(serviceId);
+        }
+    }, 'json');
+}
 
 // 提交按钮
 function saveAdd() {

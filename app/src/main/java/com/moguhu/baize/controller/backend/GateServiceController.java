@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
  * 网关服务管理
- *
+ * <p>
  * Created by xuefeihu on 18/9/8.
  */
 @RestController
@@ -65,6 +67,18 @@ public class GateServiceController extends BaseController {
         }
 
         return result;
+    }
+
+    @RequestMapping("/all")
+    @ResponseBody
+    public AjaxResult all() {
+        try {
+            List<GateServiceResponse> list = gateServiceService.all();
+            return AjaxResult.success(list);
+        } catch (Exception e) {
+            logger.error("查询全部列表, e={}", e);
+            return AjaxResult.error("查询全部列表");
+        }
     }
 
     @RequestMapping("/detail")

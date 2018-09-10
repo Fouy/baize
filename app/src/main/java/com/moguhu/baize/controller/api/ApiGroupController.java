@@ -1,6 +1,7 @@
 package com.moguhu.baize.controller.api;
 
 import com.alibaba.fastjson.JSON;
+import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.vo.AjaxResult;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.controller.BaseController;
@@ -9,6 +10,7 @@ import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.service.api.ApiGroupService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -84,6 +86,11 @@ public class ApiGroupController extends BaseController {
     @ResponseBody
     public AjaxResult save(ApiGroupSaveRequest request) {
         try {
+            if (StringUtils.isEmpty(request.getName()) || StringUtils.isEmpty(request.getType())
+                    || null == request.getServiceId()) {
+                return AjaxResult.error("参数有误");
+            }
+
             apiGroupService.save(request);
             return AjaxResult.success();
         } catch (Exception e) {
@@ -117,6 +124,22 @@ public class ApiGroupController extends BaseController {
             }
 
             apiGroupService.deleteById(groupId);
+            return AjaxResult.success();
+        } catch (Exception e) {
+            logger.error("删除信息失败, groupId={}, e={}", JSON.toJSONString(groupId), e);
+            return AjaxResult.error("删除信息失败");
+        }
+    }
+
+    @RequestMapping("/option")
+    @ResponseBody
+    public AjaxResult option(Long groupId, String status) {
+        try {
+            if (null == groupId || StatusEnum.resolve(status) == null) {
+                return AjaxResult.error("参数有误");
+            }
+
+            apiGroupService.option(groupId, status);
             return AjaxResult.success();
         } catch (Exception e) {
             logger.error("删除信息失败, groupId={}, e={}", JSON.toJSONString(groupId), e);
