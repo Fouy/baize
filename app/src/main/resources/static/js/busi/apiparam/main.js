@@ -5,8 +5,6 @@
 
 (function() {
 
-    initApiGroup();
-
     // 初始化表格
     $('#exampleTableEvents').bootstrapTable({
         method: 'get',
@@ -19,7 +17,7 @@
         pageNumber:1,      //初始化加载第一页，默认第一页
         pageSize: 10,      //每页的记录行数（*）
         pageList: [10, 25, 50, 100],  //可供选择的每页的行数（*）
-        url: "/api/list",
+        url: "/apiparam/list",
         queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
                             // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
         //queryParams: queryParams,//前端调用服务时，会默认传递上边提到的参数，如果需要添加自定义参数，可以自定义一个函数返回请求参数
@@ -32,70 +30,34 @@
         searchOnEnterKey: true,
         columns: [{
             field: 'name',
-            title: 'API名称',
+            title: '参数名',
             align: 'center'
         }, {
-            field: 'groupName',
-            title: '分组',
+            field: 'type',
+            title: '类型',
             align: 'center'
         }, {
-            field: 'path',
-            title: '路径',
+            field: 'position',
+            title: '位置',
             align: 'center'
         }, {
-            field: 'methods',
-            title: '请求方式',
+            field: 'need',
+            title: '是否必须',
             align: 'center'
         }, {
-            field: 'version',
-            title: '版本',
+            field: 'info',
+            title: '描述说明',
             align: 'center'
         }, {
-            field: 'cached',
-            title: '是否缓存',
-            align: 'center',
-            formatter:function(value, row, index) {
-                if (value && value == 'YES') {
-                    return '是';
-                } else if (value && value == 'NO') {
-                    return '否';
-                }
-            }
-        }, {
-            field: 'protocol',
-            title: '支持协议',
-            align: 'center'
-        }, {
-            field: 'status',
-            title: '状态',
-            align: 'center',
-            formatter:function(value, row, index) {
-                if (value && value == 'ON') {
-                    return '<span class="label label-running">已启用</span>';
-                } else if (value && value == 'OFF') {
-                    return '<span class="label label-down">已停用</span>';
-                }
-            }
-        }, {
-            field: 'apiId',
+            field: 'paramId',
             title: '操作',
             align: 'center',
             formatter:function(value, row, index) {
-                //value：当前field的值，即userId
-                //row：当前行的数据
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-
-                if (row.status == 'ON') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>停用</a></li>';
-                } else if (row.status == 'OFF') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=apiParamWin('+value+')>参数配置</a></li>';
-                }
-
+                a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;
@@ -104,30 +66,6 @@
     });
 
 })();
-
-/**
- * 初始化API GROUP
- */
-function initApiGroup() {
-    // 初始化select
-    var groupId = $("#groupId");
-    groupId.empty();
-    var optAll = $('<option></option>');
-    optAll.attr('value', '');
-    optAll.append('--请选择--');
-    optAll.appendTo(groupId);
-
-    $.get("/apigroup/all", {}, function(result) {
-        var data = eval(result);
-        var list = data.data;
-        for(var i = 0; i < list.length; i++) {
-            var opt = $('<option></option>');
-            opt.attr('value', list[i].groupId);
-            opt.append(list[i].name);
-            opt.appendTo(groupId);
-        }
-    }, 'json');
-}
 
 // 新增窗口
 function addWin(){
@@ -156,14 +94,6 @@ function editWin(apiId){
             search();
         }
     });
-}
-
-// 参数配置窗口
-function apiParamWin(apiId){
-    var dataUrl = '/apiparam/main',
-        dataIndex = '/apiparam/main',
-        menuName = 'API参数配置';
-    parent.customItem(dataUrl, dataIndex, menuName);
 }
 
 /**
@@ -200,10 +130,7 @@ function delWin(apiId){
 // 搜索
 function search(){
     var param = {};
-    param.name = $('#name').val();
-    param.path = $('#path').val();
-    param.groupId = $('#groupId').val();
-    param.status = $('#status').val();
+    param.apiId = $('#apiId').val();
     $('#exampleTableEvents').bootstrapTable('refresh',{query : param});
 }
 
