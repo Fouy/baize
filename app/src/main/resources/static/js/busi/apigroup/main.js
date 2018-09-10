@@ -70,11 +70,10 @@
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
 
+                a = a +         '<li><a href="javascript:void(0)" onclick=apiWin('+value+')>API管理</a></li>';
                 if (row.status == 'ON') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=apiWin('+value+')>API管理</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>停用</a></li>';
                 } else if (row.status == 'OFF') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=apiWin('+value+')>API管理</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';

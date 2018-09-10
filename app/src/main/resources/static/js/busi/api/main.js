@@ -47,35 +47,9 @@
             title: '请求方式',
             align: 'center'
         }, {
-            field: 'status',
-            title: '状态',
-            align: 'center',
-            formatter:function(value, row, index) {
-                if (value && value == 'ON') {
-                    return '启用';
-                } else if (value && value == 'OFF') {
-                    return '停用';
-                }
-            }
-        }, {
             field: 'version',
             title: '版本',
             align: 'center'
-        }, {
-            field: 'env',
-            title: '环境',
-            align: 'center',
-            formatter:function(value, row, index) {
-                if (value && value == 'DEV') {
-                    return '开发';
-                } else if (value && value == 'TEST') {
-                    return '测试';
-                } else if (value && value == 'UAT') {
-                    return '预发布';
-                } else if (value && value == 'ONLINE') {
-                    return '生产';
-                }
-            }
         }, {
             field: 'cached',
             title: '是否缓存',
@@ -92,9 +66,16 @@
             title: '支持协议',
             align: 'center'
         }, {
-            field: 'info',
-            title: '描述说明',
-            align: 'center'
+            field: 'status',
+            title: '状态',
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'ON') {
+                    return '<span class="label label-running">已启用</span>';
+                } else if (value && value == 'OFF') {
+                    return '<span class="label label-down">已停用</span>';
+                }
+            }
         }, {
             field: 'apiId',
             title: '操作',
@@ -105,6 +86,17 @@
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
+
+
+                a = a +         '<li><a href="javascript:void(0)" onclick=apiWin('+value+')>API管理</a></li>';
+                if (row.status == 'ON') {
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>停用</a></li>';
+                } else if (row.status == 'OFF') {
+                    a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';
+                }
+
                 a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
                 a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
                 a = a +     '</ul>';
@@ -204,6 +196,9 @@ function delWin(apiId){
 function search(){
     var param = {};
     param.name = $('#name').val();
+    param.path = $('#path').val();
+    param.groupId = $('#groupId').val();
+    param.status = $('#status').val();
     $('#exampleTableEvents').bootstrapTable('refresh',{query : param});
 }
 

@@ -2,6 +2,9 @@ package com.moguhu.baize.service.api.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.moguhu.baize.common.constants.StatusEnum;
+import com.moguhu.baize.metadata.dao.mapper.api.ApiGroupEntityMapper;
+import com.moguhu.baize.metadata.entity.api.ApiGroupEntity;
 import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
@@ -33,6 +36,9 @@ public class ApiServiceImpl implements ApiService {
 
     @Autowired
     private ApiEntityMapper apiEntityMapper;
+    
+    @Autowired
+    private ApiGroupEntityMapper apiGroupEntityMapper;
 
     @Override
     public PageListDto<ApiResponse> pageList(ApiSearchRequest request) {
@@ -41,6 +47,10 @@ public class ApiServiceImpl implements ApiService {
         List<ApiResponse> list = new ArrayList<>();
         if (!CollectionUtils.isEmpty(entityList)) {
             list = DozerUtil.mapList(entityList, ApiResponse.class);
+            list.forEach(apiResponse -> {
+                ApiGroupEntity apiGroupEntity = apiGroupEntityMapper.selectById(apiResponse.getGroupId());
+                apiResponse.setGroupName(apiGroupEntity.getName());
+            });
         }
         PageListDto<ApiResponse> pageListDto = new PageListDto<>();
         pageListDto.setTotal(page.getTotal());
@@ -79,6 +89,7 @@ public class ApiServiceImpl implements ApiService {
     @Override
     @Transactional
     public void save(ApiSaveRequest request) {
+        request.setStatus(StatusEnum.OFF.name());
         apiEntityMapper.insert(request);
     }
 

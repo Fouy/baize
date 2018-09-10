@@ -169,12 +169,13 @@
     <if test="groupId != null" >
       and group_id = #{groupId,jdbcType=BIGINT}
     </if>
-    <if test="path != null" >
+    <if test="path != null and path != '' " >
       and path = #{path,jdbcType=VARCHAR}
     </if>
     <if test="name != null and name != '' " >
       and `name` LIKE CONCAT('%', #{name,jdbcType=VARCHAR}, '%')
     </if>
+    order by api_id desc
   </select>
 
   <!-- 加锁 -->

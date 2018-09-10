@@ -105,6 +105,7 @@
     <if test="status != null and status != '' " >
       and `status` = #{status,jdbcType=VARCHAR}
     </if>
+    order by service_id desc
   </select>
 
   <!-- 加锁 -->

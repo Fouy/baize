@@ -1,6 +1,7 @@
 package com.moguhu.baize.controller.api;
 
 import com.alibaba.fastjson.JSON;
+import com.moguhu.baize.common.constants.BooleanEnum;
 import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
@@ -10,6 +11,7 @@ import com.moguhu.baize.common.vo.AjaxResult;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.controller.BaseController;
 import com.moguhu.baize.service.api.ApiService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -85,6 +87,12 @@ public class ApiController extends BaseController {
     @ResponseBody
     public AjaxResult save(ApiSaveRequest request) {
         try {
+            if (StringUtils.isEmpty(request.getName()) || null == request.getGroupId() || StringUtils.isEmpty(request.getPath())
+                    || StringUtils.isEmpty(request.getMethods()) || BooleanEnum.resolve(request.getCached()) == null
+                    || StringUtils.isEmpty(request.getProtocol()) || StringUtils.isEmpty(request.getVersion())) {
+                return AjaxResult.error("参数有误");
+            }
+
             apiService.save(request);
             return AjaxResult.success();
         } catch (Exception e) {

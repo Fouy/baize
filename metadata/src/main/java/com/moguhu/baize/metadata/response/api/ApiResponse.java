@@ -9,4 +9,16 @@ import com.moguhu.baize.metadata.entity.api.ApiEntity;
  */
 public class ApiResponse extends ApiEntity {
 
+    /**
+     * API 分组名称
+     */
+    private String groupName;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 }

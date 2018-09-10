@@ -23,7 +23,7 @@ public class AjaxResult {
     }
 
     public static AjaxResult success() {
-        return new AjaxResult(AjaxResult.SUCCESS_CODE);
+        return new AjaxResult(AjaxResult.SUCCESS_CODE, "操作成功", null);
     }
 
     public static AjaxResult success(Object data) {

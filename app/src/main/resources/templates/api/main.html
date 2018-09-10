@@ -15,6 +15,7 @@
     <link href="/css/style.css?v=4.1.0" rel="stylesheet"/>
     <!-- Sweet Alert -->
     <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"/>
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet"/>
 </head>
 
 <body class="gray-bg">
@@ -62,18 +63,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label class="col-sm-4 control-label">环境：</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" name="env" id="env">
-                                                <option value="">--请选择--</option>
-                                                <option value="DEV">开发</option>
-                                                <option value="TEST">测试</option>
-                                                <option value="UAT">预发布</option>
-                                                <option value="ONLINE">生产</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
                                     <div class="col-md-4">
                                         <div class="col-sm-12">
@@ -115,7 +104,13 @@
     <!-- Sweet alert -->
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
 	<script src="/js/common/date.format.js"></script>
-    <!-- Peity -->
+    <!-- Toastr script -->
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/js/plugins/validate/messages_zh.min.js"></script>
+
+    <script src="/js/common/common.js"></script>
     <script src="/js/busi/api/main.js"></script>
 
 </body>

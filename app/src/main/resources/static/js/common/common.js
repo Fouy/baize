@@ -45,10 +45,32 @@ $.getUrlParam = function (name) {
     return '';
 };
 
-//关闭窗口
+// 关闭窗口
 function closeWin() {
     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
     parent.layer.close(index); //再执行关闭
+}
+
+// 初始化 chosen select
+function initChosenSelect() {
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': {
+            allow_single_deselect: true
+        },
+        '.chosen-select-no-single': {
+            disable_search_threshold: 10
+        },
+        '.chosen-select-no-results': {
+            no_results_text: 'Oops, nothing found!'
+        },
+        '.chosen-select-width': {
+            width: "95%"
+        }
+    };
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
 }
 
 /**

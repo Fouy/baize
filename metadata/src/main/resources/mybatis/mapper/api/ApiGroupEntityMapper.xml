@@ -112,6 +112,7 @@
     <if test="name != null and name != '' " >
       and `name` like concat('%', #{name,jdbcType=VARCHAR}, '%')
     </if>
+    order by group_id desc
   </select>
 
   <!-- 加锁 -->
