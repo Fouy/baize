@@ -49,10 +49,6 @@
                                         <label class="col-sm-4 control-label">分组：</label>
                                         <div class="col-sm-8">
                                             <select class="form-control" name="groupId" id="groupId">
-                                                <option>选项 1</option>
-                                                <option>选项 2</option>
-                                                <option>选项 3</option>
-                                                <option>选项 4</option>
                                             </select>
                                         </div>
                                     </div>
@@ -71,8 +67,10 @@
                                         <div class="col-sm-8">
                                             <select class="form-control" name="env" id="env">
                                                 <option value="">--请选择--</option>
-                                                <option value="ON">启用</option>
-                                                <option value="OFF">停用</option>
+                                                <option value="DEV">开发</option>
+                                                <option value="TEST">测试</option>
+                                                <option value="UAT">预发布</option>
+                                                <option value="ONLINE">生产</option>
                                             </select>
                                         </div>
                                     </div>
@@ -84,7 +82,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <button type="button" class="btn btn-primary btn-sm" onclick="addWin()" >
-                                            新建API
+                                            添加API
                                         </button>
                                     </div>
                                 </div>

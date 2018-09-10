@@ -10,6 +10,7 @@ import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.service.api.ApiGroupService;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +68,18 @@ public class ApiGroupController extends BaseController {
         return result;
     }
 
+    @RequestMapping("/all")
+    @ResponseBody
+    public AjaxResult all() {
+        try {
+            List<ApiGroupResponse> apiGroupResponse = apiGroupService.all();
+            return AjaxResult.success(apiGroupResponse);
+        } catch (Exception e) {
+            logger.error("查询所有列表失败, e={}", e);
+            return AjaxResult.error("查询所有列表失败");
+        }
+    }
+
     @RequestMapping("/detail")
     @ResponseBody
     public AjaxResult detail(Long groupId) {
@@ -106,6 +119,11 @@ public class ApiGroupController extends BaseController {
             if (null == request.getGroupId()) {
                 return AjaxResult.error("参数有误");
             }
+            // 检查分组是否存在
+            ApiGroupResponse apiGroupResponse = apiGroupService.selectById(request.getGroupId());
+            if (null == apiGroupResponse || StatusEnum.ON.name().equals(apiGroupResponse.getStatus()) ) {
+                return AjaxResult.error("记录不存在或状态不合法");
+            }
 
             apiGroupService.updateById(request);
             return AjaxResult.success();
@@ -122,6 +140,11 @@ public class ApiGroupController extends BaseController {
             if (null == groupId) {
                 return AjaxResult.error("参数有误");
             }
+            // 检查分组是否存在
+            ApiGroupResponse apiGroupResponse = apiGroupService.selectById(groupId);
+            if (null == apiGroupResponse || StatusEnum.ON.name().equals(apiGroupResponse.getStatus()) ) {
+                return AjaxResult.error("记录不存在或状态不合法");
+            }
 
             apiGroupService.deleteById(groupId);
             return AjaxResult.success();
@@ -137,6 +160,11 @@ public class ApiGroupController extends BaseController {
         try {
             if (null == groupId || StatusEnum.resolve(status) == null) {
                 return AjaxResult.error("参数有误");
+            }
+            // 检查分组是否存在
+            ApiGroupResponse apiGroupResponse = apiGroupService.selectById(groupId);
+            if (null == apiGroupResponse) {
+                return AjaxResult.error("记录不存在");
             }
 
             apiGroupService.option(groupId, status);

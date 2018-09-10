@@ -71,10 +71,10 @@
                 a = a +     '<ul class="dropdown-menu">';
 
                 if (row.status == 'ON') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=childWin('+value+')>API管理</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=apiWin('+value+')>API管理</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>停用</a></li>';
                 } else if (row.status == 'OFF') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=childWin('+value+')>API管理</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=apiWin('+value+')>API管理</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';
@@ -118,19 +118,9 @@ function editWin(groupId){
     });
 }
 
-// 子类目窗口
-function childWin(groupId){
-    //页面层
-    parent.layer.open({
-        type: 2,
-        title: '子类目',
-        skin: 'layui-layer-rim', //加上边框
-        area: ['1000px', '650px'], //宽高
-        content: '/apigroup/child.html?groupId='+groupId,
-        end: function () {
-            search();
-        }
-    });
+// API窗口
+function apiWin(groupId){
+    parent.$("#api").click();
 }
 
 /**

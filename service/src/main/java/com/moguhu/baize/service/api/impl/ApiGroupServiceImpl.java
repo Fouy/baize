@@ -95,7 +95,22 @@ public class ApiGroupServiceImpl implements ApiGroupService {
         param.setGroupId(groupId);
         param.setStatus(status);
         apiGroupEntityMapper.lock(groupId);
-        apiGroupEntityMapper.updateById(param);
+        int count = apiGroupEntityMapper.updateById(param);
+        if (count != 1) {
+            throw new RuntimeException("wrong effected row.");
+        }
+    }
+
+    @Override
+    public List<ApiGroupResponse> all() {
+        ApiGroupSearchRequest param = new ApiGroupSearchRequest();
+        param.setStatus(StatusEnum.ON.name());
+        List<ApiGroupEntity> entityList = apiGroupEntityMapper.queryAll(param);
+        List<ApiGroupResponse> list = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            list = DozerUtil.mapList(entityList, ApiGroupResponse.class);
+        }
+        return list;
     }
 
 }

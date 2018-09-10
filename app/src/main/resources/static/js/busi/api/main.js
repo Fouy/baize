@@ -4,6 +4,9 @@
  */
 
 (function() {
+
+    initApiGroup();
+
     // 初始化表格
     $('#exampleTableEvents').bootstrapTable({
         method: 'get',
@@ -112,6 +115,30 @@
     });
 
 })();
+
+/**
+ * 初始化API GROUP
+ */
+function initApiGroup() {
+    // 初始化select
+    var groupId = $("#groupId");
+    groupId.empty();
+    var optAll = $('<option></option>');
+    optAll.attr('value', '');
+    optAll.append('--请选择--');
+    optAll.appendTo(groupId);
+
+    $.get("/apigroup/all", {}, function(result) {
+        var data = eval(result);
+        var list = data.data;
+        for(var i = 0; i < list.length; i++) {
+            var opt = $('<option></option>');
+            opt.attr('value', list[i].groupId);
+            opt.append(list[i].name);
+            opt.appendTo(groupId);
+        }
+    }, 'json');
+}
 
 // 新增窗口
 function addWin(){

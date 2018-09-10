@@ -1,11 +1,12 @@
 package com.moguhu.baize.metadata.request.api;
 
+import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.metadata.request.BasePageRequest;
 
 /**
  * API 分页查询请求
  * <p>
- * Created by xuefeihu on 18/5/14.
+ * Created by xuefeihu on 18/9/6.
  */
 public class ApiGroupSearchRequest extends BasePageRequest {
 
@@ -14,11 +15,26 @@ public class ApiGroupSearchRequest extends BasePageRequest {
      */
     private String name;
 
+    /**
+     * 状态：启用 ON 停用 OFF.
+     *
+     * @see StatusEnum
+     */
+    private String status;
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

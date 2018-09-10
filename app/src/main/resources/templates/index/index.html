@@ -36,6 +36,9 @@
     <!-- Toastr script -->
     <script src="/js/plugins/toastr/toastr.min.js"></script>
 
+    <script src="/js/hplus.js?v=4.1.0"></script>
+    <script type="text/javascript" src="/js/contabs.js"></script>
+
     <!-- index js -->
     <script src="/js/common/common.js"></script>
     <script src="/js/index.js"></script>
@@ -77,10 +80,10 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="/apigroup/main">API分组列表</a>
+                                <a id="apigroup" class="J_menuItem" href="/apigroup/main">API分组列表</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="/api/main">API列表</a>
+                                <a id="api" class="J_menuItem" href="/api/main">API列表</a>
                             </li>
                         </ul>
                     </li>
@@ -92,7 +95,7 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="/component/main">组件列表</a>
+                                <a id="component" class="J_menuItem" href="/component/main">组件列表</a>
                             </li>
                         </ul>
                     </li>
@@ -104,7 +107,7 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="/gateservice/main">服务列表</a>
+                                <a id="gateservice" class="J_menuItem" href="/gateservice/main">服务列表</a>
                             </li>
                         </ul>
                     </li>
@@ -116,7 +119,7 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="/gatenode/main">网关节点</a>
+                                <a id="gatenode" class="J_menuItem" href="/gatenode/main">网关节点</a>
                             </li>
                         </ul>
                     </li>
@@ -128,7 +131,7 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="/user/main">用户管理</a>
+                                <a id="user" class="J_menuItem" href="/user/main">用户管理</a>
                             </li>
                         </ul>
                     </li>
@@ -237,7 +240,7 @@
                 </button>
                 <nav class="page-tabs J_menuTabs">
                     <div class="page-tabs-content">
-                        <a href="javascript:;" class="active J_menuTab" data-id="/home.html">首页</a>
+                        <a href="javascript:;" class="active J_menuTab" data-id="welcome_page">首页</a>
                     </div>
                 </nav>
                 <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -259,7 +262,7 @@
                 <a href="/logout" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/home.html" frameborder="0" data-id="index_v1.html" seamless="true"></iframe>
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/home.html" frameborder="0" data-id="welcome_page" seamless="true"></iframe>
             </div>
             <div class="footer">
                 <div class="pull-right">&copy; 2017-2020 <a href="http://www.moguhu.com/" target="_blank">Jack's blog</a>

@@ -7,6 +7,8 @@ import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 
+import java.util.List;
+
 /**
  * API分组 管理
  *
@@ -58,4 +60,11 @@ public interface ApiGroupService {
      * @param status
      */
     void option(Long groupId, String status);
+
+    /**
+     * 查询所有 API GROUP
+     *
+     * @return
+     */
+    List<ApiGroupResponse> all();
 }
