@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moguhu.baize.metadata.dao.mapper.api.ApiParamMapEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.moguhu.baize.metadata.entity.api.ApiParamMapEntity" >
+    <id column="map_id" property="mapId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="api_id" property="apiId" jdbcType="BIGINT" />
+    <result column="param_id" property="paramId" jdbcType="BIGINT" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="need" property="need" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="ext_info" property="extInfo" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    map_id, create_time, modify_time, api_id, param_id, `position`, `type`, `name`, need, info,
+    ext_info
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_param_map
+    where map_id = #{mapId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from api_param_map
+    where map_id = #{mapId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.moguhu.baize.metadata.entity.api.ApiParamMapEntity" useGeneratedKeys="true" keyProperty="mapId" >
+    insert into api_param_map
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        create_time,
+        modify_time,
+      <if test="apiId != null" >
+        api_id,
+      </if>
+      <if test="paramId != null" >
+        param_id,
+      </if>
+      <if test="position != null" >
+        `position`,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="name != null" >
+        `name`,
+      </if>
+      <if test="need != null" >
+        need,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="extInfo != null" >
+        ext_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        NOW(),
+        NOW(),
+      <if test="apiId != null" >
+        #{apiId,jdbcType=BIGINT},
+      </if>
+      <if test="paramId != null" >
+        #{paramId,jdbcType=BIGINT},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="need != null" >
+        #{need,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="extInfo != null" >
+        #{extInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateById" parameterType="com.moguhu.baize.metadata.entity.api.ApiParamMapEntity" >
+    update api_param_map
+    <set >
+        modify_time = NOW(),
+      <if test="apiId != null" >
+        api_id = #{apiId,jdbcType=BIGINT},
+      </if>
+      <if test="paramId != null" >
+        param_id = #{paramId,jdbcType=BIGINT},
+      </if>
+      <if test="position != null" >
+        `position` = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="need != null" >
+        need = #{need,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="extInfo != null" >
+        ext_info = #{extInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where map_id = #{mapId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

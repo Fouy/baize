@@ -7,11 +7,11 @@ import com.moguhu.baize.common.constants.api.PositionEnum;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ApiParamEntity implements Serializable {
+public class ApiParamMapEntity implements Serializable {
     /**
      * 主键ID.
      */
-    private Long paramId;
+    private Long mapId;
 
     /**
      * 创建时间.
@@ -27,6 +27,11 @@ public class ApiParamEntity implements Serializable {
      * API ID.
      */
     private Long apiId;
+
+    /**
+     * 参数ID.
+     */
+    private Long paramId;
 
     /**
      * 参数位置：PATH参数; GET参数; POST参数; HEAD参数; body参数(如图片上传).
@@ -66,12 +71,12 @@ public class ApiParamEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Long getParamId() {
-        return paramId;
+    public Long getMapId() {
+        return mapId;
     }
 
-    public void setParamId(Long paramId) {
-        this.paramId = paramId;
+    public void setMapId(Long mapId) {
+        this.mapId = mapId;
     }
 
     public Date getCreateTime() {
@@ -96,6 +101,14 @@ public class ApiParamEntity implements Serializable {
 
     public void setApiId(Long apiId) {
         this.apiId = apiId;
+    }
+
+    public Long getParamId() {
+        return paramId;
+    }
+
+    public void setParamId(Long paramId) {
+        this.paramId = paramId;
     }
 
     public String getPosition() {
