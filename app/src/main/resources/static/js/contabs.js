@@ -200,7 +200,12 @@ function menuItem() {
  * @param menuName
  * @returns {boolean}
  */
-function customItem(dataUrl, dataIndex, menuName) {
+function customItem(dataUrl, dataIndex, menuName, iframeUrl) {
+
+    if (!iframeUrl || iframeUrl == null) {
+        iframeUrl = dataUrl;
+    }
+
     // 获取标识数据
     var flag = true;
     if (dataUrl == undefined || $.trim(dataUrl).length == 0)return false;
@@ -215,6 +220,8 @@ function customItem(dataUrl, dataIndex, menuName) {
                 $('.J_mainContent .J_iframe').each(function () {
                     if ($(this).data('id') == dataUrl) {
                         $(this).show().siblings('.J_iframe').hide();
+                        // 刷新
+                        $(this).attr('src', iframeUrl);
                         return false;
                     }
                 });
@@ -230,16 +237,9 @@ function customItem(dataUrl, dataIndex, menuName) {
         $('.J_menuTab').removeClass('active');
 
         // 添加选项卡对应的iframe
-        var str1 = '<iframe class="J_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
+        var str1 = '<iframe class="J_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + iframeUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
         $('.J_mainContent').find('iframe.J_iframe').hide().parents('.J_mainContent').append(str1);
 
-        //显示loading提示
-//            var loading = layer.load();
-//
-//            $('.J_mainContent iframe:visible').load(function () {
-//                //iframe加载完成后隐藏loading提示
-//                layer.close(loading);
-//            });
         // 添加选项卡
         $('.J_menuTabs .page-tabs-content').append(str);
         scrollToTab($('.J_menuTab.active'));

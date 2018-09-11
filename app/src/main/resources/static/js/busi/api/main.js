@@ -162,8 +162,9 @@ function editWin(apiId){
 function apiParamWin(apiId){
     var dataUrl = '/apiparam/main',
         dataIndex = '/apiparam/main',
-        menuName = 'API参数配置';
-    parent.customItem(dataUrl, dataIndex, menuName);
+        menuName = 'API参数配置',
+        iframeUrl = dataUrl + '?apiId=' + apiId;
+    parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
 }
 
 /**

@@ -1,6 +1,9 @@
 package com.moguhu.baize.metadata.dao.mapper.api;
 
 import com.moguhu.baize.metadata.entity.api.ApiParamMapEntity;
+import com.moguhu.baize.metadata.request.api.ApiParamMapSearchRequest;
+
+import java.util.List;
 
 public interface ApiParamMapEntityMapper {
     /**
@@ -22,4 +25,19 @@ public interface ApiParamMapEntityMapper {
      * 通过id修改表api_param_map.
      */
     int updateById(ApiParamMapEntity record);
+
+    /**
+     * 查询列表
+     *
+     * @param request
+     * @return
+     */
+    List<ApiParamMapEntity> queryAll(ApiParamMapSearchRequest request);
+
+    /**
+     * 加锁
+     *
+     * @param mapId
+     */
+    void lock(Long mapId);
 }

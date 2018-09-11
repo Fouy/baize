@@ -124,4 +124,23 @@
     where map_id = #{mapId,jdbcType=BIGINT}
   </update>
 
+  <!-- 查询列表 -->
+  <select id="queryAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from api_param_map
+    where 1=1
+    <if test="apiId != null" >
+      and api_id = #{apiId,jdbcType=BIGINT}
+    </if>
+  </select>
+
+  <!-- 加锁 -->
+  <select id="lock" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from api_param_map
+    where map_id = #{mapId,jdbcType=BIGINT} for update
+  </select>
+
 </mapper>

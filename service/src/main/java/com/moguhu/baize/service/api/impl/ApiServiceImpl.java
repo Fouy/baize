@@ -66,6 +66,8 @@ public class ApiServiceImpl implements ApiService {
         ApiEntity entity = apiEntityMapper.selectById(apiId);
         if (entity != null) {
             response = DozerUtil.map(entity, ApiResponse.class);
+            ApiGroupEntity apiGroupEntity = apiGroupEntityMapper.selectById(response.getGroupId());
+            response.setGroupName(apiGroupEntity.getName());
         }
         return response;
     }
