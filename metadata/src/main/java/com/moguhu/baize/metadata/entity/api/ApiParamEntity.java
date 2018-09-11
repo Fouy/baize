@@ -1,6 +1,7 @@
 package com.moguhu.baize.metadata.entity.api;
 
 import com.moguhu.baize.common.constants.BooleanEnum;
+import com.moguhu.baize.common.constants.api.ApiParamStatuslEnum;
 import com.moguhu.baize.common.constants.api.ParamTypeEnum;
 import com.moguhu.baize.common.constants.api.PositionEnum;
 
@@ -58,6 +59,13 @@ public class ApiParamEntity implements Serializable {
      * 描述说明.
      */
     private String info;
+
+    /**
+     * 状态：BIND 已绑定  UNBIND 未绑定.
+     *
+     * @see ApiParamStatuslEnum
+     */
+    private String status;
 
     /**
      * 扩展信息.
@@ -144,5 +152,13 @@ public class ApiParamEntity implements Serializable {
 
     public void setExtInfo(String extInfo) {
         this.extInfo = extInfo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -2,15 +2,21 @@ package com.moguhu.baize.service.api.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.moguhu.baize.common.constants.api.ApiParamStatuslEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
+import com.moguhu.baize.metadata.dao.mapper.api.ApiParamEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiParamMapEntityMapper;
+import com.moguhu.baize.metadata.entity.api.ApiParamEntity;
 import com.moguhu.baize.metadata.entity.api.ApiParamMapEntity;
 import com.moguhu.baize.metadata.request.api.ApiParamMapSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiParamMapSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiParamMapUpdateRequest;
+import com.moguhu.baize.metadata.request.api.ApiParamUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiParamMapResponse;
+import com.moguhu.baize.metadata.response.api.ApiParamResponse;
 import com.moguhu.baize.service.api.ApiParamMapService;
+import com.moguhu.baize.service.api.ApiParamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +36,9 @@ import java.util.List;
 public class ApiParamMapServiceImpl implements ApiParamMapService {
 
     private static final Logger logger = LoggerFactory.getLogger(ApiParamMapServiceImpl.class);
+
+    @Autowired
+    private ApiParamService apiParamService;
 
     @Autowired
     private ApiParamMapEntityMapper apiParamMapEntityMapper;
@@ -79,6 +88,16 @@ public class ApiParamMapServiceImpl implements ApiParamMapService {
     @Override
     @Transactional
     public void save(ApiParamMapSaveRequest request) {
+        if (null != request.getParamId()) {
+            ApiParamEntity apiParamEntity = apiParamService.selectById(request.getParamId());
+            if (null != apiParamEntity) {
+                ApiParamUpdateRequest param = new ApiParamUpdateRequest();
+                param.setParamId(request.getParamId());
+                param.setStatus(ApiParamStatuslEnum.BIND.name());
+                apiParamService.updateById(param);
+            }
+        }
+
         apiParamMapEntityMapper.insert(request);
     }
 

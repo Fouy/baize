@@ -13,7 +13,7 @@ $().ready(function () {
 
     // 增加校验
     var icon = "<i class='fa fa-times-circle'></i> ";
-    $("#editForm").validate({
+    $("#addForm").validate({
         rules: {
             name: "required",
             groupId: "required",

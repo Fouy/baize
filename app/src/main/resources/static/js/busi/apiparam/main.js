@@ -40,19 +40,63 @@
         }, {
             field: 'type',
             title: '类型',
-            align: 'center'
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'INT') {
+                    return '整数';
+                } else if (value && value == 'DECIMAL') {
+                    return '小数';
+                } else if (value && value == 'CHAR') {
+                    return '字符';
+                } else if (value && value == 'TIME') {
+                    return '时间';
+                } else if (value && value == 'BOOLEAN') {
+                    return '布尔类型';
+                }
+            }
         }, {
             field: 'position',
             title: '位置',
-            align: 'center'
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'PATH') {
+                    return 'PATH参数';
+                } else if (value && value == 'GET') {
+                    return 'GET参数';
+                } else if (value && value == 'POST') {
+                    return 'POST参数';
+                } else if (value && value == 'HEAD') {
+                    return 'HEAD参数';
+                } else if (value && value == 'BODY') {
+                    return 'body参数';
+                }
+            }
         }, {
             field: 'need',
             title: '是否必须',
-            align: 'center'
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'YES') {
+                    return '是';
+                } else if (value && value == 'NO') {
+                    return '否';
+                }
+            }
         }, {
             field: 'info',
             title: '描述说明',
             align: 'center'
+        }, {
+            field: 'status',
+            title: '状态',
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'BIND') {
+                    return '<span class="label label-running">已绑定</span>';
+                } else if (value && value == 'UNBIND') {
+                    return '<span class="label label-down">未绑定</span>';
+                }
+            }
         }, {
             field: 'paramId',
             title: '操作',
@@ -61,8 +105,8 @@
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editBaseWin('+value+')>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delBaseParamWin('+value+')>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;
@@ -100,15 +144,48 @@
         }, {
             field: 'type',
             title: '类型',
-            align: 'center'
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'INT') {
+                    return '整数';
+                } else if (value && value == 'DECIMAL') {
+                    return '小数';
+                } else if (value && value == 'CHAR') {
+                    return '字符';
+                } else if (value && value == 'TIME') {
+                    return '时间';
+                } else if (value && value == 'BOOLEAN') {
+                    return '布尔类型';
+                }
+            }
         }, {
             field: 'position',
             title: '位置',
-            align: 'center'
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'PATH') {
+                    return 'PATH参数';
+                } else if (value && value == 'GET') {
+                    return 'GET参数';
+                } else if (value && value == 'POST') {
+                    return 'POST参数';
+                } else if (value && value == 'HEAD') {
+                    return 'HEAD参数';
+                } else if (value && value == 'BODY') {
+                    return 'body参数';
+                }
+            }
         }, {
             field: 'need',
             title: '是否必须',
-            align: 'center'
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'YES') {
+                    return '是';
+                } else if (value && value == 'NO') {
+                    return '否';
+                }
+            }
         }, {
             field: 'info',
             title: '描述说明',
@@ -121,8 +198,8 @@
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editBackWin('+value+')>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delBackParamWin('+value+')>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;
@@ -180,9 +257,10 @@ function addBaseParamWin(){
         title: '新增',
         skin: 'layui-layer-rim', //加上边框
         area: ['1000px', '650px'], //宽高
-        content: '/apiparam/add',
+        content: '/apiparam/add?apiId=' + $('#apiId').val(),
         end: function () {
-            search();
+            searchBaseParam();
+            searchBackParam();
         }
     });
 }
@@ -195,32 +273,49 @@ function addBackParamWin(){
         title: '新增',
         skin: 'layui-layer-rim', //加上边框
         area: ['1000px', '650px'], //宽高
-        content: '/apiparammap/add',
+        content: '/apiparammap/add?apiId=' + $('#apiId').val(),
         end: function () {
             searchBaseParam();
+            searchBackParam();
         }
     });
 }
 
-// 编辑窗口
-function editWin(apiId){
+// 编辑 base param 窗口
+function editBaseWin(paramId){
     parent.layer.open({
         type: 2,
         title: '编辑',
         skin: 'layui-layer-rim', //加上边框
         area: ['1000px', '650px'], //宽高
-        content: '/api/edit.html?apiId='+apiId,
+        content: '/apiparam/edit.html?paramId='+paramId,
         end: function () {
+            searchBaseParam();
+            searchBackParam();
+        }
+    });
+}
+
+// 编辑 back param 窗口
+function editBackWin(mapId){
+    parent.layer.open({
+        type: 2,
+        title: '编辑',
+        skin: 'layui-layer-rim', //加上边框
+        area: ['1000px', '650px'], //宽高
+        content: '/apiparammap/edit.html?mapId='+mapId,
+        end: function () {
+            searchBaseParam();
             searchBackParam();
         }
     });
 }
 
 /**
- * 删除
- * @param apiId
+ * base param 删除
+ * @param paramId
  */
-function delWin(apiId){
+function delBaseParamWin(paramId){
     swal({
             title: "您确定要删除这条记录吗",
             type: "warning",
@@ -234,14 +329,47 @@ function delWin(apiId){
         function (isConfirm) {
             if (isConfirm){
                 var param = {};
-                param.apiId = apiId;
-                $.post("/api/delete", param, function(result) {
+                param.paramId = paramId;
+                $.post("/apiparam/delete", param, function(result) {
                     if (result.code == "1000") {
                         swal("删除成功！", result.msg, "success");
                     } else {
                         swal("删除失败！", result.msg, "error");
                     }
-                    search();
+                    searchBaseParam();
+                    searchBackParam();
+                }, 'json');
+            }
+        });
+}
+
+/**
+ * back param 删除
+ * @param mapId
+ */
+function delBackParamWin(mapId){
+    swal({
+            title: "您确定要删除这条记录吗",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是的，我要删除！",
+            cancelButtonText: "让我再考虑一下…",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function (isConfirm) {
+            if (isConfirm){
+                var param = {};
+                param.mapId = mapId;
+                $.post("/apiparammap/delete", param, function(result) {
+                    if (result.code == "1000") {
+                        swal("删除成功！", result.msg, "success");
+                    } else {
+                        swal("删除失败！", result.msg, "error");
+                    }
+                    searchBaseParam();
+                    searchBackParam();
                 }, 'json');
             }
         });

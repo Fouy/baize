@@ -2,6 +2,7 @@ package com.moguhu.baize.service.api.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.moguhu.baize.common.constants.api.ApiParamStatuslEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiParamEntityMapper;
@@ -79,7 +80,19 @@ public class ApiParamServiceImpl implements ApiParamService {
     @Override
     @Transactional
     public void save(ApiParamSaveRequest request) {
+        request.setStatus(ApiParamStatuslEnum.UNBIND.name());
         apiParamEntityMapper.insert(request);
+    }
+
+    @Override
+    public List<ApiParamResponse> all(ApiParamSearchRequest request) {
+        List<ApiParamEntity> entityList = apiParamEntityMapper.queryAll(request);
+        List<ApiParamResponse> list = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            list = DozerUtil.mapList(entityList, ApiParamResponse.class);
+        }
+
+        return list;
     }
 
 }
