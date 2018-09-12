@@ -80,14 +80,8 @@ function saveAdd() {
     data.paramId = $('#paramId').val();
     data.name = $('#name').val();
     data.position = $('#position').val();
-    data.type = $('#type').val();
     data.info = $('#info').val();
-    // 是否缓存转换
-    if (needCheck.isChecked()) {
-        data.need = 'YES';
-    } else {
-        data.need = 'NO';
-    }
+    data.mapType = 'MAP';
 
     $.post("/apiparammap/save", data, function (result) {
         if (result.code == '1000') {

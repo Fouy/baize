@@ -26,33 +26,9 @@ $().ready(function () {
         }
     });
 
-    // 初始化 base param列表
-    initBaseParamList();
+    initFormData();
 
 });
-
-// 初始化 base param列表
-function initBaseParamList() {
-    // 初始化select
-    var paramId = $("#paramId");
-    paramId.empty();
-    var optAll = $('<option></option>');
-    optAll.attr('value', '');
-    optAll.append('--新参数--');
-    optAll.appendTo(paramId);
-
-    $.get("/apiparam/all", {apiId : $('#apiId').val()}, function (result) {
-        var data = eval(result);
-        var list = data.data;
-        for (var i = 0; i < list.length; i++) {
-            var opt = $('<option></option>');
-            opt.attr('value', list[i].paramId);
-            opt.append(list[i].name);
-            opt.appendTo(paramId);
-        }
-        initFormData();
-    }, 'json');
-}
 
 /**
  * 初始化表单数据
@@ -66,7 +42,6 @@ function initFormData() {
             return;
         }
 
-        $('#paramId').val(entity.paramId);
         $('#name').val(entity.name);
         $('#position').val(entity.position);
         $('#type').val(entity.type);
@@ -76,7 +51,6 @@ function initFormData() {
         if ('YES' == entity.need) {
             needCheck.setPosition(true);
         }
-
     }, 'json');
 }
 
@@ -90,10 +64,16 @@ function saveEdit() {
 
     var data = {};
     data.mapId = $('#mapId').val();
-    data.paramId = $('#paramId').val();
     data.name = $('#name').val();
     data.position = $('#position').val();
+    data.type = $('#type').val();
     data.info = $('#info').val();
+    // 是否缓存转换
+    if (needCheck.isChecked()) {
+        data.need = 'YES';
+    } else {
+        data.need = 'NO';
+    }
 
     $.post("/apiparammap/update", data, function (result) {
         if (result.code == '1000') {

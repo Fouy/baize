@@ -75,6 +75,22 @@ public class ApiParamController extends BaseController {
         return result;
     }
 
+    @RequestMapping("/all")
+    @ResponseBody
+    public AjaxResult all(ApiParamSearchRequest request) {
+        try {
+            if (null == request.getApiId()) {
+                return AjaxResult.error("参数有误");
+            }
+
+            List<ApiParamResponse> list = apiParamService.all(request);
+            return AjaxResult.success(list);
+        } catch (Exception e) {
+            logger.error("查询所有列表出错, e={}", e);
+            return AjaxResult.error("查询所有列表出错");
+        }
+    }
+
     @RequestMapping("/allunbind")
     @ResponseBody
     public AjaxResult allUnbind(ApiParamSearchRequest request) {
@@ -87,8 +103,8 @@ public class ApiParamController extends BaseController {
             List<ApiParamResponse> list = apiParamService.all(request);
             return AjaxResult.success(list);
         } catch (Exception e) {
-            logger.error("查询所有列表出错, e={}", e);
-            return AjaxResult.error("查询所有列表出错");
+            logger.error("查询所有UNBIND列表出错, e={}", e);
+            return AjaxResult.error("查询所有UNBIND列表出错");
         }
     }
 

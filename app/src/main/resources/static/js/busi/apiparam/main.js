@@ -10,7 +10,7 @@
 
     initApiInfo();
 
-    // 初始化表格
+    // 初始化 基础参数 表格
     $('#baseParamTable').bootstrapTable({
         method: 'get',
         toolbar: '#baseParamToolbar',    //工具按钮用哪个容器
@@ -21,7 +21,7 @@
         sortOrder: "asc",
         pageNumber:1,      //初始化加载第一页，默认第一页
         pageSize: 10,      //每页的记录行数（*）
-        pageList: [10, 25, 50, 100],  //可供选择的每页的行数（*）
+        pageList: [50, 100],  //可供选择的每页的行数（*）
         url: "/apiparam/list?apiId=" + apiId,
         queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
                             // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
@@ -114,7 +114,7 @@
         }]
     });
 
-    // 初始化表格
+    // 初始化 后端映射 表格
     $('#backParamTable').bootstrapTable({
         method: 'get',
         toolbar: '#backParamToolbar',    //工具按钮用哪个容器
@@ -125,8 +125,8 @@
         sortOrder: "asc",
         pageNumber:1,      //初始化加载第一页，默认第一页
         pageSize: 10,      //每页的记录行数（*）
-        pageList: [10, 25, 50, 100],  //可供选择的每页的行数（*）
-        url: "/apiparammap/list?apiId="+apiId,
+        pageList: [50, 100],  //可供选择的每页的行数（*）
+        url: "/apiparammap/list?mapType=MAP&apiId="+apiId,
         queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
                             // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
         //queryParams: queryParams,//前端调用服务时，会默认传递上边提到的参数，如果需要添加自定义参数，可以自定义一个函数返回请求参数
@@ -191,14 +191,107 @@
             title: '描述说明',
             align: 'center'
         }, {
-            field: 'paramId',
+            field: 'mapId',
             title: '操作',
             align: 'center',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editBackWin('+value+')>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editBackWin('+value+',"' + $('#apiId').val() + '")>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delBackParamWin('+value+')>删除</a></li>';
+                a = a +     '</ul>';
+                a = a + '</div>';
+                return a;
+            }
+        }]
+    });
+
+    // 初始化 后端自定义 表格
+    $('#backCustomParamTable').bootstrapTable({
+        method: 'get',
+        toolbar: '#backCustomParamToolbar',    //工具按钮用哪个容器
+        striped: true,      //是否显示行间隔色
+        cache: false,      //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+        pagination: true,
+        sortable: false,
+        sortOrder: "asc",
+        pageNumber:1,      //初始化加载第一页，默认第一页
+        pageSize: 10,      //每页的记录行数（*）
+        pageList: [50, 100],  //可供选择的每页的行数（*）
+        url: "/apiparammap/list?mapType=CUSTOM&apiId="+apiId,
+        queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
+                            // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
+        //queryParams: queryParams,//前端调用服务时，会默认传递上边提到的参数，如果需要添加自定义参数，可以自定义一个函数返回请求参数
+        sidePagination: "server",   //分页方式：client客户端分页，server服务端分页（*）
+        strictSearch: true,
+        //showColumns: true,     //是否显示所有的列
+        //showRefresh: true,     //是否显示刷新按钮
+        minimumCountColumns: 2,    //最少允许的列数
+        clickToSelect: true,    //是否启用点击选中行
+        searchOnEnterKey: true,
+        columns: [{
+            field: 'name',
+            title: '参数名',
+            align: 'center'
+        }, {
+            field: 'type',
+            title: '类型',
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'INT') {
+                    return '整数';
+                } else if (value && value == 'DECIMAL') {
+                    return '小数';
+                } else if (value && value == 'CHAR') {
+                    return '字符';
+                } else if (value && value == 'TIME') {
+                    return '时间';
+                } else if (value && value == 'BOOLEAN') {
+                    return '布尔类型';
+                }
+            }
+        }, {
+            field: 'position',
+            title: '位置',
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'PATH') {
+                    return 'PATH参数';
+                } else if (value && value == 'GET') {
+                    return 'GET参数';
+                } else if (value && value == 'POST') {
+                    return 'POST参数';
+                } else if (value && value == 'HEAD') {
+                    return 'HEAD参数';
+                } else if (value && value == 'BODY') {
+                    return 'body参数';
+                }
+            }
+        }, {
+            field: 'need',
+            title: '是否必须',
+            align: 'center',
+            formatter:function(value, row, index) {
+                if (value && value == 'YES') {
+                    return '是';
+                } else if (value && value == 'NO') {
+                    return '否';
+                }
+            }
+        }, {
+            field: 'info',
+            title: '描述说明',
+            align: 'center'
+        }, {
+            field: 'mapId',
+            title: '操作',
+            align: 'center',
+            formatter:function(value, row, index) {
+                var a = '<div class="btn-group">';
+                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
+                a = a +     '<ul class="dropdown-menu">';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editBackCustomWin('+value+',"' + $('#apiId').val() + '")>编辑</a></li>';
                 a = a +         '<li><a href="javascript:void(0)" onclick=delBackParamWin('+value+')>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
@@ -259,13 +352,12 @@ function addBaseParamWin(){
         area: ['1000px', '650px'], //宽高
         content: '/apiparam/add?apiId=' + $('#apiId').val(),
         end: function () {
-            searchBaseParam();
-            searchBackParam();
+            searchAll();
         }
     });
 }
 
-// 新增 back param 窗口
+// 新增 back map 窗口
 function addBackParamWin(){
   //页面层
     parent.layer.open({
@@ -275,8 +367,22 @@ function addBackParamWin(){
         area: ['1000px', '650px'], //宽高
         content: '/apiparammap/add?apiId=' + $('#apiId').val(),
         end: function () {
-            searchBaseParam();
-            searchBackParam();
+            searchAll();
+        }
+    });
+}
+
+// 新增 back custom 窗口
+function addBackCustomParamWin(){
+  //页面层
+    parent.layer.open({
+        type: 2,
+        title: '新增',
+        skin: 'layui-layer-rim', //加上边框
+        area: ['1000px', '650px'], //宽高
+        content: '/apiparammap/customadd?apiId=' + $('#apiId').val(),
+        end: function () {
+            searchAll();
         }
     });
 }
@@ -290,23 +396,35 @@ function editBaseWin(paramId){
         area: ['1000px', '650px'], //宽高
         content: '/apiparam/edit.html?paramId='+paramId,
         end: function () {
-            searchBaseParam();
-            searchBackParam();
+            searchAll();
         }
     });
 }
 
-// 编辑 back param 窗口
-function editBackWin(mapId){
+// 编辑 back map 窗口
+function editBackWin(mapId, apiId){
     parent.layer.open({
         type: 2,
         title: '编辑',
         skin: 'layui-layer-rim', //加上边框
         area: ['1000px', '650px'], //宽高
-        content: '/apiparammap/edit.html?mapId='+mapId,
+        content: '/apiparammap/edit.html?mapId='+mapId+'&apiId='+apiId,
         end: function () {
-            searchBaseParam();
-            searchBackParam();
+            searchAll();
+        }
+    });
+}
+
+// 编辑 back custom 窗口
+function editBackCustomWin(mapId, apiId){
+    parent.layer.open({
+        type: 2,
+        title: '编辑',
+        skin: 'layui-layer-rim', //加上边框
+        area: ['1000px', '650px'], //宽高
+        content: '/apiparammap/customedit.html?mapId='+mapId+'&apiId='+apiId,
+        end: function () {
+            searchAll();
         }
     });
 }
@@ -336,8 +454,7 @@ function delBaseParamWin(paramId){
                     } else {
                         swal("删除失败！", result.msg, "error");
                     }
-                    searchBaseParam();
-                    searchBackParam();
+                    searchAll();
                 }, 'json');
             }
         });
@@ -368,11 +485,17 @@ function delBackParamWin(mapId){
                     } else {
                         swal("删除失败！", result.msg, "error");
                     }
-                    searchBaseParam();
-                    searchBackParam();
+                    searchAll();
                 }, 'json');
             }
         });
+}
+
+// 刷新全部表格
+function searchAll() {
+    searchBaseParam();
+    searchBackParam();
+    searchBackCustomParam();
 }
 
 // 搜索 base param
@@ -382,10 +505,17 @@ function searchBaseParam(){
     $('#baseParamTable').bootstrapTable('refresh',{query : param});
 }
 
-// 搜索 back param
+// 搜索 back map
 function searchBackParam(){
     var param = {};
     param.apiId = $('#apiId').val();
     $('#backParamTable').bootstrapTable('refresh',{query : param});
+}
+
+// 搜索 back custom
+function searchBackCustomParam(){
+    var param = {};
+    param.apiId = $('#apiId').val();
+    $('#backCustomParamTable').bootstrapTable('refresh',{query : param});
 }
 

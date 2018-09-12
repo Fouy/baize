@@ -1,6 +1,7 @@
 package com.moguhu.baize.metadata.entity.api;
 
 import com.moguhu.baize.common.constants.BooleanEnum;
+import com.moguhu.baize.common.constants.api.ParamMapTypeEnum;
 import com.moguhu.baize.common.constants.api.ParamTypeEnum;
 import com.moguhu.baize.common.constants.api.PositionEnum;
 
@@ -63,6 +64,13 @@ public class ApiParamMapEntity implements Serializable {
      * 描述说明.
      */
     private String info;
+
+    /**
+     * 映射类型： 映射 MAP  自定义 CUSTOM.
+     *
+     * @see ParamMapTypeEnum
+     */
+    private String mapType;
 
     /**
      * 扩展信息.
@@ -157,5 +165,13 @@ public class ApiParamMapEntity implements Serializable {
 
     public void setExtInfo(String extInfo) {
         this.extInfo = extInfo;
+    }
+
+    public String getMapType() {
+        return mapType;
+    }
+
+    public void setMapType(String mapType) {
+        this.mapType = mapType;
     }
 }

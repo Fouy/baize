@@ -3,9 +3,9 @@ package com.moguhu.baize.service.api.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.moguhu.baize.common.constants.api.ApiParamStatuslEnum;
+import com.moguhu.baize.common.constants.api.ParamMapTypeEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
-import com.moguhu.baize.metadata.dao.mapper.api.ApiParamEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiParamMapEntityMapper;
 import com.moguhu.baize.metadata.entity.api.ApiParamEntity;
 import com.moguhu.baize.metadata.entity.api.ApiParamMapEntity;
@@ -65,6 +65,10 @@ public class ApiParamMapServiceImpl implements ApiParamMapService {
         ApiParamMapEntity entity = apiParamMapEntityMapper.selectById(mapId);
         if (entity != null) {
             response = DozerUtil.map(entity, ApiParamMapResponse.class);
+            ApiParamResponse apiParamResponse = apiParamService.selectById(entity.getParamId());
+            if (null != apiParamResponse) {
+                response.setParamName(apiParamResponse.getName());
+            }
         }
         return response;
     }
@@ -81,14 +85,27 @@ public class ApiParamMapServiceImpl implements ApiParamMapService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long mapId) {
+        ApiParamMapEntity apiParamMapEntity = apiParamMapEntityMapper.selectById(mapId);
+        // 解绑原参数
+        ParamMapTypeEnum resolve = ParamMapTypeEnum.resolve(apiParamMapEntity.getMapType());
+        if (resolve != null && resolve.matches(ParamMapTypeEnum.MAP.name())) {
+            ApiParamUpdateRequest param = new ApiParamUpdateRequest();
+            param.setParamId(apiParamMapEntity.getParamId());
+            param.setStatus(ApiParamStatuslEnum.UNBIND.name());
+            apiParamService.updateById(param);
+        }
+
         apiParamMapEntityMapper.deleteById(mapId);
     }
 
     @Override
     @Transactional
     public void save(ApiParamMapSaveRequest request) {
-        if (null != request.getParamId()) {
+        ParamMapTypeEnum mapTypeEnum = ParamMapTypeEnum.resolve(request.getMapType());
+        if (mapTypeEnum.matches(ParamMapTypeEnum.MAP.name())) {
+            // 更新原参数
             ApiParamEntity apiParamEntity = apiParamService.selectById(request.getParamId());
             if (null != apiParamEntity) {
                 ApiParamUpdateRequest param = new ApiParamUpdateRequest();
@@ -96,6 +113,9 @@ public class ApiParamMapServiceImpl implements ApiParamMapService {
                 param.setStatus(ApiParamStatuslEnum.BIND.name());
                 apiParamService.updateById(param);
             }
+
+            request.setNeed(apiParamEntity.getNeed());
+            request.setType(apiParamEntity.getType());
         }
 
         apiParamMapEntityMapper.insert(request);

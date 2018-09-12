@@ -2,6 +2,7 @@ package com.moguhu.baize.controller.api;
 
 import com.alibaba.fastjson.JSON;
 import com.moguhu.baize.common.constants.BooleanEnum;
+import com.moguhu.baize.common.constants.api.ParamMapTypeEnum;
 import com.moguhu.baize.common.constants.api.ParamTypeEnum;
 import com.moguhu.baize.common.constants.api.PositionEnum;
 import com.moguhu.baize.common.vo.AjaxResult;
@@ -11,9 +12,7 @@ import com.moguhu.baize.metadata.request.api.ApiParamMapSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiParamMapSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiParamMapUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiParamMapResponse;
-import com.moguhu.baize.metadata.response.api.ApiParamResponse;
 import com.moguhu.baize.service.api.ApiParamMapService;
-import com.moguhu.baize.service.api.ApiParamService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +41,18 @@ public class ApiParamMapController extends BaseController {
     @RequestMapping("/edit")
     public ModelAndView edit() {
         ModelAndView mav = new ModelAndView("apiparammap/edit");
+        return mav;
+    }
+
+    @RequestMapping("/customadd")
+    public ModelAndView customadd() {
+        ModelAndView mav = new ModelAndView("apiparammap/custom-add");
+        return mav;
+    }
+
+    @RequestMapping("/customedit")
+    public ModelAndView customedit() {
+        ModelAndView mav = new ModelAndView("apiparammap/custom-edit");
         return mav;
     }
 
@@ -88,8 +99,13 @@ public class ApiParamMapController extends BaseController {
     public AjaxResult save(ApiParamMapSaveRequest request) {
         try {
             if (null == request.getApiId() || PositionEnum.resolve(request.getPosition()) == null
-                    || ParamTypeEnum.resolve(request.getType()) == null || StringUtils.isEmpty(request.getName())
-                    || BooleanEnum.resolve(request.getNeed()) == null) {
+                    || StringUtils.isEmpty(request.getName()) || ParamMapTypeEnum.resolve(request.getMapType()) == null) {
+                return AjaxResult.error("参数有误");
+            }
+            // MAP类型: type need 以原参数为准, 自定义需要非空
+            ParamMapTypeEnum mapTypeEnum = ParamMapTypeEnum.resolve(request.getMapType());
+            if (mapTypeEnum.matches(ParamMapTypeEnum.CUSTOM.name())
+                    && (ParamTypeEnum.resolve(request.getType()) == null || BooleanEnum.resolve(request.getNeed()) == null)) {
                 return AjaxResult.error("参数有误");
             }
 

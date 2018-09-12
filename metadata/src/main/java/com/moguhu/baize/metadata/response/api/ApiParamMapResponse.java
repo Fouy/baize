@@ -9,4 +9,16 @@ import com.moguhu.baize.metadata.entity.api.ApiParamMapEntity;
  */
 public class ApiParamMapResponse extends ApiParamMapEntity {
 
+    /**
+     * BASE参数名.
+     */
+    private String paramName;
+
+    public String getParamName() {
+        return paramName;
+    }
+
+    public void setParamName(String paramName) {
+        this.paramName = paramName;
+    }
 }

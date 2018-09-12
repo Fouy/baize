@@ -6,7 +6,7 @@
     <meta http-equiv="Expires" CONTENT="0"/>
 	<meta http-equiv="Cache-Control" CONTENT="no-cache"/>
 	<meta http-equiv="Pragma" CONTENT="no-cache"/>
-    <title>编辑API</title>
+    <title>参数映射-编辑</title>
     <link rel="shortcut icon" href="/favicon.ico"/> 
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
     <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
@@ -21,65 +21,57 @@
 
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>API信息</h5>
+            <h5>参数映射信息</h5>
         </div>
         <div class="ibox-content">
             <form class="form-horizontal m-t" id="editForm">
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">API名称：</label>
+                    <label class="col-sm-3 control-label">基本参数：</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="paramId" id="paramId" disabled>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">参数名：</label>
                     <div class="col-sm-8">
                         <input id="name" name="name" class="form-control" type="text"/>
+                        <input id="mapId" name="mapId" class="form-control" type="hidden"/>
                         <input id="apiId" name="apiId" class="form-control" type="hidden"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">分组：</label>
+                    <label class="col-sm-3 control-label">参数位置：</label>
                     <div class="col-sm-8">
-                        <select class="form-control m-b" name="groupId" id="groupId">
+                        <select class="form-control" name="position" id="position">
+                            <option value="">--请选择--</option>
+                            <option value="PATH">PATH参数</option>
+                            <option value="GET">GET参数</option>
+                            <option value="POST">POST参数</option>
+                            <option value="HEAD">HEAD参数</option>
+                            <option value="BODY">BODY参数</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">路径：</label>
+                    <label class="col-sm-3 control-label">类型：</label>
                     <div class="col-sm-8">
-                        <input id="path" name="path" class="form-control" type="text"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">请求方式：</label>
-                    <div class="col-sm-8">
-                        <select id="methods" name="methods" data-placeholder="选择请求方式" class="form-control chosen-select" multiple >
-                            <option value="GET" hassubinfo="true">GET</option>
-                            <option value="HEAD" hassubinfo="true">HEAD</option>
-                            <option value="POST" hassubinfo="true">POST</option>
-                            <option value="PUT" hassubinfo="true">PUT</option>
-                            <option value="PATCH" hassubinfo="true">PATCH</option>
-                            <option value="DELETE" hassubinfo="true">DELETE</option>
-                            <option value="OPTIONS" hassubinfo="true">OPTIONS</option>
-                            <option value="TRACE" hassubinfo="true">TRACE</option>
+                        <select class="form-control" name="type" id="type" disabled>
+                            <option value="">--请选择--</option>
+                            <option value="INT">整数</option>
+                            <option value="DECIMAL">小数</option>
+                            <option value="CHAR">字符</option>
+                            <option value="TIME">时间</option>
+                            <option value="BOOLEAN">布尔类型</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">是否缓存：</label>
+                    <label class="col-sm-3 control-label">是否必须：</label>
                     <div class="col-sm-8">
-                        <input id="cached" name="cached" type="checkbox" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">协议：</label>
-                    <div class="col-sm-8">
-                        <select id="protocol" name="protocol" data-placeholder="选择协议" class="form-control chosen-select" multiple >
-                            <option value="HTTP" hassubinfo="true">HTTP</option>
-                            <option value="HTTPS" hassubinfo="true">HTTPS</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">版本：</label>
-                    <div class="col-sm-8">
-                        <input id="version" name="version" class="form-control" type="text"/>
+                        <input id="need" name="need" type="checkbox" class="form-control" disabled />
                     </div>
                 </div>
                 <div class="form-group">
@@ -119,7 +111,7 @@
     <script src="/js/plugins/chosen/chosen.jquery.js"></script>
 
     <script src="/js/common/common.js"></script>
-    <script src="/js/busi/api/edit.js"></script>
+    <script src="/js/busi/apiparammap/edit.js"></script>
 
 </body>
 

@@ -12,11 +12,12 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="need" property="need" jdbcType="VARCHAR" />
     <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="map_type" property="mapType" jdbcType="VARCHAR" />
     <result column="ext_info" property="extInfo" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    map_id, create_time, modify_time, api_id, param_id, `position`, `type`, `name`, need, info,
+    map_id, create_time, modify_time, api_id, param_id, `position`, `type`, `name`, need, info, map_type,
     ext_info
   </sql>
 
@@ -58,6 +59,9 @@
       <if test="info != null" >
         info,
       </if>
+      <if test="mapType != null" >
+        map_type,
+      </if>
       <if test="extInfo != null" >
         ext_info,
       </if>
@@ -85,6 +89,9 @@
       </if>
       <if test="info != null" >
         #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="mapType != null" >
+        #{mapType,jdbcType=VARCHAR},
       </if>
       <if test="extInfo != null" >
         #{extInfo,jdbcType=VARCHAR},
@@ -117,6 +124,9 @@
       <if test="info != null" >
         info = #{info,jdbcType=VARCHAR},
       </if>
+      <if test="mapType != null" >
+        map_type = #{mapType,jdbcType=VARCHAR},
+      </if>
       <if test="extInfo != null" >
         ext_info = #{extInfo,jdbcType=VARCHAR},
       </if>
@@ -132,6 +142,9 @@
     where 1=1
     <if test="apiId != null" >
       and api_id = #{apiId,jdbcType=BIGINT}
+    </if>
+    <if test="mapType != null and mapType != '' " >
+      and map_type = #{mapType,jdbcType=VARCHAR}
     </if>
   </select>
 
