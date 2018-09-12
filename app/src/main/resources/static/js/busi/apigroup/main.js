@@ -119,7 +119,13 @@ function editWin(groupId){
 
 // API窗口
 function apiWin(groupId){
-    parent.$("#api").click();
+    //parent.$("#api").click();
+
+    var dataUrl = '/api/main',
+        dataIndex = '/api/main',
+        menuName = 'API列表',
+        iframeUrl = dataUrl + '?groupId=' + groupId;
+    parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
 }
 
 /**

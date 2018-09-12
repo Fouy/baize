@@ -126,6 +126,13 @@ function initApiGroup() {
             opt.append(list[i].name);
             opt.appendTo(groupId);
         }
+        // 设置group默认值
+        var groupId0 = $.getUrlParam('groupId');
+        if (groupId0 && groupId0 != '') {
+            $('#groupId').val(groupId0);
+            search();
+        }
+
     }, 'json');
 }
 
