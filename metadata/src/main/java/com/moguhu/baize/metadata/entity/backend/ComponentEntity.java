@@ -1,5 +1,9 @@
 package com.moguhu.baize.metadata.entity.backend;
 
+import com.moguhu.baize.common.constants.StatusEnum;
+import com.moguhu.baize.common.constants.backend.ComponentTypeEnum;
+import com.moguhu.baize.common.constants.backend.ExecPositionEnum;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -25,7 +29,14 @@ public class ComponentEntity implements Serializable {
     private String name;
 
     /**
-     * 类型：路由 ROUTE  认证 AUTH  响应 RESPONSE 等.
+     * 组件编码.
+     */
+    private String compCode;
+
+    /**
+     * 类型：认证 AUTH; 鉴权(角色权限) ALLOW; 流量控制 TRAFFIC; 缓存 CACHE; 路由 ROUTE; 日志 LOG; 协议转换 PROTO_CONVERT; 其他 OTHER.
+     *
+     * @see ComponentTypeEnum
      */
     private String type;
 
@@ -36,6 +47,8 @@ public class ComponentEntity implements Serializable {
 
     /**
      * 状态： ON 启用  OFF 停用.
+     *
+     * @see StatusEnum
      */
     private String status;
 
@@ -46,6 +59,8 @@ public class ComponentEntity implements Serializable {
 
     /**
      * 执行位置：前置 PRE  路由 ROUTE  后置 POST  错误 ERROR.
+     *
+     * @see ExecPositionEnum
      */
     private String execPosition;
 
@@ -53,6 +68,11 @@ public class ComponentEntity implements Serializable {
      * 优先级.
      */
     private Integer priority;
+
+    /**
+     * 描述说明.
+     */
+    private String info;
 
     /**
      * 扩展字段.
@@ -147,5 +167,21 @@ public class ComponentEntity implements Serializable {
 
     public void setExtInfo(String extInfo) {
         this.extInfo = extInfo;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getCompCode() {
+        return compCode;
+    }
+
+    public void setCompCode(String compCode) {
+        this.compCode = compCode;
     }
 }

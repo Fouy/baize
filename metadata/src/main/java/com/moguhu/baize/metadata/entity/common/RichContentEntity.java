@@ -1,5 +1,7 @@
 package com.moguhu.baize.metadata.entity.common;
 
+import com.moguhu.baize.common.constants.content.RichContentTypeEnum;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +18,8 @@ public class RichContentEntity implements Serializable {
 
     /**
      * 类型：groovy脚本  GROOVY.
+     *
+     * @see RichContentTypeEnum
      */
     private String type;
 

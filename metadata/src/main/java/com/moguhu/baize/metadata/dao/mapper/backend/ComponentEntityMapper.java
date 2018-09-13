@@ -1,6 +1,9 @@
 package com.moguhu.baize.metadata.dao.mapper.backend;
 
 import com.moguhu.baize.metadata.entity.backend.ComponentEntity;
+import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
+
+import java.util.List;
 
 public interface ComponentEntityMapper {
     /**
@@ -22,4 +25,19 @@ public interface ComponentEntityMapper {
      * 通过id修改表component.
      */
     int updateById(ComponentEntity record);
+
+    /**
+     * 查询列表
+     *
+     * @param request
+     * @return
+     */
+    List<ComponentEntity> queryAll(ComponentSearchRequest request);
+
+    /**
+     * 加锁
+     *
+     * @param compId
+     */
+    void lock(Long compId);
 }

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public abstract class BaseController {
      *
      * @return
      */
-    public UserContext getClinicContext() {
+    public UserContext getUserContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof AuthenticationToken) {
             AuthenticationToken authenticationToken = (AuthenticationToken) authentication;
