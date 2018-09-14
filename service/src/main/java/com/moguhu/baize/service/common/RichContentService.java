@@ -17,4 +17,25 @@ public interface RichContentService {
      */
     RichContentEntity selectById(Long contentId);
 
+    /**
+     * 根据ID更新
+     *
+     * @param record
+     * @return
+     */
+    void updateById(RichContentEntity record);
+
+    /**
+     * 根据ID删除
+     *
+     * @param contentId
+     */
+    void deleteById(Long contentId);
+
+    /**
+     * 插入数据
+     *
+     * @param richContent
+     */
+    void insert(RichContentEntity richContent);
 }

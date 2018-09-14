@@ -22,4 +22,11 @@ public interface RichContentEntityMapper {
      * 通过id修改表rich_content.
      */
     int updateById(RichContentEntity record);
+
+    /**
+     * 加锁
+     *
+     * @param contentId
+     */
+    void lock(Long contentId);
 }

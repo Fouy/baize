@@ -58,5 +58,13 @@
     </set>
     where content_id = #{contentId,jdbcType=BIGINT}
   </update>
+
+  <!-- 加锁 -->
+  <select id="lock" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from rich_content
+    where content_id = #{contentId,jdbcType=BIGINT} for update
+  </select>
   
 </mapper>

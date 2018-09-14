@@ -164,10 +164,19 @@ public class ComponentController extends BaseController {
 
     @RequestMapping("/update")
     @ResponseBody
-    public AjaxResult update(ComponentUpdateRequest request) {
+    public AjaxResult update(ComponentUpdateRequest request, MultipartFile file) {
         try {
             if (null == request.getCompId()) {
                 return AjaxResult.error("参数有误");
+            }
+            if (!file.isEmpty()) {
+                String fileContent = new String(file.getBytes(), "UTF-8");
+                FilterInfo filterInfo = FilterVerifier.getInstance().verifyFilter(fileContent);
+
+                request.setCompCode(filterInfo.getCompCode());
+                request.setExecPosition(filterInfo.getExecPosition());
+                request.setPriority(filterInfo.getPriority());
+                request.setGroovyCode(filterInfo.getGroovyCode());
             }
 
             componentService.updateById(request);

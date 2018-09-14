@@ -7,7 +7,6 @@ import com.moguhu.baize.common.constants.content.RichContentTypeEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.dao.mapper.backend.ComponentEntityMapper;
-import com.moguhu.baize.metadata.dao.mapper.common.RichContentEntityMapper;
 import com.moguhu.baize.metadata.entity.backend.ComponentEntity;
 import com.moguhu.baize.metadata.entity.common.RichContentEntity;
 import com.moguhu.baize.metadata.request.backend.ComponentSaveRequest;
@@ -15,6 +14,7 @@ import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
 import com.moguhu.baize.metadata.request.backend.ComponentUpdateRequest;
 import com.moguhu.baize.metadata.response.backend.ComponentResponse;
 import com.moguhu.baize.service.backend.ComponentService;
+import com.moguhu.baize.service.common.RichContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ComponentServiceImpl implements ComponentService {
     private ComponentEntityMapper componentEntityMapper;
 
     @Autowired
-    private RichContentEntityMapper richContentEntityMapper;
+    private RichContentService richContentService;
 
     @Override
     public PageListDto<ComponentResponse> pageList(ComponentSearchRequest request) {
@@ -71,10 +71,18 @@ public class ComponentServiceImpl implements ComponentService {
     @Transactional
     public void updateById(ComponentUpdateRequest request) {
         if (request != null) {
-            ComponentEntity param = DozerUtil.map(request, ComponentEntity.class);
+            ComponentEntity componentEntity = componentEntityMapper.selectById(request.getCompId());
+            RichContentEntity param = new RichContentEntity();
+            param.setContentId(componentEntity.getContentId());
+            param.setContent(request.getGroovyCode());
+            richContentService.updateById(param);
 
+            ComponentEntity compParam = DozerUtil.map(request, ComponentEntity.class);
             componentEntityMapper.lock(request.getCompId());
-            componentEntityMapper.updateById(param);
+            int count = componentEntityMapper.updateById(compParam);
+            if (count != 1) {
+                throw new RuntimeException("wrong effected rows");
+            }
         }
     }
 
@@ -85,7 +93,7 @@ public class ComponentServiceImpl implements ComponentService {
         if (componentEntity == null) {
             throw new RuntimeException("wrong compId error.");
         }
-        richContentEntityMapper.deleteById(componentEntity.getContentId());
+        richContentService.deleteById(componentEntity.getContentId());
         componentEntityMapper.deleteById(compId);
     }
 
@@ -96,7 +104,7 @@ public class ComponentServiceImpl implements ComponentService {
         RichContentEntity richContent = new RichContentEntity();
         richContent.setType(RichContentTypeEnum.GROOVY.name());
         richContent.setContent(request.getGroovyCode());
-        richContentEntityMapper.insert(richContent);
+        richContentService.insert(richContent);
 
         request.setStatus(StatusEnum.OFF.name());
         request.setContentId(richContent.getContentId());

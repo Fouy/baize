@@ -31,7 +31,10 @@
         columns: [{
             field: 'name',
             title: '组件名',
-            align: 'center'
+            align: 'center',
+            formatter:function(value, row, index) {
+                return '<i class="fa fa-cube">&nbsp;</i>' + value;
+            }
         }, {
             field: 'compCode',
             title: '编码',
@@ -194,7 +197,7 @@ function delWin(compId){
 // 搜索
 function search(){
     var param = {};
-    param.info = $('#info').val();
+    param.name = $('#name').val();
     param.status = $('#status').val();
     $('#exampleTableEvents').bootstrapTable('refresh',{query : param});
 }

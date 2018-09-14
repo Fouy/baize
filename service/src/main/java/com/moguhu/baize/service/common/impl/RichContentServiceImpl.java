@@ -5,6 +5,7 @@ import com.moguhu.baize.metadata.entity.common.RichContentEntity;
 import com.moguhu.baize.service.common.RichContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 富文本服务
@@ -22,4 +23,29 @@ public class RichContentServiceImpl implements RichContentService {
     public RichContentEntity selectById(Long contentId) {
         return richContentEntityMapper.selectById(contentId);
     }
+
+    @Override
+    @Transactional
+    public void updateById(RichContentEntity record) {
+        richContentEntityMapper.lock(record.getContentId());
+        int count = richContentEntityMapper.updateById(record);
+        if (count != 1) {
+            throw new RuntimeException("wrong effected rows");
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long contentId) {
+        int count = richContentEntityMapper.deleteById(contentId);
+        if (count != 1) {
+            throw new RuntimeException("wrong effected rows");
+        }
+    }
+
+    @Override
+    public void insert(RichContentEntity richContent) {
+        richContentEntityMapper.insert(richContent);
+    }
+
 }
