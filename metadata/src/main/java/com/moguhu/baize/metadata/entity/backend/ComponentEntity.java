@@ -184,4 +184,25 @@ public class ComponentEntity implements Serializable {
     public void setCompCode(String compCode) {
         this.compCode = compCode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ComponentEntity)) return false;
+
+        ComponentEntity that = (ComponentEntity) o;
+
+        if (!compId.equals(that.compId)) return false;
+        if (!compCode.equals(that.compCode)) return false;
+        return type.equals(that.type);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = compId.hashCode();
+        result = 31 * result + compCode.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
 }

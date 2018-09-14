@@ -15,35 +15,35 @@ public enum ComponentTypeEnum {
     /**
      * 认证
      */
-    AUTH,
+    AUTH("AUTH", "认证"),
     /**
      * 鉴权(角色权限)
      */
-    ALLOW,
+    ALLOW("ALLOW", "鉴权"),
     /**
      * 流量控制
      */
-    TRAFFIC,
+    TRAFFIC("TRAFFIC", "流量控制"),
     /**
      * 缓存
      */
-    CACHE,
+    CACHE("CACHE", "缓存"),
     /**
      * 路由
      */
-    ROUTE,
+    ROUTE("ROUTE", "路由"),
     /**
      * 日志
      */
-    LOG,
+    LOG("LOG", "日志"),
     /**
      * 协议转换
      */
-    PROTO_CONVERT,
+    PROTO_CONVERT("PROTO_CONVERT", "协议转换"),
     /**
      * 其他
      */
-    OTHER,;
+    OTHER("OTHER", "其他"),;
 
     private static final Map<String, ComponentTypeEnum> mappings = new HashMap<>(8);
 
@@ -51,6 +51,15 @@ public enum ComponentTypeEnum {
         for (ComponentTypeEnum type : values()) {
             mappings.put(type.name(), type);
         }
+    }
+
+    private String code;
+
+    private String desc;
+
+    ComponentTypeEnum(String code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
 
     public static ComponentTypeEnum resolve(String type) {
@@ -61,4 +70,11 @@ public enum ComponentTypeEnum {
         return (this == resolve(type));
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 }

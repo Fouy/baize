@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Expires" CONTENT="0"/>
+	<meta http-equiv="Cache-Control" CONTENT="no-cache"/>
+	<meta http-equiv="Pragma" CONTENT="no-cache"/>
+    <title>API分组-组件配置</title>
+    <link rel="shortcut icon" href="/favicon.ico"/> 
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
+    <link href="/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+    <link href="/css/animate.css" rel="stylesheet"/>
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"/>
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <!-- Panel Other -->
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>API分组-组件配置</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="pull-right">
+                            <button class="btn btn-primary btn-sm" onclick="saveAll()">确认选择</button>
+                            <input id="groupId" name="groupId" class="form-control" type="hidden"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-AUTH" aria-expanded="true"> 认证</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-ALLOW" aria-expanded="false">鉴权</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-TRAFFIC" aria-expanded="false">流量控制</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-CACHE" aria-expanded="false">缓存</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-ROUTE" aria-expanded="false">路由</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-LOG" aria-expanded="false">日志</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-PROTO_CONVERT" aria-expanded="false">协议转换</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-OTHER" aria-expanded="false">其他</a></li>
+                            </ul>
+                            <div class="tab-content">
+
+                                <!-- TAB START -->
+                                <div id="tab-AUTH" class="tab-pane active">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="tab-ALLOW" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="tab-TRAFFIC" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="tab-CACHE" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="tab-ROUTE" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="tab-LOG" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="tab-PROTO_CONVERT" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="tab-OTHER" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- TAB END -->
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Other -->
+    </div>
+
+    <!-- 组件模板 -->
+    <script id="componentTemplete" type="text/x-jquery-tmpl">
+        <div class="col-sm-4" id="comp_${compId}">
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <div class="pull-left">
+                        ${name} &nbsp; (${version})
+                    </div>
+                    <div class="pull-right">
+                        {{if checked}}
+                            <input class="i-checks" type="checkbox" data='${compId}' checked />
+                        {{else}}
+                            <input class="i-checks" type="checkbox" data='${compId}' />
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <p>编码: ${compCode}</p>
+                    <p>执行位置: ${execPositionName}</p>
+                    <p>优先级: ${priority}</p>
+                    <p>描述: ${info}</p>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="/js/content.js?v=1.0.0"></script>
+
+    <!-- Bootstrap table -->
+    <script src="/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+	<script src="/js/common/date.format.js"></script>
+    <!-- iCheck -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/js/jquery.tmpl.min.js"></script>
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/js/plugins/validate/messages_zh.min.js"></script>
+
+    <!-- Toastr script -->
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+
+    <script src="/js/common/common.js"></script>
+    <script src="/js/busi/apigroup/comp-config.js"></script>
+
+</body>
+
+</html>

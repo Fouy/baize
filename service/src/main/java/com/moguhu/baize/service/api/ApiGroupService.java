@@ -5,6 +5,7 @@ import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.request.api.ApiGroupSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiGroupCompResponse;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 
 import java.util.List;
@@ -67,4 +68,20 @@ public interface ApiGroupService {
      * @return
      */
     List<ApiGroupResponse> all();
+
+    /**
+     * 查询组件列表
+     *
+     * @param groupId
+     * @return
+     */
+    ApiGroupCompResponse complist(Long groupId);
+
+    /**
+     * 保存组件
+     *
+     * @param groupId
+     * @param compIds
+     */
+    void savecomp(Long groupId, String compIds);
 }

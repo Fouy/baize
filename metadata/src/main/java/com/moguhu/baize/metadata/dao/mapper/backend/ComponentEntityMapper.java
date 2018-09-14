@@ -40,4 +40,20 @@ public interface ComponentEntityMapper {
      * @param compId
      */
     void lock(Long compId);
+
+    /**
+     * 根据 groupId 查询组件
+     *
+     * @param groupId
+     * @return
+     */
+    List<ComponentEntity> queryByApiGroup(Long groupId);
+
+    /**
+     * 根据 apiId 查询组件
+     *
+     * @param apiId
+     * @return
+     */
+    List<ComponentEntity> queryByApi(Long apiId);
 }

@@ -9,4 +9,33 @@ import com.moguhu.baize.metadata.entity.backend.ComponentEntity;
  */
 public class ComponentResponse extends ComponentEntity {
 
+    private boolean checked = false;
+
+    private String typeName;
+
+    private String execPositionName;
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getExecPositionName() {
+        return execPositionName;
+    }
+
+    public void setExecPositionName(String execPositionName) {
+        this.execPositionName = execPositionName;
+    }
 }

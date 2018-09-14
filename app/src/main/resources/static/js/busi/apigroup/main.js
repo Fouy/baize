@@ -77,6 +77,7 @@
                     a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=compWin('+value+')>组件配置</a></li>';
                 }
 
                 a = a +     '</ul>';
@@ -119,11 +120,18 @@ function editWin(groupId){
 
 // API窗口
 function apiWin(groupId){
-    //parent.$("#api").click();
-
     var dataUrl = '/api/main',
         dataIndex = '/api/main',
         menuName = 'API列表',
+        iframeUrl = dataUrl + '?groupId=' + groupId;
+    parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
+}
+
+// 组件配置窗口
+function compWin(groupId){
+    var dataUrl = '/apigroup/compconfig',
+        dataIndex = '/apigroup/compconfig',
+        menuName = 'API分组配置',
         iframeUrl = dataUrl + '?groupId=' + groupId;
     parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
 }

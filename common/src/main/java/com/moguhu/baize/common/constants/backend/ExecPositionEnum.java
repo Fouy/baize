@@ -15,19 +15,19 @@ public enum ExecPositionEnum {
     /**
      * 前置
      */
-    PRE,
+    PRE("PRE", "前置"),
     /**
      * 路由
      */
-    ROUTE,
+    ROUTE("ROUTE", "路由"),
     /**
      * 后置
      */
-    POST,
+    POST("POST", "后置"),
     /**
      * 错误
      */
-    ERROR,;
+    ERROR("ERROR", "错误"),;
 
     private static final Map<String, ExecPositionEnum> mappings = new HashMap<>(4);
 
@@ -35,6 +35,15 @@ public enum ExecPositionEnum {
         for (ExecPositionEnum position : values()) {
             mappings.put(position.name(), position);
         }
+    }
+
+    private String code;
+
+    private String desc;
+
+    ExecPositionEnum(String code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
 
     public static ExecPositionEnum resolve(String position) {
@@ -45,4 +54,11 @@ public enum ExecPositionEnum {
         return (this == resolve(position));
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 }

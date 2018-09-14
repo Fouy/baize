@@ -8,6 +8,7 @@ import com.moguhu.baize.controller.BaseController;
 import com.moguhu.baize.metadata.request.api.ApiGroupSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiGroupCompResponse;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.service.api.ApiGroupService;
 import java.util.List;
@@ -45,6 +46,12 @@ public class ApiGroupController extends BaseController {
     @RequestMapping("/edit")
     public ModelAndView edit() {
         ModelAndView mav = new ModelAndView("apigroup/edit");
+        return mav;
+    }
+
+    @RequestMapping("/compconfig")
+    public ModelAndView compconfig() {
+        ModelAndView mav = new ModelAndView("apigroup/comp-config");
         return mav;
     }
 
@@ -172,6 +179,40 @@ public class ApiGroupController extends BaseController {
         } catch (Exception e) {
             logger.error("删除信息失败, groupId={}, e={}", JSON.toJSONString(groupId), e);
             return AjaxResult.error("删除信息失败");
+        }
+    }
+
+    @RequestMapping("/complist")
+    @ResponseBody
+    public AjaxResult complist(Long groupId) {
+        try {
+            if (null == groupId) {
+                return AjaxResult.error("参数有误");
+            }
+
+            ApiGroupCompResponse response = apiGroupService.complist(groupId);
+            return AjaxResult.success(response);
+        } catch (Exception e) {
+            logger.error("查询组件列表失败, groupId = {}, e={}", groupId, e);
+            return AjaxResult.error("查询组件列表失败");
+        }
+    }
+
+
+
+    @RequestMapping("/savecomp")
+    @ResponseBody
+    public AjaxResult savecomp(Long groupId, String compIds) {
+        try {
+            if (null == groupId) {
+                return AjaxResult.error("参数有误");
+            }
+
+            apiGroupService.savecomp(groupId, compIds);
+            return AjaxResult.success("保存成功", null);
+        } catch (Exception e) {
+            logger.error("保存失败, e={}", e);
+            return AjaxResult.error("保存失败");
         }
     }
 
