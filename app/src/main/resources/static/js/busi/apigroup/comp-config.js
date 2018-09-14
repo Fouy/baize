@@ -23,6 +23,8 @@ function initComponent(groupId) {
     $.get("/apigroup/complist?groupId=" + groupId, {}, function (result) {
         var data = eval(result);
         if (data.code == '1000') {
+            $('#group_title').empty();
+            $('#group_title').text(data.data.name + '-组件配置');
             // 填充组件
             for (var i = 0; i < typeList.length; i++) {
                 var tabRowId = '#tab-' + typeList[i] + ' > div.panel-body > div.row';
@@ -34,7 +36,7 @@ function initComponent(groupId) {
                 for (var j = 0; j < list.length; j++) {
                     $("#componentTemplete").tmpl(list[j]).appendTo(tabRow);
                     if (list[j].checked) {
-                        compIdArray.push(list[j].compId);
+                        compIdArray.push(list[j].compId + '');
                     }
                 }
             }
@@ -51,17 +53,19 @@ function initICheck() {
 
     });
     $('.i-checks').on('ifChecked', function (event) {
-        //alert(event.type + ' callback');
-        compIdArray.push($(this).attr('data'));
-        //alert($(this).attr('data'));
+        var compId = $(this).attr('data');
+        compIdArray.push(compId);
         $.unique(compIdArray.sort());
+        // 改变 pannel 主题
+        $('#panel_' + compId).attr('class', '');
+        $('#panel_' + compId).attr('class', 'panel panel-primary');
     });
     $('.i-checks').on('ifUnchecked', function (event) {
-        //alert(event.type + ' callback');
-        //alert($(this).attr('data'));
-
-        compIdArray.splice($.inArray($(this).attr('data'), compIdArray), 1);
-
+        var compId = $(this).attr('data');
+        compIdArray.splice($.inArray(compId, compIdArray), 1);
+        // 改变 pannel 主题
+        $('#panel_' + compId).attr('class', '');
+        $('#panel_' + compId).attr('class', 'panel panel-default');
     });
 }
 

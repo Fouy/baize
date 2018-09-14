@@ -25,7 +25,7 @@
         <!-- Panel Other -->
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>API分组-组件配置</h5>
+                <h5 id="group_title">API分组-组件配置</h5>
             </div>
             <div class="ibox-content">
                 <div class="row row-lg">
@@ -56,74 +56,50 @@
                                 <!-- TAB START -->
                                 <div id="tab-AUTH" class="tab-pane active">
                                     <div class="panel-body">
-
                                         <div class="row">
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div id="tab-ALLOW" class="tab-pane">
                                     <div class="panel-body">
-
                                         <div class="row">
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div id="tab-TRAFFIC" class="tab-pane">
                                     <div class="panel-body">
-
                                         <div class="row">
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div id="tab-CACHE" class="tab-pane">
                                     <div class="panel-body">
-
                                         <div class="row">
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div id="tab-ROUTE" class="tab-pane">
                                     <div class="panel-body">
-
                                         <div class="row">
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div id="tab-LOG" class="tab-pane">
                                     <div class="panel-body">
-
                                         <div class="row">
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div id="tab-PROTO_CONVERT" class="tab-pane">
                                     <div class="panel-body">
-
                                         <div class="row">
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <div id="tab-OTHER" class="tab-pane">
                                     <div class="panel-body">
-
                                         <div class="row">
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <!-- TAB END -->
@@ -142,7 +118,12 @@
     <!-- 组件模板 -->
     <script id="componentTemplete" type="text/x-jquery-tmpl">
         <div class="col-sm-4" id="comp_${compId}">
-            <div class="panel panel-default">
+
+            {{if checked}}
+            <div class="panel panel-primary" id="panel_${compId}">
+            {{else}}
+            <div class="panel panel-default" id="panel_${compId}">
+            {{/if}}
                 <div class="panel-heading clearfix">
                     <div class="pull-left">
                         ${name} &nbsp; (${version})
