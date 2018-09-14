@@ -59,4 +59,26 @@
     where api_comp_rela_id = #{apiCompRelaId,jdbcType=BIGINT}
   </update>
 
+  <!-- 根据apiId 删除 -->
+  <delete id="deleteByApiId" parameterType="java.lang.Long" >
+    delete from api_comp_rela
+    where api_id = #{apiId,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 批量插入数据 -->
+  <insert id="batchInsert">
+    insert into api_comp_rela (
+      create_time,
+      api_id,
+      comp_id
+    ) values
+    <foreach collection="batchList" item="entry" separator=",">
+      (
+        NOW(),
+        #{entry.apiId,jdbcType=BIGINT},
+        #{entry.compId,jdbcType=BIGINT}
+      )
+    </foreach>
+  </insert>
+
 </mapper>

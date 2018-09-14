@@ -131,7 +131,7 @@ function apiWin(groupId){
 function compWin(groupId){
     var dataUrl = '/apigroup/compconfig',
         dataIndex = '/apigroup/compconfig',
-        menuName = 'API分组配置',
+        menuName = '分组组件配置',
         iframeUrl = dataUrl + '?groupId=' + groupId;
     parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
 }

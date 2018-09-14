@@ -1,11 +1,12 @@
 package com.moguhu.baize.service.api;
 
 
+import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiCompResponse;
 import com.moguhu.baize.metadata.response.api.ApiResponse;
-import com.moguhu.baize.common.vo.PageListDto;
 
 /**
  * API 管理
@@ -58,4 +59,20 @@ public interface ApiService {
      * @param status
      */
     void option(Long apiId, String status);
+
+    /**
+     * 查询组件列表
+     *
+     * @param apiId
+     * @return
+     */
+    ApiCompResponse complist(Long apiId);
+
+    /**
+     * 保存组件信息
+     *
+     * @param apiId
+     * @param compIds
+     */
+    void savecomp(Long apiId, String compIds);
 }

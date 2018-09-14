@@ -3,13 +3,14 @@ package com.moguhu.baize.controller.api;
 import com.alibaba.fastjson.JSON;
 import com.moguhu.baize.common.constants.BooleanEnum;
 import com.moguhu.baize.common.constants.StatusEnum;
-import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
-import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
-import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
-import com.moguhu.baize.metadata.response.api.ApiResponse;
 import com.moguhu.baize.common.vo.AjaxResult;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.controller.BaseController;
+import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
+import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
+import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiCompResponse;
+import com.moguhu.baize.metadata.response.api.ApiResponse;
 import com.moguhu.baize.service.api.ApiService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,12 @@ public class ApiController extends BaseController {
     @RequestMapping("/edit")
     public ModelAndView edit() {
         ModelAndView mav = new ModelAndView("api/edit");
+        return mav;
+    }
+
+    @RequestMapping("/compconfig")
+    public ModelAndView compconfig() {
+        ModelAndView mav = new ModelAndView("api/comp-config");
         return mav;
     }
 
@@ -128,4 +135,38 @@ public class ApiController extends BaseController {
             return AjaxResult.error("停启用信息失败");
         }
     }
+
+    @RequestMapping("/complist")
+    @ResponseBody
+    public AjaxResult complist(Long apiId) {
+        try {
+            if (null == apiId) {
+                return AjaxResult.error("参数有误");
+            }
+
+            ApiCompResponse response = apiService.complist(apiId);
+            return AjaxResult.success(response);
+        } catch (Exception e) {
+            logger.error("查询组件列表失败, apiId = {}, e={}", apiId, e);
+            return AjaxResult.error("查询组件列表失败");
+        }
+    }
+
+
+    @RequestMapping("/savecomp")
+    @ResponseBody
+    public AjaxResult savecomp(Long apiId, String compIds) {
+        try {
+            if (null == apiId) {
+                return AjaxResult.error("参数有误");
+            }
+
+            apiService.savecomp(apiId, compIds);
+            return AjaxResult.success("保存成功", null);
+        } catch (Exception e) {
+            logger.error("保存失败, e={}", e);
+            return AjaxResult.error("保存失败");
+        }
+    }
+
 }

@@ -94,6 +94,7 @@
                     a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=apiParamWin('+value+')>参数配置</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=compWin('+value+')>组件配置</a></li>';
                 }
 
                 a = a +     '</ul>';
@@ -170,6 +171,15 @@ function apiParamWin(apiId){
     var dataUrl = '/apiparam/main',
         dataIndex = '/apiparam/main',
         menuName = 'API参数配置',
+        iframeUrl = dataUrl + '?apiId=' + apiId;
+    parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
+}
+
+// 组件配置窗口
+function compWin(apiId){
+    var dataUrl = '/api/compconfig',
+        dataIndex = '/api/compconfig',
+        menuName = 'API组件配置',
         iframeUrl = dataUrl + '?apiId=' + apiId;
     parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
 }

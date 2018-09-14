@@ -1,6 +1,9 @@
 package com.moguhu.baize.metadata.dao.mapper.api;
 
 import com.moguhu.baize.metadata.entity.api.ApiCompRelaEntity;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ApiCompRelaEntityMapper {
     /**
@@ -22,4 +25,18 @@ public interface ApiCompRelaEntityMapper {
      * 通过id修改表api_comp_rela.
      */
     int updateById(ApiCompRelaEntity record);
+
+    /**
+     * 根据apiId 删除
+     *
+     * @param apiId
+     */
+    void deleteByApiId(Long apiId);
+
+    /**
+     * 批量插入
+     *
+     * @param batchList
+     */
+    void batchInsert(@Param("batchList") List<ApiCompRelaEntity> batchList);
 }
