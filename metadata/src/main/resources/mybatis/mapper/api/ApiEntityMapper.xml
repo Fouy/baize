@@ -19,7 +19,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    api_id, create_time, modify_time, `name`, group_id, path, methods, status, version,
+    api_id, create_time, modify_time, `name`, group_id, path, methods, `status`, version,
     env, cached, info, protocol, ext_info
   </sql>
 
@@ -156,26 +156,44 @@
 
   <!-- 分页查询 -->
   <select id="queryAll" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from api
-    where 1=1
+    SELECT DISTINCT
+        t1.api_id as api_id ,
+        t1.create_time as create_time ,
+        t1.modify_time as modify_time ,
+        t1.`name` as `name` ,
+        t1.group_id as group_id ,
+        t1.path as path ,
+        t1.methods as methods ,
+        t1.`status` as `status` ,
+        t1.version as version ,
+        t1.env as env ,
+        t1.cached as cached ,
+        t1.info as info ,
+        t1.protocol as protocol ,
+        t1.ext_info as ext_info
+    FROM
+        api t1
+    LEFT JOIN api_comp_rela t2 ON t1.api_id = t2.api_id
+    WHERE 1=1
+    <if test="compId != null" >
+      AND t2.comp_id = #{compId,jdbcType=BIGINT}
+    </if>
     <if test="env != null and env != '' " >
-      and env = #{env,jdbcType=VARCHAR}
+      and t1.env = #{env,jdbcType=VARCHAR}
     </if>
     <if test="status != null and status != '' " >
-      and `status` = #{status,jdbcType=VARCHAR}
+      and t1.`status` = #{status,jdbcType=VARCHAR}
     </if>
     <if test="groupId != null" >
-      and group_id = #{groupId,jdbcType=BIGINT}
+      and t1.group_id = #{groupId,jdbcType=BIGINT}
     </if>
     <if test="path != null and path != '' " >
-      and path = #{path,jdbcType=VARCHAR}
+      and t1.path = #{path,jdbcType=VARCHAR}
     </if>
     <if test="name != null and name != '' " >
-      and `name` LIKE CONCAT('%', #{name,jdbcType=VARCHAR}, '%')
+      and t1.`name` LIKE CONCAT('%', #{name,jdbcType=VARCHAR}, '%')
     </if>
-    order by api_id desc
+    ORDER BY t1.api_id DESC
   </select>
 
   <!-- 加锁 -->

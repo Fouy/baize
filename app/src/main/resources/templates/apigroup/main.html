@@ -15,6 +15,7 @@
     <link href="/css/style.css?v=4.1.0" rel="stylesheet"/>
     <!-- Sweet Alert -->
     <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"/>
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet"/>
 </head>
 
 <body class="gray-bg">
@@ -23,7 +24,7 @@
         <!-- Panel Other -->
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>API分组列表</h5>
+                <h5 id="group_title">API分组列表</h5>
             </div>
             <div class="ibox-content">
                 <div class="row row-lg">
@@ -37,6 +38,7 @@
                                         <label class="col-sm-6 control-label">分组名称：</label>
                                         <div class="col-sm-6">
                                             <input class="form-control" style="width: 200px;" name="name" placeholder="请输入名称" type="text" id="name"/>
+                                            <input class="form-control" name="compId" type="hidden" id="compId"/>
                                         </div>
                                     </div>
 
@@ -80,7 +82,13 @@
     <!-- Sweet alert -->
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
 	<script src="/js/common/date.format.js"></script>
-    <!-- Peity -->
+    <!-- Toastr script -->
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/js/plugins/validate/messages_zh.min.js"></script>
+
+    <script src="/js/common/common.js"></script>
     <script src="/js/busi/apigroup/main.js"></script>
 
 </body>

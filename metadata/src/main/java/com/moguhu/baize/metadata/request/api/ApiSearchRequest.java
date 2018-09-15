@@ -7,7 +7,7 @@ import com.moguhu.baize.metadata.request.BasePageRequest;
 /**
  * API 分页查询请求
  * <p>
- * Created by xuefeihu on 18/5/14.
+ * Created by xuefeihu on 18/9/6.
  */
 public class ApiSearchRequest extends BasePageRequest {
 
@@ -39,6 +39,11 @@ public class ApiSearchRequest extends BasePageRequest {
      * @see EnvEnum
      */
     private String env;
+
+    /**
+     * 组件ID.
+     */
+    private String compId;
 
     public String getEnv() {
         return env;
@@ -78,5 +83,13 @@ public class ApiSearchRequest extends BasePageRequest {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCompId() {
+        return compId;
+    }
+
+    public void setCompId(String compId) {
+        this.compId = compId;
     }
 }

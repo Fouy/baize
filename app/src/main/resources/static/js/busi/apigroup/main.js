@@ -87,6 +87,15 @@
         }]
     });
 
+    // 设置组件ID
+    var compId = $.getUrlParam('compId');
+    if (compId && compId != '') {
+        $('#compId').val(compId);
+        $('#group_title').empty();
+        $('#group_title').text('组件绑定的分组');
+        search();
+    }
+
 })();
 
 // 新增窗口
@@ -210,6 +219,7 @@ function delWin(groupId){
 // 搜索
 function search(){
     var param = {};
+    param.compId = $('#compId').val();
     param.name = $('#name').val();
     $('#exampleTableEvents').bootstrapTable('refresh',{query : param});
 }

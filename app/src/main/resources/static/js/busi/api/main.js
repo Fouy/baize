@@ -133,6 +133,14 @@ function initApiGroup() {
             $('#groupId').val(groupId0);
             search();
         }
+        // 设置组件ID
+        var compId = $.getUrlParam('compId');
+        if (compId && compId != '') {
+            $('#compId').val(compId);
+            $('#api_title').empty();
+            $('#api_title').text('组件绑定的API');
+            search();
+        }
 
     }, 'json');
 }
@@ -218,6 +226,7 @@ function delWin(apiId){
 // 搜索
 function search(){
     var param = {};
+    param.compId = $('#compId').val();
     param.name = $('#name').val();
     param.path = $('#path').val();
     param.groupId = $('#groupId').val();

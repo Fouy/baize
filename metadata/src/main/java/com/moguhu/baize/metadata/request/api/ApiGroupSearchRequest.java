@@ -22,6 +22,11 @@ public class ApiGroupSearchRequest extends BasePageRequest {
      */
     private String status;
 
+    /**
+     * 组件ID.
+     */
+    private String compId;
+
     public String getName() {
         return name;
     }
@@ -36,5 +41,13 @@ public class ApiGroupSearchRequest extends BasePageRequest {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCompId() {
+        return compId;
+    }
+
+    public void setCompId(String compId) {
+        this.compId = compId;
     }
 }

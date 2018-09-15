@@ -118,7 +118,8 @@
 
                 if (row.status == 'ON') {
                     a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>停用</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=apiParamWin('+value+')>参数配置</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=bindApiWin('+value+')>查看绑定API</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=bindGroupWin('+value+')>查看绑定分组</a></li>';
                 } else if (row.status == 'OFF') {
                     a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
                     a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
@@ -161,6 +162,24 @@ function editWin(compId){
             search();
         }
     });
+}
+
+// 查看绑定API窗口
+function bindApiWin(compId){
+    var dataUrl = '/api/main',
+        dataIndex = '/api/main',
+        menuName = 'API列表',
+        iframeUrl = dataUrl + '?compId=' + compId;
+    parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
+}
+
+// 查看绑定分组窗口
+function bindGroupWin(compId){
+    var dataUrl = '/apigroup/main',
+        dataIndex = '/apigroup/main',
+        menuName = 'API分组列表',
+        iframeUrl = dataUrl + '?compId=' + compId;
+    parent.customItem(dataUrl, dataIndex, menuName, iframeUrl);
 }
 
 /**
