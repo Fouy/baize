@@ -129,7 +129,9 @@
                         ${name} &nbsp; (${version})
                     </div>
                     <div class="pull-right">
-                        {{if checked}}
+                        {{if extended}}
+                            [继承自分组]
+                        {{else checked}}
                             <input class="i-checks" type="checkbox" data='${compId}' checked />
                         {{else}}
                             <input class="i-checks" type="checkbox" data='${compId}' />

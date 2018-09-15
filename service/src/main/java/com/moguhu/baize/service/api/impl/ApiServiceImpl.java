@@ -2,6 +2,7 @@ package com.moguhu.baize.service.api.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.base.Splitter;
 import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.constants.backend.ComponentTypeEnum;
 import com.moguhu.baize.common.constants.backend.ExecPositionEnum;
@@ -10,6 +11,7 @@ import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiCompRelaEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiGroupEntityMapper;
+import com.moguhu.baize.metadata.dao.mapper.api.GroupCompRelaEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.backend.ComponentEntityMapper;
 import com.moguhu.baize.metadata.entity.api.ApiCompRelaEntity;
 import com.moguhu.baize.metadata.entity.api.ApiEntity;
@@ -32,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +59,9 @@ public class ApiServiceImpl implements ApiService {
 
     @Autowired
     private ApiCompRelaEntityMapper apiCompRelaEntityMapper;
+
+    @Autowired
+    private GroupCompRelaEntityMapper groupCompRelaEntityMapper;
 
     @Override
     public PageListDto<ApiResponse> pageList(ApiSearchRequest request) {
@@ -135,15 +140,20 @@ public class ApiServiceImpl implements ApiService {
         param.setStatus(StatusEnum.ON.name());
         List<ComponentEntity> allList = componentEntityMapper.queryAll(param);
         List<ComponentEntity> compList = componentEntityMapper.queryByApi(apiId);
+        List<ComponentEntity> groupCompList = componentEntityMapper.queryByApiGroup(apiEntity.getGroupId());
 
         if (!CollectionUtils.isEmpty(allList)) {
             List<ComponentResponse> componentResponses = DozerUtil.mapList(allList, ComponentResponse.class);
-            Map<String, List<ComponentResponse>> componentMaps = convert2Map(componentResponses);
+            Map<String, List<ComponentResponse>> componentMaps = ComponentConvert.convert2Map(componentResponses);
             response.setComponentMap(componentMaps);
 
             componentResponses.forEach(componentResponse -> {
                 if (compList.contains(componentResponse)) {
                     componentResponse.setChecked(true);
+                }
+                if (groupCompList.contains(componentResponse)) {// 继承父类组件
+                    componentResponse.setChecked(true);
+                    componentResponse.setExtended(true);
                 }
                 componentResponse.setTypeName(ComponentTypeEnum.resolve(componentResponse.getType()).getDesc());
                 componentResponse.setExecPositionName(ExecPositionEnum.resolve(componentResponse.getExecPosition()).getDesc());
@@ -161,35 +171,26 @@ public class ApiServiceImpl implements ApiService {
 
         if (!StringUtils.isEmpty(compIds)) {
             List<ApiCompRelaEntity> batchList = new ArrayList<>();
-            String[] compIdArray = compIds.split(",");
-            for (int i = 0; i < compIdArray.length; i++) {
+            List<String> compIdList = new ArrayList<>(Splitter.on(",").trimResults().splitToList(compIds));// 需要转换成ArrayList 才可用removeIf()
+
+            // 剔除父类组件ID
+            ApiEntity apiEntity = apiEntityMapper.selectById(apiId);
+            List<Long> groupCompIds = groupCompRelaEntityMapper.queryByApiGroup(apiEntity.getGroupId());
+            compIdList.removeIf(tempCompId -> {
+                if (groupCompIds.contains(Long.valueOf(tempCompId).longValue())) {
+                    return true;
+                }
+                return false;
+            });
+
+            compIdList.forEach(compId -> {
                 ApiCompRelaEntity relaEntity = new ApiCompRelaEntity();
                 relaEntity.setApiId(apiId);
-                relaEntity.setCompId(Long.parseLong(compIdArray[i]));
+                relaEntity.setCompId(Long.parseLong(compId));
                 batchList.add(relaEntity);
-            }
+            });
             apiCompRelaEntityMapper.batchInsert(batchList);
         }
-    }
-
-    /**
-     * 组件转Map
-     *
-     * @param componentResponses
-     * @return
-     */
-    private Map<String, List<ComponentResponse>> convert2Map(List<ComponentResponse> componentResponses) {
-        Map<String, List<ComponentResponse>> map = new HashMap<>();
-        ComponentTypeEnum[] types = ComponentTypeEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].name(), new ArrayList<>());
-        }
-
-        componentResponses.forEach(componentResponse -> {
-            List<ComponentResponse> tempList = map.get(componentResponse.getType());
-            tempList.add(componentResponse);
-        });
-        return map;
     }
 
 }

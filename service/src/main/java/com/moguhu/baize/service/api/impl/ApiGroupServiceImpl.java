@@ -30,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -146,7 +145,7 @@ public class ApiGroupServiceImpl implements ApiGroupService {
 
         if (!CollectionUtils.isEmpty(allList)) {
             List<ComponentResponse> componentResponses = DozerUtil.mapList(allList, ComponentResponse.class);
-            Map<String, List<ComponentResponse>> componentMaps = convert2Map(componentResponses);
+            Map<String, List<ComponentResponse>> componentMaps = ComponentConvert.convert2Map(componentResponses);
             response.setComponentMap(componentMaps);
 
             componentResponses.forEach(componentResponse -> {
@@ -178,26 +177,6 @@ public class ApiGroupServiceImpl implements ApiGroupService {
             }
             groupCompRelaEntityMapper.batchInsert(batchList);
         }
-    }
-
-    /**
-     * 组件转Map
-     *
-     * @param componentResponses
-     * @return
-     */
-    private Map<String, List<ComponentResponse>> convert2Map(List<ComponentResponse> componentResponses) {
-        Map<String, List<ComponentResponse>> map = new HashMap<>();
-        ComponentTypeEnum[] types = ComponentTypeEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].name(), new ArrayList<>());
-        }
-
-        componentResponses.forEach(componentResponse -> {
-            List<ComponentResponse> tempList = map.get(componentResponse.getType());
-            tempList.add(componentResponse);
-        });
-        return map;
     }
 
 }

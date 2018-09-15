@@ -38,5 +38,13 @@ public interface GroupCompRelaEntityMapper {
      *
      * @param batchList
      */
-    void batchInsert(@Param("batchList")List<GroupCompRelaEntity> batchList);
+    void batchInsert(@Param("batchList") List<GroupCompRelaEntity> batchList);
+
+    /**
+     * 根据groupId查询组件ID列表
+     *
+     * @param groupId
+     * @return
+     */
+    List<Long> queryByApiGroup(Long groupId);
 }

@@ -15,6 +15,11 @@ public class ComponentResponse extends ComponentEntity {
 
     private String execPositionName;
 
+    /**
+     * 是否继承自Group
+     */
+    private boolean extended = false;
+
     public boolean isChecked() {
         return checked;
     }
@@ -37,5 +42,13 @@ public class ComponentResponse extends ComponentEntity {
 
     public void setExecPositionName(String execPositionName) {
         this.execPositionName = execPositionName;
+    }
+
+    public boolean isExtended() {
+        return extended;
+    }
+
+    public void setExtended(boolean extended) {
+        this.extended = extended;
     }
 }
