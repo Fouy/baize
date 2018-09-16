@@ -110,32 +110,21 @@ public class ApiGroupServiceImpl implements ApiGroupService {
     @Override
     @Transactional
     public void save(ApiGroupSaveRequest request) {
-        request.setStatus(StatusEnum.OFF.name());
         apiGroupEntityMapper.insert(request);
     }
 
     @Override
     @Transactional
-    public void option(Long groupId, String status) {
+    public void syncZookeeper(Long groupId) {
         // 创建 sync task
-        ApiGroupSyncTask task = new ApiGroupSyncTask(groupId, status);
+        ApiGroupSyncTask task = new ApiGroupSyncTask(groupId);
         autowireCapableBeanFactory.autowireBean(task);
         commonThreadService.submit(task);
-
-        ApiGroupEntity param = new ApiGroupEntity();
-        param.setGroupId(groupId);
-        param.setStatus(status);
-        apiGroupEntityMapper.lock(groupId);
-        int count = apiGroupEntityMapper.updateById(param);
-        if (count != 1) {
-            throw new RuntimeException("wrong effected row.");
-        }
     }
 
     @Override
     public List<ApiGroupResponse> all() {
         ApiGroupSearchRequest param = new ApiGroupSearchRequest();
-        param.setStatus(StatusEnum.ON.name());
         List<ApiGroupEntity> entityList = apiGroupEntityMapper.queryAll(param);
         List<ApiGroupResponse> list = new ArrayList<>();
         if (!CollectionUtils.isEmpty(entityList)) {

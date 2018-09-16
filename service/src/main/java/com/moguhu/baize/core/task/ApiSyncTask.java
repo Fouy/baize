@@ -1,7 +1,5 @@
 package com.moguhu.baize.core.task;
 
-import com.moguhu.baize.common.constants.StatusEnum;
-import com.moguhu.baize.common.constants.zookeeper.ZookeeperKey;
 import com.moguhu.baize.metadata.entity.api.ApiEntity;
 import com.moguhu.baize.metadata.entity.api.ApiGroupEntity;
 import com.moguhu.baize.metadata.entity.backend.GateServiceEntity;
@@ -53,14 +51,8 @@ public class ApiSyncTask extends AbstractSyncTask {
                 return -1L;
             }
 
-            String apiPath = ZookeeperKey.BAIZE_ZUUL + "/" + gateService.getServiceCode() + "/" + ZookeeperKey.SERVICECODE_APIGROUP
-                    + "/" + apiGroup.getGroupId() + "/" + api.getApiId();
-
-            if (StatusEnum.ON.name().equals(status)) {
-                this.syncApi(api, apiGroup, gateService);
-            } else if (StatusEnum.OFF.name().equals(status)) {
-                this.deletePath(apiPath);
-            }
+            api.setStatus(this.status);
+            this.syncApi(api, apiGroup, gateService);
 
             logger.info("API sync task execute SUCCESSFUL，apiId={}", apiId);
         } catch (Exception e) {

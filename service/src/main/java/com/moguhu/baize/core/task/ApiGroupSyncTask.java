@@ -1,7 +1,6 @@
 package com.moguhu.baize.core.task;
 
 import com.moguhu.baize.common.constants.StatusEnum;
-import com.moguhu.baize.common.constants.zookeeper.ZookeeperKey;
 import com.moguhu.baize.metadata.entity.api.ApiGroupEntity;
 import com.moguhu.baize.metadata.entity.backend.GateServiceEntity;
 import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
@@ -29,11 +28,9 @@ public class ApiGroupSyncTask extends AbstractSyncTask {
     private GateServiceService gateServiceService;
 
     private Long groupId;
-    private String status;
 
-    public ApiGroupSyncTask(Long groupId, String status) {
+    public ApiGroupSyncTask(Long groupId) {
         this.groupId = groupId;
-        this.status = status;
     }
 
     @Override
@@ -52,19 +49,11 @@ public class ApiGroupSyncTask extends AbstractSyncTask {
                 return -1L;
             }
 
-            String apiGroupPath = ZookeeperKey.BAIZE_ZUUL + "/" + gateService.getServiceCode() + "/" + ZookeeperKey.SERVICECODE_APIGROUP
-                    + "/" + apiGroup.getGroupId();
-
-            if (StatusEnum.ON.name().equals(status)) {
-                ApiSearchRequest param = new ApiSearchRequest();
-                param.setGroupId(groupId);
-                param.setStatus(StatusEnum.ON.name());
-                List<ApiResponse> apiList = apiService.all(param);
-                if (!CollectionUtils.isEmpty(apiList)) {
-                    apiList.forEach(api -> this.syncApi(api, apiGroup, gateService));
-                }
-            } else if (StatusEnum.OFF.name().equals(status)) {
-                this.deletePath(apiGroupPath);
+            ApiSearchRequest param = new ApiSearchRequest();
+            param.setGroupId(groupId);
+            List<ApiResponse> apiList = apiService.all(param);
+            if (!CollectionUtils.isEmpty(apiList)) {
+                apiList.forEach(api -> this.syncApi(api, apiGroup, gateService));
             }
 
             logger.info("API Group sync task execute SUCCESSFUL，groupId={}", groupId);

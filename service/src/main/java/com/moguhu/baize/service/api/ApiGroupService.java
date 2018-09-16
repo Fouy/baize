@@ -55,12 +55,11 @@ public interface ApiGroupService {
     void save(ApiGroupSaveRequest request);
 
     /**
-     * 停启用
+     * 将Group 下的 已启用的API 同步至 ZooKeeper
      *
      * @param groupId
-     * @param status
      */
-    void option(Long groupId, String status);
+    void syncZookeeper(Long groupId);
 
     /**
      * 查询所有 API GROUP

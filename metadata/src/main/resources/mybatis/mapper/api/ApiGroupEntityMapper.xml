@@ -8,13 +8,12 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="service_id" property="serviceId" jdbcType="BIGINT" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="info" property="info" jdbcType="VARCHAR" />
     <result column="ext_info" property="extInfo" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    group_id, create_time, modify_time, `name`, `type`, service_id, `status`, info, ext_info
+    group_id, create_time, modify_time, `name`, `type`, service_id, info, ext_info
   </sql>
 
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -43,9 +42,6 @@
       <if test="serviceId != null" >
         service_id,
       </if>
-      <if test="status != null" >
-        `status`,
-      </if>
       <if test="info != null" >
         info,
       </if>
@@ -64,9 +60,6 @@
       </if>
       <if test="serviceId != null" >
         #{serviceId,jdbcType=BIGINT},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
       </if>
       <if test="info != null" >
         #{info,jdbcType=VARCHAR},
@@ -90,9 +83,6 @@
       <if test="serviceId != null" >
         service_id = #{serviceId,jdbcType=BIGINT},
       </if>
-      <if test="status != null" >
-        `status` = #{status,jdbcType=VARCHAR},
-      </if>
       <if test="info != null" >
         info = #{info,jdbcType=VARCHAR},
       </if>
@@ -112,7 +102,6 @@
         t1.`name` as `name` ,
         t1.`type` as `type` ,
         t1.service_id as service_id ,
-        t1.`status` as `status` ,
         t1.info as info ,
         t1.ext_info as ext_info
     FROM

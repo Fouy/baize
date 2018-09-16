@@ -10,7 +10,6 @@ import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiCompResponse;
-import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.metadata.response.api.ApiResponse;
 import com.moguhu.baize.service.api.ApiGroupService;
 import com.moguhu.baize.service.api.ApiService;
@@ -139,13 +138,6 @@ public class ApiController extends BaseController {
             ApiResponse apiResponse = apiService.selectById(apiId);
             if (null == apiResponse) {
                 return AjaxResult.error("API不存在");
-            }
-            // 检查Group 是否启用
-            if (StatusEnum.ON.name().equals(status)) {
-                ApiGroupResponse apiGroupResponse = apiGroupService.selectById(apiResponse.getGroupId());
-                if (!StatusEnum.ON.name().equals(apiGroupResponse.getStatus())) {
-                    return AjaxResult.error("请先启用分组");
-                }
             }
 
             apiService.option(apiId, status);

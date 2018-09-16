@@ -1,6 +1,7 @@
 package com.moguhu.baize.core.task;
 
 import com.alibaba.fastjson.JSON;
+import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.constants.zookeeper.ZookeeperKey;
 import com.moguhu.baize.common.utils.curator.CuratorClient;
 import com.moguhu.baize.core.zookeeper.model.ApiZkStorage;
@@ -87,6 +88,7 @@ public abstract class AbstractSyncTask implements Callable<Long> {
         if (client.checkExists(path)) {
             List<String> children = client.getChildren(path);
             if (CollectionUtils.isEmpty(children)) {
+                client.deleteNode(path);
                 return;
             }
             children.forEach(child -> {
@@ -151,27 +153,31 @@ public abstract class AbstractSyncTask implements Callable<Long> {
         apiGroupPath = this.syncGroupOnly(apiGroup);
         apiPath = apiGroupPath + "/" + api.getApiId();
 
-        if (!client.checkExists(apiPath)) {
-            try {
-                List<Long> compIds = componentService.queryByApi(api.getApiId());
-                ApiParamSearchRequest param = new ApiParamSearchRequest();
-                param.setApiId(api.getApiId());
-                List<ApiParamResponse> apiParamList = apiParamService.all(param);
-                ApiParamMapSearchRequest param1 = new ApiParamMapSearchRequest();
-                param1.setApiId(api.getApiId());
-                List<ApiParamMapResponse> apiParamMapList = apiParamMapService.all(param1);
+        if (StatusEnum.ON.name().equals(api.getStatus())) {
+            if (!client.checkExists(apiPath)) {
+                try {
+                    List<Long> compIds = componentService.queryByApi(api.getApiId());
+                    ApiParamSearchRequest param = new ApiParamSearchRequest();
+                    param.setApiId(api.getApiId());
+                    List<ApiParamResponse> apiParamList = apiParamService.all(param);
+                    ApiParamMapSearchRequest param1 = new ApiParamMapSearchRequest();
+                    param1.setApiId(api.getApiId());
+                    List<ApiParamMapResponse> apiParamMapList = apiParamMapService.all(param1);
 
-                ApiZkStorage apiZkStorage = new ApiZkStorage();
-                apiZkStorage.setCompIds(compIds);
-                apiZkStorage.setParams(apiParamList);
-                apiZkStorage.setMappings(apiParamMapList);
-                String storageStr = URLEncoder.encode(JSON.toJSONString(apiZkStorage), "UTF-8");
+                    ApiZkStorage apiZkStorage = new ApiZkStorage();
+                    apiZkStorage.setCompIds(compIds);
+                    apiZkStorage.setParams(apiParamList);
+                    apiZkStorage.setMappings(apiParamMapList);
+                    String storageStr = URLEncoder.encode(JSON.toJSONString(apiZkStorage), "UTF-8");
 
-                client.createNode(apiPath, storageStr, CreateMode.PERSISTENT);
-            } catch (Exception e) {
-                logger.info(" /baize/zuul/${serviceCode}/apigroup/${group}/${api} node has exists. ");
-                // do nothing
+                    client.createNode(apiPath, storageStr, CreateMode.PERSISTENT);
+                } catch (Exception e) {
+                    logger.info(" /baize/zuul/${serviceCode}/apigroup/${group}/${api} node has exists. ");
+                    // do nothing
+                }
             }
+        } else {
+            this.deletePath(apiPath);
         }
     }
 

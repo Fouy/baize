@@ -1,6 +1,5 @@
 package com.moguhu.baize.metadata.request.api;
 
-import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.metadata.request.BasePageRequest;
 
 /**
@@ -16,13 +15,6 @@ public class ApiGroupSearchRequest extends BasePageRequest {
     private String name;
 
     /**
-     * 状态：启用 ON 停用 OFF.
-     *
-     * @see StatusEnum
-     */
-    private String status;
-
-    /**
      * 组件ID.
      */
     private Long compId;
@@ -33,14 +25,6 @@ public class ApiGroupSearchRequest extends BasePageRequest {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Long getCompId() {

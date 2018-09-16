@@ -129,8 +129,8 @@ public class ApiGroupController extends BaseController {
             }
             // 检查分组是否存在
             ApiGroupResponse apiGroupResponse = apiGroupService.selectById(request.getGroupId());
-            if (null == apiGroupResponse || StatusEnum.ON.name().equals(apiGroupResponse.getStatus())) {
-                return AjaxResult.error("记录不存在或状态不合法");
+            if (null == apiGroupResponse) {
+                return AjaxResult.error("记录不存在");
             }
 
             apiGroupService.updateById(request);
@@ -150,23 +150,23 @@ public class ApiGroupController extends BaseController {
             }
             // 检查分组是否存在
             ApiGroupResponse apiGroupResponse = apiGroupService.selectById(groupId);
-            if (null == apiGroupResponse || StatusEnum.ON.name().equals(apiGroupResponse.getStatus())) {
-                return AjaxResult.error("记录不存在或状态不合法");
+            if (null == apiGroupResponse) {
+                return AjaxResult.error("记录不存在");
             }
 
             apiGroupService.deleteById(groupId);
             return AjaxResult.success();
         } catch (Exception e) {
-            logger.error("删除信息失败, groupId={}, e={}", JSON.toJSONString(groupId), e);
+            logger.error("删除信息失败, groupId={}, e={}", groupId, e);
             return AjaxResult.error("删除信息失败");
         }
     }
 
-    @RequestMapping("/option")
+    @RequestMapping("/synczookeeper")
     @ResponseBody
-    public AjaxResult option(Long groupId, String status) {
+    public AjaxResult syncZookeeper(Long groupId) {
         try {
-            if (null == groupId || StatusEnum.resolve(status) == null) {
+            if (null == groupId) {
                 return AjaxResult.error("参数有误");
             }
             // 检查分组是否存在
@@ -175,10 +175,10 @@ public class ApiGroupController extends BaseController {
                 return AjaxResult.error("记录不存在");
             }
 
-            apiGroupService.option(groupId, status);
+            apiGroupService.syncZookeeper(groupId);
             return AjaxResult.success();
         } catch (Exception e) {
-            logger.error("删除信息失败, groupId={}, e={}", JSON.toJSONString(groupId), e);
+            logger.error("删除信息失败, groupId={}, e={}", groupId, e);
             return AjaxResult.error("删除信息失败");
         }
     }
