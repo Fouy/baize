@@ -8,6 +8,7 @@ import com.moguhu.baize.common.constants.backend.ComponentTypeEnum;
 import com.moguhu.baize.common.constants.backend.ExecPositionEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
+import com.moguhu.baize.core.task.ApiSyncTask;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiCompRelaEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiGroupEntityMapper;
@@ -24,17 +25,18 @@ import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
 import com.moguhu.baize.metadata.response.api.ApiCompResponse;
 import com.moguhu.baize.metadata.response.api.ApiResponse;
 import com.moguhu.baize.metadata.response.backend.ComponentResponse;
+import com.moguhu.baize.service.CommonThreadService;
 import com.moguhu.baize.service.api.ApiService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +64,12 @@ public class ApiServiceImpl implements ApiService {
 
     @Autowired
     private GroupCompRelaEntityMapper groupCompRelaEntityMapper;
+
+    @Autowired
+    private CommonThreadService commonThreadService;
+
+    @Autowired
+    private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
     @Override
     public PageListDto<ApiResponse> pageList(ApiSearchRequest request) {
@@ -121,11 +129,19 @@ public class ApiServiceImpl implements ApiService {
     @Override
     @Transactional
     public void option(Long apiId, String status) {
+        // 创建 sync task
+        ApiSyncTask task = new ApiSyncTask(apiId, status);
+        autowireCapableBeanFactory.autowireBean(task);
+        commonThreadService.submit(task);
+
         ApiEntity param = new ApiEntity();
         param.setApiId(apiId);
         param.setStatus(status);
         apiEntityMapper.lock(apiId);
-        apiEntityMapper.updateById(param);
+        int count = apiEntityMapper.updateById(param);
+        if (count != 1) {
+            throw new RuntimeException("wrong effected row.");
+        }
     }
 
     @Override
@@ -191,6 +207,16 @@ public class ApiServiceImpl implements ApiService {
             });
             apiCompRelaEntityMapper.batchInsert(batchList);
         }
+    }
+
+    @Override
+    public List<ApiResponse> all(ApiSearchRequest request) {
+        List<ApiEntity> entityList = apiEntityMapper.queryAll(request);
+        List<ApiResponse> list = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            list = DozerUtil.mapList(entityList, ApiResponse.class);
+        }
+        return list;
     }
 
 }

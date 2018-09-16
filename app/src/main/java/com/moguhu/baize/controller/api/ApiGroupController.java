@@ -11,13 +11,14 @@ import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiGroupCompResponse;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.service.api.ApiGroupService;
-import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * API分组 管理
@@ -128,7 +129,7 @@ public class ApiGroupController extends BaseController {
             }
             // 检查分组是否存在
             ApiGroupResponse apiGroupResponse = apiGroupService.selectById(request.getGroupId());
-            if (null == apiGroupResponse || StatusEnum.ON.name().equals(apiGroupResponse.getStatus()) ) {
+            if (null == apiGroupResponse || StatusEnum.ON.name().equals(apiGroupResponse.getStatus())) {
                 return AjaxResult.error("记录不存在或状态不合法");
             }
 
@@ -149,7 +150,7 @@ public class ApiGroupController extends BaseController {
             }
             // 检查分组是否存在
             ApiGroupResponse apiGroupResponse = apiGroupService.selectById(groupId);
-            if (null == apiGroupResponse || StatusEnum.ON.name().equals(apiGroupResponse.getStatus()) ) {
+            if (null == apiGroupResponse || StatusEnum.ON.name().equals(apiGroupResponse.getStatus())) {
                 return AjaxResult.error("记录不存在或状态不合法");
             }
 
@@ -197,7 +198,6 @@ public class ApiGroupController extends BaseController {
             return AjaxResult.error("查询组件列表失败");
         }
     }
-
 
 
     @RequestMapping("/savecomp")

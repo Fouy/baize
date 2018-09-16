@@ -8,6 +8,8 @@ import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiCompResponse;
 import com.moguhu.baize.metadata.response.api.ApiResponse;
 
+import java.util.List;
+
 /**
  * API 管理
  *
@@ -75,4 +77,12 @@ public interface ApiService {
      * @param compIds
      */
     void savecomp(Long apiId, String compIds);
+
+    /**
+     * 列表查询
+     *
+     * @param request
+     * @return
+     */
+    List<ApiResponse> all(ApiSearchRequest request);
 }

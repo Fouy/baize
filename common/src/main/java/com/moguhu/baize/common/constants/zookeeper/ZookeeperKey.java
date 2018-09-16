@@ -16,8 +16,6 @@ public class ZookeeperKey {
     // /baize/zuul/${serviceCode} 下节点
     public static final String SERVICECODE_NODES = "nodes";
     public static final String SERVICECODE_APIGROUP = "apigroup";
-    public static final String SERVICECODE_COMPONENT = "component";
-    public static final String SERVICECODE_REFRESH = "refresh";
     public static final String SERVICECODE_BACKHOSTS = "backhosts";
 
 

@@ -7,6 +7,8 @@ import com.moguhu.baize.metadata.request.api.ApiParamMapSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiParamMapUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiParamMapResponse;
 
+import java.util.List;
+
 /**
  * API Param 映射 管理
  *
@@ -50,5 +52,13 @@ public interface ApiParamMapService {
      * @param request
      */
     void save(ApiParamMapSaveRequest request);
+
+    /**
+     * 列表查询
+     *
+     * @param request
+     * @return
+     */
+    List<ApiParamMapResponse> all(ApiParamMapSearchRequest request);
 
 }

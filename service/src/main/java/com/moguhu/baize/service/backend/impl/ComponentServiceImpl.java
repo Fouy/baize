@@ -132,4 +132,24 @@ public class ComponentServiceImpl implements ComponentService {
         }
         return list;
     }
+
+    @Override
+    public List<Long> queryByApiGroup(Long groupId) {
+        List<Long> result = new ArrayList<>();
+        List<ComponentEntity> componentEntities = componentEntityMapper.queryByApiGroup(groupId);
+        if (!CollectionUtils.isEmpty(componentEntities)) {
+            componentEntities.forEach(componentEntity -> result.add(componentEntity.getCompId()));
+        }
+        return result;
+    }
+
+    @Override
+    public List<Long> queryByApi(Long apiId) {
+        List<Long> result = new ArrayList<>();
+        List<ComponentEntity> componentEntities = componentEntityMapper.queryByApi(apiId);
+        if (!CollectionUtils.isEmpty(componentEntities)) {
+            componentEntities.forEach(componentEntity -> result.add(componentEntity.getCompId()));
+        }
+        return result;
+    }
 }

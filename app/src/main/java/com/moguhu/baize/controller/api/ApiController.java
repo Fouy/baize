@@ -10,7 +10,9 @@ import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiCompResponse;
+import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.metadata.response.api.ApiResponse;
+import com.moguhu.baize.service.api.ApiGroupService;
 import com.moguhu.baize.service.api.ApiService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class ApiController extends BaseController {
 
     @Autowired
     private ApiService apiService;
+
+    @Autowired
+    private ApiGroupService apiGroupService;
 
     @RequestMapping("/main")
     public ModelAndView main() {
@@ -112,11 +117,15 @@ public class ApiController extends BaseController {
     @ResponseBody
     public AjaxResult update(ApiUpdateRequest request) {
         try {
+            if (null == request.getApiId()) {
+                return AjaxResult.error("参数有误");
+            }
+
             apiService.updateById(request);
             return AjaxResult.success();
         } catch (Exception e) {
-            logger.error("更新信息失败, request={}, e={}", JSON.toJSONString(request), e);
-            return AjaxResult.error("更新信息失败");
+            logger.error("更新失败, request={}, e={}", JSON.toJSONString(request), e);
+            return AjaxResult.error("更新失败");
         }
     }
 
@@ -127,12 +136,23 @@ public class ApiController extends BaseController {
             if (StatusEnum.resolve(status) == null || null == apiId) {
                 return AjaxResult.error("参数有误");
             }
+            ApiResponse apiResponse = apiService.selectById(apiId);
+            if (null == apiResponse) {
+                return AjaxResult.error("API不存在");
+            }
+            // 检查Group 是否启用
+            if (StatusEnum.ON.name().equals(status)) {
+                ApiGroupResponse apiGroupResponse = apiGroupService.selectById(apiResponse.getGroupId());
+                if (!StatusEnum.ON.name().equals(apiGroupResponse.getStatus())) {
+                    return AjaxResult.error("请先启用分组");
+                }
+            }
 
             apiService.option(apiId, status);
-            return AjaxResult.success();
+            return AjaxResult.success("操作成功", null);
         } catch (Exception e) {
-            logger.error("停启用信息失败, apiId={}, e={}", apiId, e);
-            return AjaxResult.error("停启用信息失败");
+            logger.error("停启用失败, apiId={}, e={}", apiId, e);
+            return AjaxResult.error("停启用失败");
         }
     }
 

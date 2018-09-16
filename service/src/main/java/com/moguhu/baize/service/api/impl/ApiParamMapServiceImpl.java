@@ -121,4 +121,14 @@ public class ApiParamMapServiceImpl implements ApiParamMapService {
         apiParamMapEntityMapper.insert(request);
     }
 
+    @Override
+    public List<ApiParamMapResponse> all(ApiParamMapSearchRequest request) {
+        List<ApiParamMapEntity> entityList = apiParamMapEntityMapper.queryAll(request);
+        List<ApiParamMapResponse> list = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            list = DozerUtil.mapList(entityList, ApiParamMapResponse.class);
+        }
+        return list;
+    }
+
 }

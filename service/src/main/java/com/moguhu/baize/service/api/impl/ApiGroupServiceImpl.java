@@ -7,6 +7,7 @@ import com.moguhu.baize.common.constants.backend.ComponentTypeEnum;
 import com.moguhu.baize.common.constants.backend.ExecPositionEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
+import com.moguhu.baize.core.task.ApiGroupSyncTask;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiGroupEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.api.GroupCompRelaEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.backend.ComponentEntityMapper;
@@ -20,11 +21,13 @@ import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
 import com.moguhu.baize.metadata.response.api.ApiGroupCompResponse;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.metadata.response.backend.ComponentResponse;
+import com.moguhu.baize.service.CommonThreadService;
 import com.moguhu.baize.service.api.ApiGroupService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -51,6 +54,12 @@ public class ApiGroupServiceImpl implements ApiGroupService {
 
     @Autowired
     private GroupCompRelaEntityMapper groupCompRelaEntityMapper;
+
+    @Autowired
+    private CommonThreadService commonThreadService;
+
+    @Autowired
+    private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
     @Override
     public PageListDto<ApiGroupResponse> pageList(ApiGroupSearchRequest request) {
@@ -108,6 +117,11 @@ public class ApiGroupServiceImpl implements ApiGroupService {
     @Override
     @Transactional
     public void option(Long groupId, String status) {
+        // 创建 sync task
+        ApiGroupSyncTask task = new ApiGroupSyncTask(groupId, status);
+        autowireCapableBeanFactory.autowireBean(task);
+        commonThreadService.submit(task);
+
         ApiGroupEntity param = new ApiGroupEntity();
         param.setGroupId(groupId);
         param.setStatus(status);

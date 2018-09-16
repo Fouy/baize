@@ -67,4 +67,20 @@ public interface ComponentService {
      * @return
      */
     List<ComponentResponse> all();
+
+    /**
+     * 根据 groupId 查询组件
+     *
+     * @param groupId
+     * @return
+     */
+    List<Long> queryByApiGroup(Long groupId);
+
+    /**
+     * 根据 apiId 查询组件
+     *
+     * @param apiId
+     * @return
+     */
+    List<Long> queryByApi(Long apiId);
 }
