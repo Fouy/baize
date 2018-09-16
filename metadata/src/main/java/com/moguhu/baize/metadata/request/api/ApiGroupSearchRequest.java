@@ -25,7 +25,7 @@ public class ApiGroupSearchRequest extends BasePageRequest {
     /**
      * 组件ID.
      */
-    private String compId;
+    private Long compId;
 
     public String getName() {
         return name;
@@ -43,11 +43,11 @@ public class ApiGroupSearchRequest extends BasePageRequest {
         this.status = status;
     }
 
-    public String getCompId() {
+    public Long getCompId() {
         return compId;
     }
 
-    public void setCompId(String compId) {
+    public void setCompId(Long compId) {
         this.compId = compId;
     }
 }

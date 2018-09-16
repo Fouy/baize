@@ -81,4 +81,18 @@
     </foreach>
   </insert>
 
+  <!-- 查询列表 -->
+  <select id="queryAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from api_comp_rela
+    where 1=1
+    <if test="apiId != null" >
+      and api_id = #{apiId,jdbcType=BIGINT}
+    </if>
+    <if test="compId != null" >
+      and comp_id = #{compId,jdbcType=BIGINT}
+    </if>
+  </select>
+
 </mapper>

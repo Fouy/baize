@@ -47,4 +47,12 @@ public interface GroupCompRelaEntityMapper {
      * @return
      */
     List<Long> queryByApiGroup(Long groupId);
+
+    /**
+     * 查询列表
+     *
+     * @param request
+     * @return
+     */
+    List<GroupCompRelaEntity> queryAll(GroupCompRelaEntity request);
 }

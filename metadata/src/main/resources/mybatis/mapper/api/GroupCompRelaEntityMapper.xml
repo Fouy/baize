@@ -89,4 +89,18 @@
     where group_id = #{groupId,jdbcType=BIGINT}
   </select>
 
+  <!-- 查询列表 -->
+  <select id="queryAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from group_comp_rela
+    where 1=1
+    <if test="groupId != null" >
+      and group_id = #{groupId,jdbcType=BIGINT}
+    </if>
+    <if test="compId != null" >
+      and comp_id = #{compId,jdbcType=BIGINT}
+    </if>
+  </select>
+
 </mapper>

@@ -193,6 +193,46 @@ function compWin(apiId){
 }
 
 /**
+ * 停启用
+ * @param apiId
+ * @param status
+ */
+function statusWin(apiId, status){
+    var tip = '';
+    if (status == 'ON') {
+        tip = '启用';
+    } else {
+        tip = '停用';
+    }
+
+    swal({
+            title: "您确定要"+tip+"这条记录吗",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是的，我要"+tip+"！",
+            cancelButtonText: "让我再考虑一下…",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function (isConfirm) {
+            if (isConfirm){
+                var param = {};
+                param.apiId = apiId;
+                param.status = status;
+                $.post("/api/option", param, function(result) {
+                    if (result.code == "1000") {
+                        swal(tip+"成功！", result.msg, "success");
+                    } else {
+                        swal(tip+"失败！", result.msg, "error");
+                    }
+                    search();
+                }, 'json');
+            }
+        });
+}
+
+/**
  * 删除
  * @param apiId
  */

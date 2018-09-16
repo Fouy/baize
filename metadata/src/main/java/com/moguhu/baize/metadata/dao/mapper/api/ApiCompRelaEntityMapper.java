@@ -39,4 +39,13 @@ public interface ApiCompRelaEntityMapper {
      * @param batchList
      */
     void batchInsert(@Param("batchList") List<ApiCompRelaEntity> batchList);
+
+    /**
+     * 查询列表
+     *
+     * @param request
+     * @return
+     */
+    List<ApiCompRelaEntity> queryAll(ApiCompRelaEntity request);
+
 }

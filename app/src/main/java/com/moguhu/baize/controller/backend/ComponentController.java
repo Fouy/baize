@@ -6,17 +6,22 @@ import com.moguhu.baize.common.constants.backend.ComponentTypeEnum;
 import com.moguhu.baize.common.vo.AjaxResult;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.controller.BaseController;
+import com.moguhu.baize.metadata.entity.api.ApiCompRelaEntity;
+import com.moguhu.baize.metadata.entity.api.GroupCompRelaEntity;
 import com.moguhu.baize.metadata.entity.common.RichContentEntity;
 import com.moguhu.baize.metadata.request.backend.ComponentSaveRequest;
 import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
 import com.moguhu.baize.metadata.request.backend.ComponentUpdateRequest;
 import com.moguhu.baize.metadata.response.backend.ComponentResponse;
+import com.moguhu.baize.service.api.ApiCompRelaService;
+import com.moguhu.baize.service.api.GroupCompRelaService;
 import com.moguhu.baize.service.backend.ComponentService;
 import com.moguhu.baize.service.common.RichContentService;
 import com.moguhu.baize.zuul.common.FilterInfo;
 import com.moguhu.baize.zuul.filter.FilterVerifier;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +46,12 @@ public class ComponentController extends BaseController {
 
     @Autowired
     private RichContentService richContentService;
+
+    @Autowired
+    private ApiCompRelaService apiCompRelaService;
+
+    @Autowired
+    private GroupCompRelaService groupCompRelaService;
 
     @RequestMapping("/main")
     public ModelAndView main() {
@@ -169,6 +180,10 @@ public class ComponentController extends BaseController {
             if (null == request.getCompId()) {
                 return AjaxResult.error("参数有误");
             }
+            ComponentResponse componentEntity = componentService.selectById(request.getCompId());
+            if (null == componentEntity) {
+                return AjaxResult.error("组件不存在");
+            }
             if (!file.isEmpty()) {
                 String fileContent = new String(file.getBytes(), "UTF-8");
                 FilterInfo filterInfo = FilterVerifier.getInstance().verifyFilter(fileContent);
@@ -194,6 +209,14 @@ public class ComponentController extends BaseController {
             if (null == compId) {
                 return AjaxResult.error("参数有误");
             }
+            ComponentResponse componentEntity = componentService.selectById(compId);
+            if (null == componentEntity) {
+                return AjaxResult.error("组件不存在");
+            }
+            // 检查是否有API依赖
+            if (this.checkUsed(compId)) {
+                return AjaxResult.error("组件被使用中, 不可停用.");
+            }
 
             componentService.deleteById(compId);
             return AjaxResult.success();
@@ -214,6 +237,10 @@ public class ComponentController extends BaseController {
             if (null == componentEntity) {
                 return AjaxResult.error("组件不存在");
             }
+            // 检查是否有API依赖
+            if (StatusEnum.OFF.name().equals(status) && this.checkUsed(compId)) {
+                return AjaxResult.error("组件被使用中, 不可停用.");
+            }
 
             componentService.option(compId, status);
             return AjaxResult.success();
@@ -221,6 +248,23 @@ public class ComponentController extends BaseController {
             logger.error("停启用失败, compId={}, e={}", compId, e);
             return AjaxResult.error("停启用失败");
         }
+    }
+
+    private boolean checkUsed(Long compId) {
+        ApiCompRelaEntity param = new ApiCompRelaEntity();
+        param.setCompId(compId);
+        List<ApiCompRelaEntity> apiRelas = apiCompRelaService.all(param);
+        if (!CollectionUtils.isEmpty(apiRelas)) {
+            return true;
+        }
+
+        GroupCompRelaEntity param1 = new GroupCompRelaEntity();
+        param1.setCompId(compId);
+        List<GroupCompRelaEntity> groupRelas = groupCompRelaService.all(param1);
+        if (!CollectionUtils.isEmpty(groupRelas)) {
+            return true;
+        }
+        return false;
     }
 
 }

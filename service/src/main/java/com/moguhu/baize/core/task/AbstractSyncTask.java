@@ -167,7 +167,7 @@ public abstract class AbstractSyncTask implements Callable<Long> {
                 apiZkStorage.setMappings(apiParamMapList);
                 String storageStr = URLEncoder.encode(JSON.toJSONString(apiZkStorage), "UTF-8");
 
-                client.createNode(servicePath, storageStr, CreateMode.PERSISTENT);
+                client.createNode(apiPath, storageStr, CreateMode.PERSISTENT);
             } catch (Exception e) {
                 logger.info(" /baize/zuul/${serviceCode}/apigroup/${group}/${api} node has exists. ");
                 // do nothing
