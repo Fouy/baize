@@ -64,8 +64,8 @@
             title: '操作',
             align: 'left',
             formatter:function(value, row, index) {
-                var a = '<div class="btn-group">';
-                a = a +     '<button class="btn btn-success btn-outline btn-sm" onclick=apiWin('+value+')><i class="fa fa-plug">&nbsp;</i>API管理</span></button>';
+                var a = '<button class="btn btn-success btn-outline btn-sm" onclick=apiWin('+value+')><i class="fa fa-plug">&nbsp;</i>API管理</span></button>&nbsp;';
+                a = a + '<div class="btn-group">';
 
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-sm dropdown-toggle">更多&nbsp;<span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';

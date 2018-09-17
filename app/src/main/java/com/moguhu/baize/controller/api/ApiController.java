@@ -10,9 +10,12 @@ import com.moguhu.baize.metadata.request.api.ApiSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiCompResponse;
+import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.metadata.response.api.ApiResponse;
+import com.moguhu.baize.metadata.response.backend.GateServiceResponse;
 import com.moguhu.baize.service.api.ApiGroupService;
 import com.moguhu.baize.service.api.ApiService;
+import com.moguhu.baize.service.backend.GateServiceService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,9 @@ public class ApiController extends BaseController {
 
     @Autowired
     private ApiGroupService apiGroupService;
+
+    @Autowired
+    private GateServiceService gateServiceService;
 
     @RequestMapping("/main")
     public ModelAndView main() {
@@ -138,6 +144,17 @@ public class ApiController extends BaseController {
             ApiResponse apiResponse = apiService.selectById(apiId);
             if (null == apiResponse) {
                 return AjaxResult.error("API不存在");
+            }
+            ApiGroupResponse apiGroup = apiGroupService.selectById(apiResponse.getGroupId());
+            if (apiGroup == null) {
+                return AjaxResult.error("API分组不存在");
+            }
+            // 检查依赖发Gate Service 是否启用
+            if (StatusEnum.ON.name().equals(status)) {
+                GateServiceResponse gateService = gateServiceService.selectById(apiGroup.getServiceId());
+                if (gateService == null || StatusEnum.OFF.name().equals(gateService.getStatus())) {
+                    return AjaxResult.error("依赖的Gate Service未上线!");
+                }
             }
 
             apiService.option(apiId, status);

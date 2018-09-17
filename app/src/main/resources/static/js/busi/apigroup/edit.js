@@ -23,19 +23,6 @@ $().ready(function () {
     var groupId = $.getUrlParam('groupId');
     $('#groupId').val(groupId);
 
-    $.post("/apigroup/detail", {groupId: groupId}, function (result) {
-        var data = eval(result);
-        var entity = data.data;
-        if (!entity) {
-            return;
-        }
-        $('#name').val(entity.name);
-        $('#type').val(entity.type);
-        $('#serviceId').val(entity.serviceId);
-        $('#info').val(entity.info);
-    }, 'json');
-
-
 });
 
 /**
@@ -50,14 +37,32 @@ function initGateService() {
     optAll.append('--请选择--');
     optAll.appendTo(serviceId);
 
-    $.get("/gateservice/all", {}, function(result) {
-        var data = eval(result);
-        var list = data.data;
-        for(var i = 0; i < list.length; i++) {
-            var opt = $('<option></option>');
-            opt.attr('value', list[i].serviceId);
-            opt.append(list[i].name);
-            opt.appendTo(serviceId);
+    $.post("/gateservice/all", {}, function(result) {
+        if (result.code == '1000') {
+            var list = result.data;
+            for(var i = 0; i < list.length; i++) {
+                var opt = $('<option></option>');
+                opt.attr('value', list[i].serviceId);
+                opt.append(list[i].name);
+                opt.appendTo(serviceId);
+            }
+
+            $.post("/apigroup/detail", {groupId: $('#groupId').val()}, function (result) {
+                if (result.code == '1000') {
+                    var entity = result.data;
+                    if (!entity) {
+                        return;
+                    }
+                    $('#name').val(entity.name);
+                    $('#type').val(entity.type);
+                    $('#serviceId').val(entity.serviceId);
+                    $('#info').val(entity.info);
+                } else {
+                    toastr.error("错误信息", result.msg);
+                }
+            }, 'json');
+        } else {
+            toastr.error("错误信息", result.msg);
         }
     }, 'json');
 }

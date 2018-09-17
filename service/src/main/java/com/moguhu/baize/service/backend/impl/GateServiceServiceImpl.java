@@ -112,11 +112,15 @@ public class GateServiceServiceImpl implements GateServiceService {
     @Override
     public List<GateServiceResponse> all() {
         GateServiceSearchRequest param = new GateServiceSearchRequest();
-        param.setStatus(StatusEnum.ON.name());
         List<GateServiceEntity> entityList = gateServiceEntityMapper.queryAll(param);
         List<GateServiceResponse> list = new ArrayList<>();
         if (!CollectionUtils.isEmpty(entityList)) {
             list = DozerUtil.mapList(entityList, GateServiceResponse.class);
+            list.forEach(gateServiceResponse -> {
+                if (StatusEnum.OFF.name().equals(gateServiceResponse.getStatus())) {
+                    gateServiceResponse.setName(gateServiceResponse.getName() + "[已下线]");
+                }
+            });
         }
         return list;
     }

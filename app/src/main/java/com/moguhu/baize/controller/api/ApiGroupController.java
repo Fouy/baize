@@ -10,7 +10,9 @@ import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
 import com.moguhu.baize.metadata.response.api.ApiGroupCompResponse;
 import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
+import com.moguhu.baize.metadata.response.backend.GateServiceResponse;
 import com.moguhu.baize.service.api.ApiGroupService;
+import com.moguhu.baize.service.backend.GateServiceService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,9 @@ public class ApiGroupController extends BaseController {
 
     @Autowired
     private ApiGroupService apiGroupService;
+
+    @Autowired
+    private GateServiceService gateServiceService;
 
     @RequestMapping("/main")
     public ModelAndView main() {
@@ -132,6 +137,13 @@ public class ApiGroupController extends BaseController {
             if (null == apiGroupResponse) {
                 return AjaxResult.error("记录不存在");
             }
+            // 检查Gate Service 是否被禁用
+            if (null != request.getServiceId()) {
+                GateServiceResponse gateService = gateServiceService.selectById(request.getServiceId());
+                if (StatusEnum.OFF.name().equals(gateService.getStatus())) {
+                    return AjaxResult.error("绑定的服务当前已下线");
+                }
+            }
 
             apiGroupService.updateById(request);
             return AjaxResult.success();
@@ -173,6 +185,11 @@ public class ApiGroupController extends BaseController {
             ApiGroupResponse apiGroupResponse = apiGroupService.selectById(groupId);
             if (null == apiGroupResponse) {
                 return AjaxResult.error("记录不存在");
+            }
+            // 检查依赖发Gate Service 是否启用
+            GateServiceResponse gateService = gateServiceService.selectById(apiGroupResponse.getServiceId());
+            if (gateService == null || StatusEnum.OFF.name().equals(gateService.getStatus())) {
+                return AjaxResult.error("依赖的Gate Service未上线!");
             }
 
             apiGroupService.syncZookeeper(groupId);
