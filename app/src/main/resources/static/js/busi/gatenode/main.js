@@ -79,13 +79,11 @@
             title: '操作',
             align: 'left',
             formatter:function(value, row, index) {
-                //value：当前field的值，即userId
-                //row：当前行的数据
                 var a = '<div class="btn-group">';
-                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
+                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-sm dropdown-toggle">操作&nbsp;<span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')><i class="fa fa-edit">&nbsp;</i>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')><i class="fa fa-trash-o">&nbsp;</i>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;

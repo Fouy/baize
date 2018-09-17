@@ -33,7 +33,7 @@
             title: '组件名',
             align: 'left',
             formatter:function(value, row, index) {
-                return '<i class="fa fa-cube">&nbsp;</i>' + value;
+                return '<i class="fa fa-gear">&nbsp;</i>' + value;
             }
         }, {
             field: 'compCode',
@@ -110,20 +110,18 @@
             title: '操作',
             align: 'left',
             formatter:function(value, row, index) {
-                //value：当前field的值，即userId
-                //row：当前行的数据
                 var a = '<div class="btn-group">';
-                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
+                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-sm dropdown-toggle">更多&nbsp;<span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
 
                 if (row.status == 'ON') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>停用</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=bindApiWin('+value+')>查看绑定API</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=bindGroupWin('+value+')>查看绑定分组</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=bindApiWin('+value+')><i class="fa fa-cube">&nbsp;</i>查看绑定API</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=bindGroupWin('+value+')><i class="fa fa-cubes">&nbsp;</i>查看绑定分组</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")><i class="fa fa-toggle-off">&nbsp;</i>停用</a></li>';
                 } else if (row.status == 'OFF') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>启用</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")><i class="fa fa-toggle-on">&nbsp;</i>启用</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')><i class="fa fa-edit">&nbsp;</i>编辑</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')><i class="fa fa-trash-o">&nbsp;</i>删除</a></li>';
                 }
 
                 a = a +     '</ul>';

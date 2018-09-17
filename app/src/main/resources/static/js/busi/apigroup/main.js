@@ -31,7 +31,10 @@
         columns: [{
             field: 'name',
             title: '分组名称',
-            align: 'left'
+            align: 'left',
+            formatter:function(value, row, index) {
+                return '<i class="fa fa-cubes">&nbsp;</i>' + value;
+            }
         }, {
             field: 'type',
             title: '类型',
@@ -46,6 +49,10 @@
             title: '网关服务',
             align: 'left'
         }, {
+            field: 'createTime',
+            title: '创建时间',
+            align: 'left'
+        }, {
             field: 'info',
             title: '描述说明',
             align: 'left',
@@ -58,15 +65,14 @@
             align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
-                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
+                a = a +     '<button class="btn btn-success btn-outline btn-sm" onclick=apiWin('+value+')><i class="fa fa-plug">&nbsp;</i>API管理</span></button>';
+
+                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-sm dropdown-toggle">更多&nbsp;<span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-
-                a = a +         '<li><a href="javascript:void(0)" onclick=apiWin('+value+')>API管理</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=syncZkWin('+value+')>同步ZooKeeper</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=compWin('+value+')>组件配置</a></li>';
-
+                a = a +         '<li><a href="javascript:void(0)" onclick=syncZkWin('+value+')><i class="fa fa-link">&nbsp;</i>同步ZooKeeper</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=compWin('+value+')><i class="fa fa-gears">&nbsp;</i>组件配置</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editWin('+value+')><i class="fa fa-edit">&nbsp;</i>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delWin('+value+')><i class="fa fa-trash-o">&nbsp;</i>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;

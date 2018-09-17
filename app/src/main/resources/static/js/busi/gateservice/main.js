@@ -32,7 +32,7 @@
             title: '服务名',
             align: 'left',
             formatter:function(value, row, index) {
-                return '<i class="fa fa-fire">&nbsp;</i>' + value;
+                return '<i class="fa fa-user">&nbsp;</i>' + value;
             }
         }, {
             field: 'serviceCode',
@@ -40,7 +40,7 @@
             align: 'left'
         }, {
             field: 'hosts',
-            title: '后端服务HOSTS',
+            title: '后端服务',
             align: 'left'
         }, {
             field: 'status',
@@ -59,16 +59,16 @@
             align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
-                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
+                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-sm dropdown-toggle">更多&nbsp;<span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
 
                 if (row.status == 'OFF') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')>编辑</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")>上线</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')>删除</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"ON")><i class="fa fa-arrow-up">&nbsp;</i>上线</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=editWin('+value+')><i class="fa fa-edit">&nbsp;</i>编辑</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=delWin('+value+')><i class="fa fa-trash-o">&nbsp;</i>删除</a></li>';
                 } else if (row.status == 'ON') {
-                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")>下线</a></li>';
-                    a = a +     '<li><a href="javascript:void(0)" onclick=instanceWin('+value+')>查看实例</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=instanceWin('+value+')><i class="fa fa-eye">&nbsp;</i>查看实例</a></li>';
+                    a = a +     '<li><a href="javascript:void(0)" onclick=statusWin('+value+',"OFF")><i class="fa fa-arrow-down">&nbsp;</i>下线</a></li>';
                 }
 
                 a = a +     '</ul>';
