@@ -19,6 +19,11 @@ public class ApiGroupSearchRequest extends BasePageRequest {
      */
     private Long compId;
 
+    /**
+     * 服务ID.
+     */
+    private Long serviceId;
+
     public String getName() {
         return name;
     }
@@ -33,5 +38,13 @@ public class ApiGroupSearchRequest extends BasePageRequest {
 
     public void setCompId(Long compId) {
         this.compId = compId;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
     }
 }

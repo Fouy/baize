@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 网关实例 管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/9.
  */
 @Service
 public class GateInstanceServiceImpl implements GateInstanceService {

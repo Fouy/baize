@@ -14,7 +14,7 @@ import com.moguhu.baize.metadata.response.backend.GateNodeResponse;
 /**
  * 网关节点 管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/7.
  */
 public interface GateNodeService {
 

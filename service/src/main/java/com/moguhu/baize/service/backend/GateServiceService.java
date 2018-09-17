@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 网关服务 管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/8.
  */
 public interface GateServiceService {
 

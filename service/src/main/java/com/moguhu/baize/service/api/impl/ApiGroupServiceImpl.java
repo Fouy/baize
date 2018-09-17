@@ -40,8 +40,8 @@ import java.util.Map;
 
 /**
  * API分组 管理
- *
- * @author xuefeihu
+ * <p>
+ * Created by xuefeihu on 18/9/6.
  */
 @Service
 public class ApiGroupServiceImpl implements ApiGroupService {
@@ -191,6 +191,16 @@ public class ApiGroupServiceImpl implements ApiGroupService {
             }
             groupCompRelaEntityMapper.batchInsert(batchList);
         }
+    }
+
+    @Override
+    public List<ApiGroupResponse> queryAll(ApiGroupSearchRequest request) {
+        List<ApiGroupEntity> entityList = apiGroupEntityMapper.queryAll(request);
+        List<ApiGroupResponse> list = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(entityList)) {
+            list = DozerUtil.mapList(entityList, ApiGroupResponse.class);
+        }
+        return list;
     }
 
 }

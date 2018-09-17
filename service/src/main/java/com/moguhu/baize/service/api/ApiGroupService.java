@@ -12,8 +12,8 @@ import java.util.List;
 
 /**
  * API分组 管理
- *
- * @author xuefeihu
+ * <p>
+ * Created by xuefeihu on 18/9/6.
  */
 public interface ApiGroupService {
 
@@ -83,4 +83,12 @@ public interface ApiGroupService {
      * @param compIds
      */
     void savecomp(Long groupId, String compIds);
+
+    /**
+     * 列表查询
+     *
+     * @param request
+     * @return
+     */
+    List<ApiGroupResponse> queryAll(ApiGroupSearchRequest request);
 }

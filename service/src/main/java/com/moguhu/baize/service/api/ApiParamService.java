@@ -1,7 +1,6 @@
 package com.moguhu.baize.service.api;
 
 
-import com.moguhu.baize.common.constants.api.ApiParamStatuslEnum;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.request.api.ApiParamSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiParamSearchRequest;
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  * API Param 管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/11.
  */
 public interface ApiParamService {
 

@@ -111,6 +111,9 @@
     <if test="compId != null" >
       AND t2.comp_id = #{compId,jdbcType=BIGINT}
     </if>
+    <if test="serviceId != null" >
+      AND t1.service_id = #{serviceId,jdbcType=BIGINT}
+    </if>
     <if test="name != null and name != '' " >
       AND t1.`name` like concat('%', #{name,jdbcType=VARCHAR}, '%')
     </if>

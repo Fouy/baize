@@ -7,7 +7,7 @@ import com.moguhu.baize.metadata.response.backend.GateInstanceResponse;
 /**
  * 网关实例 管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/9.
  */
 public interface GateInstanceService {
 

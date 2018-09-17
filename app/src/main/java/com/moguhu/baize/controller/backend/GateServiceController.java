@@ -5,13 +5,17 @@ import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.vo.AjaxResult;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.controller.BaseController;
+import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.backend.GateServiceSaveRequest;
 import com.moguhu.baize.metadata.request.backend.GateServiceSearchRequest;
 import com.moguhu.baize.metadata.request.backend.GateServiceUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiGroupResponse;
 import com.moguhu.baize.metadata.response.backend.GateServiceResponse;
+import com.moguhu.baize.service.api.ApiGroupService;
 import com.moguhu.baize.service.backend.GateServiceService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +34,9 @@ public class GateServiceController extends BaseController {
 
     @Autowired
     private GateServiceService gateServiceService;
+
+    @Autowired
+    private ApiGroupService apiGroupService;
 
     @RequestMapping("/main")
     public ModelAndView main() {
@@ -134,6 +141,20 @@ public class GateServiceController extends BaseController {
         try {
             if (null == serviceId) {
                 return AjaxResult.error("参数有误");
+            }
+            GateServiceResponse gateServiceEntity = gateServiceService.selectById(serviceId);
+            if (null == gateServiceEntity) {
+                return AjaxResult.error("服务不存在");
+            }
+            if (StatusEnum.ON.name().equals(gateServiceEntity.getStatus())) {
+                return AjaxResult.error("服务启用中, 不可删除");
+            }
+            // 关联 Group 检查
+            ApiGroupSearchRequest param = new ApiGroupSearchRequest();
+            param.setServiceId(serviceId);
+            List<ApiGroupResponse> apiGroupList = apiGroupService.queryAll(param);
+            if (!CollectionUtils.isEmpty(apiGroupList)) {
+                return AjaxResult.error("有分组关联, 不可删除");
             }
 
             gateServiceService.deleteById(serviceId);

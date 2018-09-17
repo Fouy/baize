@@ -13,7 +13,7 @@ import java.util.concurrent.*;
 /**
  * 线程服务
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/6.
  */
 @Service
 public class CommonThreadService {
