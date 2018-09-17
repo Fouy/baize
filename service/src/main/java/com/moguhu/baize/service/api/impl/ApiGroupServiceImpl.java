@@ -11,9 +11,11 @@ import com.moguhu.baize.core.task.ApiGroupSyncTask;
 import com.moguhu.baize.metadata.dao.mapper.api.ApiGroupEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.api.GroupCompRelaEntityMapper;
 import com.moguhu.baize.metadata.dao.mapper.backend.ComponentEntityMapper;
+import com.moguhu.baize.metadata.dao.mapper.backend.GateServiceEntityMapper;
 import com.moguhu.baize.metadata.entity.api.ApiGroupEntity;
 import com.moguhu.baize.metadata.entity.api.GroupCompRelaEntity;
 import com.moguhu.baize.metadata.entity.backend.ComponentEntity;
+import com.moguhu.baize.metadata.entity.backend.GateServiceEntity;
 import com.moguhu.baize.metadata.request.api.ApiGroupSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupSearchRequest;
 import com.moguhu.baize.metadata.request.api.ApiGroupUpdateRequest;
@@ -56,6 +58,9 @@ public class ApiGroupServiceImpl implements ApiGroupService {
     private GroupCompRelaEntityMapper groupCompRelaEntityMapper;
 
     @Autowired
+    private GateServiceEntityMapper gateServiceEntityMapper;
+
+    @Autowired
     private CommonThreadService commonThreadService;
 
     @Autowired
@@ -68,6 +73,12 @@ public class ApiGroupServiceImpl implements ApiGroupService {
         List<ApiGroupResponse> list = new ArrayList<>();
         if (!CollectionUtils.isEmpty(entityList)) {
             list = DozerUtil.mapList(entityList, ApiGroupResponse.class);
+            list.forEach(apiGroupResponse -> {
+                GateServiceEntity gateServiceEntity = gateServiceEntityMapper.selectById(apiGroupResponse.getServiceId());
+                if (null != gateServiceEntity) {
+                    apiGroupResponse.setServiceName(gateServiceEntity.getName());
+                }
+            });
         }
         PageListDto<ApiGroupResponse> pageListDto = new PageListDto<>();
         pageListDto.setTotal(page.getTotal());

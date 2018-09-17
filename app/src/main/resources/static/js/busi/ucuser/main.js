@@ -30,11 +30,11 @@
         columns: [{
             field: 'phoneNo',
             title: '手机号',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'status',
             title: '状态',
-            align: 'center',
+            align: 'left',
             formatter:function(value,row,index){
             	if(value == 'NORMAL'){
             		return '正常';
@@ -44,7 +44,7 @@
         }, {
             field: 'createTime',
             title: '创建时间',
-            align: 'center',
+            align: 'left',
             formatter:function(value,row,index){
             	var date = new Date(value);
             	var time = date.format("yyyy-MM-dd HH:mm:ss");

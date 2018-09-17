@@ -1,5 +1,6 @@
 package com.moguhu.baize.metadata.entity.common;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.moguhu.baize.common.constants.content.RichContentTypeEnum;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class RichContentEntity implements Serializable {
     /**
      * 创建时间.
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**

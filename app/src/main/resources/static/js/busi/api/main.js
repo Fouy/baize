@@ -33,27 +33,27 @@
         columns: [{
             field: 'name',
             title: 'API名称',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'groupName',
             title: '分组',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'path',
             title: '路径',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'methods',
             title: '请求方式',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'version',
             title: '版本',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'cached',
             title: '是否缓存',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'YES') {
                     return '是';
@@ -64,11 +64,11 @@
         }, {
             field: 'protocol',
             title: '支持协议',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'status',
             title: '状态',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'ON') {
                     return '<span class="label label-running">已启用</span>';
@@ -79,7 +79,7 @@
         }, {
             field: 'apiId',
             title: '操作',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 //value：当前field的值，即userId
                 //row：当前行的数据

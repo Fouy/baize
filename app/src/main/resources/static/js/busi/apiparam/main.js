@@ -36,11 +36,11 @@
         columns: [{
             field: 'name',
             title: '参数名',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'type',
             title: '类型',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'INT') {
                     return '整数';
@@ -57,7 +57,7 @@
         }, {
             field: 'position',
             title: '位置',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'PATH') {
                     return 'PATH参数';
@@ -74,7 +74,7 @@
         }, {
             field: 'need',
             title: '是否必须',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'YES') {
                     return '是';
@@ -85,11 +85,11 @@
         }, {
             field: 'info',
             title: '描述说明',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'status',
             title: '状态',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'BIND') {
                     return '<span class="label label-running">已绑定</span>';
@@ -100,7 +100,7 @@
         }, {
             field: 'paramId',
             title: '操作',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
@@ -140,11 +140,11 @@
         columns: [{
             field: 'name',
             title: '参数名',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'type',
             title: '类型',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'INT') {
                     return '整数';
@@ -161,7 +161,7 @@
         }, {
             field: 'position',
             title: '位置',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'PATH') {
                     return 'PATH参数';
@@ -178,7 +178,7 @@
         }, {
             field: 'need',
             title: '是否必须',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'YES') {
                     return '是';
@@ -189,11 +189,11 @@
         }, {
             field: 'info',
             title: '描述说明',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'mapId',
             title: '操作',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
@@ -233,11 +233,11 @@
         columns: [{
             field: 'name',
             title: '参数名',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'type',
             title: '类型',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'INT') {
                     return '整数';
@@ -254,7 +254,7 @@
         }, {
             field: 'position',
             title: '位置',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'PATH') {
                     return 'PATH参数';
@@ -271,7 +271,7 @@
         }, {
             field: 'need',
             title: '是否必须',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'YES') {
                     return '是';
@@ -282,11 +282,11 @@
         }, {
             field: 'info',
             title: '描述说明',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'mapId',
             title: '操作',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';

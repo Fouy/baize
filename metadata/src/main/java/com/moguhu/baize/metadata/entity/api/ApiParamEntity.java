@@ -1,5 +1,6 @@
 package com.moguhu.baize.metadata.entity.api;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.moguhu.baize.common.constants.BooleanEnum;
 import com.moguhu.baize.common.constants.api.ApiParamStatuslEnum;
 import com.moguhu.baize.common.constants.api.ParamTypeEnum;
@@ -17,11 +18,13 @@ public class ApiParamEntity implements Serializable {
     /**
      * 创建时间.
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 更新时间.
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**

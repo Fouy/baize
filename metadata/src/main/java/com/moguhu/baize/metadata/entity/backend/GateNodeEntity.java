@@ -1,5 +1,6 @@
 package com.moguhu.baize.metadata.entity.backend;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.moguhu.baize.common.constants.backend.NodeStatusEnum;
 
 import java.io.Serializable;
@@ -14,11 +15,13 @@ public class GateNodeEntity implements Serializable {
     /**
      * 创建时间.
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 创建时间.
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**
@@ -66,6 +69,7 @@ public class GateNodeEntity implements Serializable {
     /**
      * 重启时间.
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date rebootTime;
 
     private static final long serialVersionUID = 1L;

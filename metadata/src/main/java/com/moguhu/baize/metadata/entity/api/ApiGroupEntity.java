@@ -1,5 +1,7 @@
 package com.moguhu.baize.metadata.entity.api;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,11 +14,13 @@ public class ApiGroupEntity implements Serializable {
     /**
      * 创建时间.
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 更新时间.
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**

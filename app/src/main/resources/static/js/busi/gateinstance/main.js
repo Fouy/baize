@@ -32,18 +32,18 @@
         columns: [{
             field: 'name',
             title: '服务名',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 return '<i class="fa fa-fire">&nbsp;</i>' + value;
             }
         }, {
             field: 'serviceCode',
             title: '服务编码',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'host',
             title: 'HOST',
-            align: 'center'
+            align: 'left'
         }]
     });
 

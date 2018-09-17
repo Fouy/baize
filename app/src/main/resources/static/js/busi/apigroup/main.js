@@ -27,31 +27,35 @@
         minimumCountColumns: 2,    //最少允许的列数
         clickToSelect: true,    //是否启用点击选中行
         searchOnEnterKey: true,
+        onLoadSuccess: successLoad,
         columns: [{
             field: 'name',
             title: '分组名称',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'type',
             title: '类型',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'COMMON') {
                     return '普通';
                 }
             }
         }, {
-            field: 'serviceId',
-            title: '服务ID',
-            align: 'center'
+            field: 'serviceName',
+            title: '网关服务',
+            align: 'left'
         }, {
             field: 'info',
             title: '描述说明',
-            align: 'center'
+            align: 'left',
+            formatter:function(value, row, index) {
+                return '<a href="#" class="tooltip-demo" data-toggle="tooltip" data-placement="right" title="'+value+'">查看</a>';
+            }
         }, {
             field: 'groupId',
             title: '操作',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
@@ -80,6 +84,16 @@
     }
 
 })();
+
+/**
+ * 数据加载成功后刷新
+ */
+function successLoad() {
+    // tooltips
+    $('[data-toggle=tooltip]').tooltip({
+        container: "body"
+    });
+}
 
 // 新增窗口
 function addWin(){

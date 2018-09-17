@@ -30,34 +30,34 @@
         columns: [{
             field: 'engineRoom',
             title: '机房',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 return '<i class="fa fa-flag">&nbsp;</i>' + value;
             }
         }, {
             field: 'nodeNo',
             title: '节点编码',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'sshAddr',
             title: 'SSH地址',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'sshAccount',
             title: 'SSH账号',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'detectIp',
             title: '探测IP',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'derectPort',
             title: '探测端口',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'status',
             title: '状态',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
 
                 if (value && value == 'CREATED') {
@@ -73,11 +73,11 @@
         }, {
             field: 'rebootTime',
             title: '重启时间',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'nodeId',
             title: '操作',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 //value：当前field的值，即userId
                 //row：当前行的数据

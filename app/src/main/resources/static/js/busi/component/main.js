@@ -31,18 +31,18 @@
         columns: [{
             field: 'name',
             title: '组件名',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 return '<i class="fa fa-cube">&nbsp;</i>' + value;
             }
         }, {
             field: 'compCode',
             title: '编码',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'type',
             title: '类型',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'AUTH') {
                     return '认证';
@@ -65,7 +65,7 @@
         }, {
             field: 'compId',
             title: '脚本',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (row.contentId) {
                     return '<a href="/component/downfile?compId='+value+'">下载</a>';
@@ -74,11 +74,11 @@
         }, {
             field: 'version',
             title: '版本',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'execPosition',
             title: '执行位置',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'PRE') {
                     return '前置';
@@ -93,11 +93,11 @@
         }, {
             field: 'priority',
             title: '优先级',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'status',
             title: '状态',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'ON') {
                     return '<span class="label label-running">已启用</span>';
@@ -108,7 +108,7 @@
         }, {
             field: 'compId',
             title: '操作',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 //value：当前field的值，即userId
                 //row：当前行的数据

@@ -30,22 +30,22 @@
         columns: [{
             field: 'name',
             title: '服务名',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 return '<i class="fa fa-fire">&nbsp;</i>' + value;
             }
         }, {
             field: 'serviceCode',
             title: '服务编码',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'hosts',
             title: '后端服务HOSTS',
-            align: 'center'
+            align: 'left'
         }, {
             field: 'status',
             title: '状态',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 if (value && value == 'ON') {
                     return '<span class="label label-running">已上线</span>';
@@ -56,7 +56,7 @@
         }, {
             field: 'serviceId',
             title: '操作',
-            align: 'center',
+            align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
