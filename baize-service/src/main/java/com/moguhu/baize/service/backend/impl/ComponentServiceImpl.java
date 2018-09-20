@@ -2,13 +2,15 @@ package com.moguhu.baize.service.backend.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
+import com.moguhu.baize.client.model.ComponentDto;
 import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.constants.content.RichContentTypeEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
-import com.moguhu.baize.metadata.mapper.backend.ComponentEntityMapper;
 import com.moguhu.baize.metadata.entity.backend.ComponentEntity;
 import com.moguhu.baize.metadata.entity.common.RichContentEntity;
+import com.moguhu.baize.metadata.mapper.backend.ComponentEntityMapper;
 import com.moguhu.baize.metadata.request.backend.ComponentSaveRequest;
 import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
 import com.moguhu.baize.metadata.request.backend.ComponentUpdateRequest;
@@ -151,5 +153,32 @@ public class ComponentServiceImpl implements ComponentService {
             componentEntities.forEach(componentEntity -> result.add(componentEntity.getCompId()));
         }
         return result;
+    }
+
+    @Override
+    public ComponentDto getComponent(Long compId) {
+        ComponentDto response = new ComponentDto();
+        ComponentEntity entity = componentEntityMapper.selectById(compId);
+        if (entity != null) {
+            response = DozerUtil.map(entity, ComponentDto.class);
+            RichContentEntity contentEntity = richContentService.selectById(entity.getContentId());
+            response.setCompContent(contentEntity.getContent());
+        }
+        return response;
+    }
+
+    @Override
+    public List<ComponentDto> getComponents(List<Long> compList) {
+        final List<ComponentDto> componentDtos = Lists.newArrayList();
+        List<ComponentEntity> entityList = componentEntityMapper.selectByIds(compList);
+        if (!CollectionUtils.isEmpty(entityList)) {
+            entityList.forEach(entity -> {
+                ComponentDto componentDto = DozerUtil.map(entity, ComponentDto.class);
+                RichContentEntity contentEntity = richContentService.selectById(entity.getContentId());
+                componentDto.setCompContent(contentEntity.getContent());
+                componentDtos.add(componentDto);
+            });
+        }
+        return componentDtos;
     }
 }

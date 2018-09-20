@@ -1,6 +1,7 @@
 package com.moguhu.baize.service.backend;
 
 
+import com.moguhu.baize.client.model.ComponentDto;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.request.backend.ComponentSaveRequest;
 import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
@@ -83,4 +84,20 @@ public interface ComponentService {
      * @return
      */
     List<Long> queryByApi(Long apiId);
+
+    /**
+     * Gateway 拉取组件
+     *
+     * @param compId
+     * @return
+     */
+    ComponentDto getComponent(Long compId);
+
+    /**
+     * GateWay 拉取组件列表
+     *
+     * @param compList
+     * @return
+     */
+    List<ComponentDto> getComponents(List<Long> compList);
 }

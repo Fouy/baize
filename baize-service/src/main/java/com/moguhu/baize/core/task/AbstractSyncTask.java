@@ -1,10 +1,11 @@
 package com.moguhu.baize.core.task;
 
 import com.alibaba.fastjson.JSON;
+import com.moguhu.baize.client.model.ApiZkStorage;
 import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.constants.zookeeper.ZookeeperKey;
 import com.moguhu.baize.common.utils.curator.CuratorClient;
-import com.moguhu.baize.core.zookeeper.model.ApiZkStorage;
+import com.moguhu.baize.core.ZookeeperModelConvert;
 import com.moguhu.baize.metadata.entity.api.ApiEntity;
 import com.moguhu.baize.metadata.entity.api.ApiGroupEntity;
 import com.moguhu.baize.metadata.entity.backend.GateServiceEntity;
@@ -53,6 +54,8 @@ public abstract class AbstractSyncTask implements Callable<Long> {
     private ApiParamService apiParamService;
     @Autowired
     private ApiParamMapService apiParamMapService;
+    @Autowired
+    private ZookeeperModelConvert modelConvert;
 
     /**
      * Gate service zookeeper path
@@ -166,8 +169,8 @@ public abstract class AbstractSyncTask implements Callable<Long> {
 
                     ApiZkStorage apiZkStorage = new ApiZkStorage();
                     apiZkStorage.setCompIds(compIds);
-                    apiZkStorage.setParams(apiParamList);
-                    apiZkStorage.setMappings(apiParamMapList);
+                    apiZkStorage.setParams(modelConvert.convertParams(apiParamList));
+                    apiZkStorage.setMappings(modelConvert.convertMappings(apiParamMapList));
                     String storageStr = URLEncoder.encode(JSON.toJSONString(apiZkStorage), "UTF-8");
 
                     client.createNode(apiPath, storageStr, CreateMode.PERSISTENT);

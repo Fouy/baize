@@ -2,6 +2,7 @@ package com.moguhu.baize.metadata.mapper.backend;
 
 import com.moguhu.baize.metadata.entity.backend.ComponentEntity;
 import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -56,4 +57,12 @@ public interface ComponentEntityMapper {
      * @return
      */
     List<ComponentEntity> queryByApi(Long apiId);
+
+    /**
+     * 根据 compList 获取组件列表
+     *
+     * @param compList
+     * @return
+     */
+    List<ComponentEntity> selectByIds(@Param("compList") List<Long> compList);
 }

@@ -212,4 +212,17 @@
         t2.api_id = #{apiId,jdbcType=BIGINT}
   </select>
 
+  <!-- 根据 compList 获取组件列表 -->
+  <select id="selectByIds" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from component
+    where comp_id IN
+    (
+    <foreach collection="compList" item="entry" separator=",">
+        #{entry,jdbcType=BIGINT}
+    </foreach>
+    )
+  </select>
+
 </mapper>

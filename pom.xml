@@ -10,6 +10,7 @@
   <modules>
     <module>baize-manager</module>
     <module>baize-service</module>
+    <module>baize-client</module>
   </modules>
   
   	<properties>
