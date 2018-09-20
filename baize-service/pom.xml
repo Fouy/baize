@@ -4,10 +4,10 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>service</artifactId>
+	<artifactId>baize-service</artifactId>
 	<packaging>jar</packaging>
 
-	<name>service</name>
+	<name>baize-service</name>
 	<description>jar</description>
 
 	<parent>

@@ -4,11 +4,11 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>app</artifactId>
+	<artifactId>baize-manager</artifactId>
 	<packaging>war</packaging>
 
-	<name>app</name>
-	<description>app</description>
+	<name>baize-manager</name>
+	<description>baize-manager</description>
 
 	<parent>
 		<groupId>com.moguhu.baize</groupId>
@@ -26,7 +26,7 @@
 
 		<dependency>
 		    <groupId>com.moguhu.baize</groupId>
-		    <artifactId>service</artifactId>
+		    <artifactId>baize-service</artifactId>
 		    <version>1.0.0-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
@@ -67,7 +67,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>baize-app</finalName>
+		<finalName>baize-manager</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

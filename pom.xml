@@ -8,10 +8,8 @@
   <packaging>pom</packaging>
   
   <modules>
-    <module>app</module>
-    <!--<module>common</module>-->
-    <!--<module>metadata</module>-->
-    <module>service</module>
+    <module>baize-manager</module>
+    <module>baize-service</module>
   </modules>
   
   	<properties>
