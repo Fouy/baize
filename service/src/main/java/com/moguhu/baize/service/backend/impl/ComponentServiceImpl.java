@@ -6,7 +6,7 @@ import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.constants.content.RichContentTypeEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
-import com.moguhu.baize.metadata.dao.mapper.backend.ComponentEntityMapper;
+import com.moguhu.baize.metadata.mapper.backend.ComponentEntityMapper;
 import com.moguhu.baize.metadata.entity.backend.ComponentEntity;
 import com.moguhu.baize.metadata.entity.common.RichContentEntity;
 import com.moguhu.baize.metadata.request.backend.ComponentSaveRequest;

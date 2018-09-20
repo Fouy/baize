@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
-import com.moguhu.baize.metadata.dao.mapper.backend.GateNodeEntityMapper;
+import com.moguhu.baize.metadata.mapper.backend.GateNodeEntityMapper;
 import com.moguhu.baize.metadata.entity.backend.GateNodeEntity;
 import com.moguhu.baize.metadata.request.backend.GateNodeSaveRequest;
 import com.moguhu.baize.metadata.request.backend.GateNodeSearchRequest;

@@ -5,7 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.moguhu.baize.common.constants.api.ApiParamStatuslEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
-import com.moguhu.baize.metadata.dao.mapper.api.ApiParamEntityMapper;
+import com.moguhu.baize.metadata.mapper.api.ApiParamEntityMapper;
 import com.moguhu.baize.metadata.entity.api.ApiParamEntity;
 import com.moguhu.baize.metadata.request.api.ApiParamSaveRequest;
 import com.moguhu.baize.metadata.request.api.ApiParamSearchRequest;

@@ -2,7 +2,7 @@ package com.moguhu.baize.service.user.impl;
 
 import com.moguhu.baize.common.constants.user.RoleEnum;
 import com.moguhu.baize.common.vo.user.UserRole;
-import com.moguhu.baize.metadata.dao.mapper.user.UserEntityMapper;
+import com.moguhu.baize.metadata.mapper.user.UserEntityMapper;
 import com.moguhu.baize.metadata.entity.user.UserEntity;
 import com.moguhu.baize.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.moguhu.baize.service.common.impl;
 
-import com.moguhu.baize.metadata.dao.mapper.common.RichContentEntityMapper;
+import com.moguhu.baize.metadata.mapper.common.RichContentEntityMapper;
 import com.moguhu.baize.metadata.entity.common.RichContentEntity;
 import com.moguhu.baize.service.common.RichContentService;
 import org.springframework.beans.factory.annotation.Autowired;

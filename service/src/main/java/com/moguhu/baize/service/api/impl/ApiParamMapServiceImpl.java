@@ -6,7 +6,7 @@ import com.moguhu.baize.common.constants.api.ApiParamStatuslEnum;
 import com.moguhu.baize.common.constants.api.ParamMapTypeEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
-import com.moguhu.baize.metadata.dao.mapper.api.ApiParamMapEntityMapper;
+import com.moguhu.baize.metadata.mapper.api.ApiParamMapEntityMapper;
 import com.moguhu.baize.metadata.entity.api.ApiParamEntity;
 import com.moguhu.baize.metadata.entity.api.ApiParamMapEntity;
 import com.moguhu.baize.metadata.request.api.ApiParamMapSaveRequest;

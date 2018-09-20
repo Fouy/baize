@@ -6,7 +6,7 @@ import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.utils.DozerUtil;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.core.task.SingleServiceSyncTask;
-import com.moguhu.baize.metadata.dao.mapper.backend.GateServiceEntityMapper;
+import com.moguhu.baize.metadata.mapper.backend.GateServiceEntityMapper;
 import com.moguhu.baize.metadata.entity.backend.GateServiceEntity;
 import com.moguhu.baize.metadata.request.backend.GateServiceSaveRequest;
 import com.moguhu.baize.metadata.request.backend.GateServiceSearchRequest;

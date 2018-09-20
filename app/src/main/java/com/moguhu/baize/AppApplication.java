@@ -26,7 +26,7 @@ import java.util.List;
 
 
 @SpringBootApplication
-@MapperScan("com.moguhu.baize.metadata.dao.mapper.*")
+@MapperScan("com.moguhu.baize.metadata.mapper.*")
 @EnableMethodCache(basePackages = "com.moguhu.baize")
 @EnableCreateCacheAnnotation
 public class AppApplication extends SpringBootServletInitializer {

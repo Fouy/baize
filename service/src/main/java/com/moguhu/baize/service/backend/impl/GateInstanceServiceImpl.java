@@ -3,7 +3,7 @@ package com.moguhu.baize.service.backend.impl;
 import com.moguhu.baize.common.constants.zookeeper.ZookeeperKey;
 import com.moguhu.baize.common.utils.curator.CuratorClient;
 import com.moguhu.baize.common.vo.PageListDto;
-import com.moguhu.baize.metadata.dao.mapper.backend.GateServiceEntityMapper;
+import com.moguhu.baize.metadata.mapper.backend.GateServiceEntityMapper;
 import com.moguhu.baize.metadata.entity.backend.GateServiceEntity;
 import com.moguhu.baize.metadata.response.backend.GateInstanceResponse;
 import com.moguhu.baize.service.backend.GateInstanceService;

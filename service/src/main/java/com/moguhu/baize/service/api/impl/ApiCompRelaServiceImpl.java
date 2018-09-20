@@ -1,6 +1,6 @@
 package com.moguhu.baize.service.api.impl;
 
-import com.moguhu.baize.metadata.dao.mapper.api.ApiCompRelaEntityMapper;
+import com.moguhu.baize.metadata.mapper.api.ApiCompRelaEntityMapper;
 import com.moguhu.baize.metadata.entity.api.ApiCompRelaEntity;
 import com.moguhu.baize.service.api.ApiCompRelaService;
 import org.slf4j.Logger;

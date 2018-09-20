@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moguhu.baize.metadata.mapper.backend.GateServiceEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.moguhu.baize.metadata.entity.backend.GateServiceEntity" >
+    <id column="service_id" property="serviceId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="service_code" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="hosts" property="hosts" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="ext_info" property="extInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    service_id, create_time, modify_time, `name`, service_code, hosts, `status`, ext_info
+  </sql>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gate_service
+    where service_id = #{serviceId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from gate_service
+    where service_id = #{serviceId,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.moguhu.baize.metadata.entity.backend.GateServiceEntity" useGeneratedKeys="true" keyProperty="serviceId" >
+    insert into gate_service
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        create_time,
+        modify_time,
+      <if test="name != null" >
+        `name`,
+      </if>
+      <if test="serviceCode != null" >
+        service_code,
+      </if>
+      <if test="hosts != null" >
+        hosts,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="extInfo != null" >
+        ext_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        NOW(),
+        NOW(),
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hosts != null" >
+        #{hosts,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="extInfo != null" >
+        #{extInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.moguhu.baize.metadata.entity.backend.GateServiceEntity" >
+    update gate_service
+    <set >
+        modify_time = NOW(),
+      <if test="name != null" >
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        service_code = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hosts != null" >
+        hosts = #{hosts,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="extInfo != null" >
+        ext_info = #{extInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where service_id = #{serviceId,jdbcType=BIGINT}
+  </update>
+
+  <!-- 查询列表 -->
+  <select id="queryAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from gate_service
+    where 1=1
+    <if test="name != null and name != '' " >
+      and `name` = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null and status != '' " >
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+    order by service_id desc
+  </select>
+
+  <!-- 加锁 -->
+  <select id="lock" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from gate_service
+    where service_id = #{serviceId,jdbcType=BIGINT} for update
+  </select>
+  
+</mapper>
