@@ -33,7 +33,7 @@ public class ApiGroupDto {
     /**
      * 服务编码.
      */
-    private Long gateServiceCode;
+    private String gateServiceCode;
 
     public List<ApiDto> getApiList() {
         return apiList;
@@ -59,11 +59,11 @@ public class ApiGroupDto {
         this.componentList = componentList;
     }
 
-    public Long getGateServiceCode() {
+    public String getGateServiceCode() {
         return gateServiceCode;
     }
 
-    public void setGateServiceCode(Long gateServiceCode) {
+    public void setGateServiceCode(String gateServiceCode) {
         this.gateServiceCode = gateServiceCode;
     }
 

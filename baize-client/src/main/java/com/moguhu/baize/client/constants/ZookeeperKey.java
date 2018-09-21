@@ -1,4 +1,4 @@
-package com.moguhu.baize.common.constants.zookeeper;
+package com.moguhu.baize.client.constants;
 
 /**
  * ZooKeeper key

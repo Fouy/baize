@@ -60,4 +60,17 @@ public class ManagerController extends BaseController {
         }
     }
 
+    // TODO 后续需要做分页拉取
+    @RequestMapping("/allcomponents")
+    @ResponseBody
+    public AjaxResult allComponents() {
+        try {
+            List<ComponentDto> components = componentService.allComponents();
+            return AjaxResult.success(components);
+        } catch (Exception e) {
+            logger.error("全量拉取组件出错, e={}", e);
+            return AjaxResult.error("全量拉取组件出错");
+        }
+    }
+
 }

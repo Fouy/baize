@@ -1,6 +1,6 @@
 package com.moguhu.baize.service.backend.impl;
 
-import com.moguhu.baize.common.constants.zookeeper.ZookeeperKey;
+import com.moguhu.baize.client.constants.ZookeeperKey;
 import com.moguhu.baize.common.utils.curator.CuratorClient;
 import com.moguhu.baize.common.vo.PageListDto;
 import com.moguhu.baize.metadata.mapper.backend.GateServiceEntityMapper;

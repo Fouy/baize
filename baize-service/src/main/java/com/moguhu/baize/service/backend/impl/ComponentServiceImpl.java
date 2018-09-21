@@ -169,8 +169,18 @@ public class ComponentServiceImpl implements ComponentService {
 
     @Override
     public List<ComponentDto> getComponents(List<Long> compList) {
-        final List<ComponentDto> componentDtos = Lists.newArrayList();
         List<ComponentEntity> entityList = componentEntityMapper.selectByIds(compList);
+        return convertComponentDto(entityList);
+    }
+
+    @Override
+    public List<ComponentDto> allComponents() {
+        List<ComponentEntity> entityList = componentEntityMapper.queryAll(new ComponentSearchRequest());
+        return convertComponentDto(entityList);
+    }
+
+    private List<ComponentDto> convertComponentDto(List<ComponentEntity> entityList) {
+        final List<ComponentDto> componentDtos = Lists.newArrayList();
         if (!CollectionUtils.isEmpty(entityList)) {
             entityList.forEach(entity -> {
                 ComponentDto componentDto = DozerUtil.map(entity, ComponentDto.class);
@@ -181,4 +191,5 @@ public class ComponentServiceImpl implements ComponentService {
         }
         return componentDtos;
     }
+
 }

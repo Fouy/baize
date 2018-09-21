@@ -100,4 +100,10 @@ public interface ComponentService {
      * @return
      */
     List<ComponentDto> getComponents(List<Long> compList);
+
+    /**
+     * 获取所有组件
+     * @return
+     */
+    List<ComponentDto> allComponents();
 }

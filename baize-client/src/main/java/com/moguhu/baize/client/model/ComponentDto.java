@@ -39,6 +39,11 @@ public class ComponentDto implements Serializable {
      */
     private String compContent;
 
+    /**
+     * GateWay 存储时文件名
+     */
+    private String fileName;
+
     public String getCompCode() {
         return compCode;
     }
@@ -85,6 +90,14 @@ public class ComponentDto implements Serializable {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override

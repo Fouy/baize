@@ -1,7 +1,7 @@
 package com.moguhu.baize.core.task;
 
+import com.moguhu.baize.client.constants.ZookeeperKey;
 import com.moguhu.baize.common.constants.StatusEnum;
-import com.moguhu.baize.common.constants.zookeeper.ZookeeperKey;
 import com.moguhu.baize.metadata.response.backend.GateServiceResponse;
 import com.moguhu.baize.service.backend.GateServiceService;
 import org.springframework.beans.factory.annotation.Autowired;

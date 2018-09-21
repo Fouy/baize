@@ -1,6 +1,6 @@
 package com.moguhu.baize.core.init;
 
-import com.moguhu.baize.common.constants.zookeeper.ZookeeperKey;
+import com.moguhu.baize.client.constants.ZookeeperKey;
 import com.moguhu.baize.common.utils.curator.CuratorClient;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.zookeeper.CreateMode;
