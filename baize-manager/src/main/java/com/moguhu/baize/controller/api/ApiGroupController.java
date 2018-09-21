@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * API分组 管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/6.
  */
 @RestController
 @RequestMapping("/apigroup")

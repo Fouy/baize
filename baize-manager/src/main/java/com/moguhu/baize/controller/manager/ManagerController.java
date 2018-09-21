@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 组件拉取
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/20.
  */
 @RestController
 @RequestMapping("/manager")

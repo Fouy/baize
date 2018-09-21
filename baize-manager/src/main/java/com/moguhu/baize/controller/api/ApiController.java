@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * API管理
  *
- * @author xuefeihu
+ * Created by xuefeihu on 18/9/6.
  */
 @RestController
 @RequestMapping("/api")
