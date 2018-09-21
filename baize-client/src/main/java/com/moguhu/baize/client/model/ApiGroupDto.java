@@ -21,9 +21,9 @@ public class ApiGroupDto {
     private Long groupId;
 
     /**
-     * 分组名称.
+     * 路径.
      */
-    private String name;
+    private String path;
 
     /**
      * 分组类型：COMMON 普通  .
@@ -75,19 +75,19 @@ public class ApiGroupDto {
         this.groupId = groupId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

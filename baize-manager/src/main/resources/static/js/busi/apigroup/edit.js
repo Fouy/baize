@@ -7,12 +7,14 @@ $().ready(function () {
         rules: {
             name: "required",
             type: "required",
+            path: "required",
             serviceId: "required",
             info: "required"
         },
         messages: {
             name: icon + "请输入分组名称",
             type: icon + "请选择类型",
+            path: icon + "请输入路径",
             serviceId: icon + "请输入服务ID",
             info: icon + "请输入描述说明"
         }
@@ -55,6 +57,7 @@ function initGateService() {
                     }
                     $('#name').val(entity.name);
                     $('#type').val(entity.type);
+                    $('#path').val(entity.path);
                     $('#serviceId').val(entity.serviceId);
                     $('#info').val(entity.info);
                 } else {
@@ -78,6 +81,7 @@ function saveEdit() {
     data.groupId = $('#groupId').val();
     data.name = $('#name').val();
     data.type = $('#type').val();
+    data.path = $('#path').val();
     data.serviceId = $('#serviceId').val();
     data.info = $('#info').val();
     $.post("/apigroup/update", data, function (result) {

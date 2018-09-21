@@ -45,6 +45,10 @@
                 }
             }
         }, {
+            field: 'path',
+            title: '路径',
+            align: 'left'
+        }, {
             field: 'serviceName',
             title: '网关服务',
             align: 'left'

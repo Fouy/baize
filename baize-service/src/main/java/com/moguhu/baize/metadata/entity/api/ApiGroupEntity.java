@@ -34,6 +34,11 @@ public class ApiGroupEntity implements Serializable {
     private String type;
 
     /**
+     * 分组URI前缀.
+     */
+    private String path;
+
+    /**
      * 服务ID.
      */
     private Long serviceId;
@@ -114,4 +119,11 @@ public class ApiGroupEntity implements Serializable {
         this.extInfo = extInfo;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

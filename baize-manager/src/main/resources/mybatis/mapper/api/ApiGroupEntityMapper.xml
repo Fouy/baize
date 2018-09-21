@@ -7,13 +7,14 @@
     <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="service_id" property="serviceId" jdbcType="BIGINT" />
     <result column="info" property="info" jdbcType="VARCHAR" />
     <result column="ext_info" property="extInfo" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    group_id, create_time, modify_time, `name`, `type`, service_id, info, ext_info
+    group_id, create_time, modify_time, `name`, `type`, path, service_id, info, ext_info
   </sql>
 
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -39,6 +40,9 @@
       <if test="type != null" >
         `type`,
       </if>
+      <if test="path != null" >
+        path,
+      </if>
       <if test="serviceId != null" >
         service_id,
       </if>
@@ -57,6 +61,9 @@
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
       </if>
       <if test="serviceId != null" >
         #{serviceId,jdbcType=BIGINT},
@@ -80,6 +87,9 @@
       <if test="type != null" >
         `type` = #{type,jdbcType=VARCHAR},
       </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
       <if test="serviceId != null" >
         service_id = #{serviceId,jdbcType=BIGINT},
       </if>
@@ -101,6 +111,7 @@
         t1.modify_time as modify_time ,
         t1.`name` as `name` ,
         t1.`type` as `type` ,
+        t1.path as path ,
         t1.service_id as service_id ,
         t1.info as info ,
         t1.ext_info as ext_info

@@ -113,7 +113,7 @@ public class ApiGroupController extends BaseController {
     public AjaxResult save(ApiGroupSaveRequest request) {
         try {
             if (StringUtils.isEmpty(request.getName()) || StringUtils.isEmpty(request.getType())
-                    || null == request.getServiceId()) {
+                    || null == request.getServiceId() || StringUtils.isEmpty(request.getPath())) {
                 return AjaxResult.error("参数有误");
             }
 
