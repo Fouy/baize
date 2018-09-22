@@ -107,10 +107,10 @@
             align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
-                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
+                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-sm dropdown-toggle">更多&nbsp;<span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editBaseWin('+value+')>编辑</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=delBaseParamWin('+value+')>删除</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editBaseWin('+value+')><i class="fa fa-edit">&nbsp;</i>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delBaseParamWin('+value+')><i class="fa fa-trash-o">&nbsp;</i>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;
@@ -204,10 +204,10 @@
             align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
-                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
+                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-sm dropdown-toggle">更多&nbsp;<span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editBackWin('+value+',"' + $('#apiId').val() + '")>编辑</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=delBackParamWin('+value+')>删除</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editBackWin('+value+',"' + $('#apiId').val() + '")><i class="fa fa-edit">&nbsp;</i>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delBackParamWin('+value+')><i class="fa fa-trash-o">&nbsp;</i>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;
@@ -301,10 +301,10 @@
             align: 'left',
             formatter:function(value, row, index) {
                 var a = '<div class="btn-group">';
-                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
+                a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-sm dropdown-toggle">更多&nbsp;<span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editBackConstantWin('+value+',"' + $('#apiId').val() + '")>编辑</a></li>';
-                a = a +         '<li><a href="javascript:void(0)" onclick=delBackParamWin('+value+')>删除</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editBackConstantWin('+value+',"' + $('#apiId').val() + '")><i class="fa fa-edit">&nbsp;</i>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=delBackParamWin('+value+')><i class="fa fa-trash-o">&nbsp;</i>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
                 return a;

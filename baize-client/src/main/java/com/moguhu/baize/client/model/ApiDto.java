@@ -3,6 +3,7 @@ package com.moguhu.baize.client.model;
 import com.moguhu.baize.client.constants.BooleanEnum;
 import com.moguhu.baize.client.constants.ProtocolEnum;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,9 +11,29 @@ import java.util.List;
  * <p>
  * Created by xuefeihu on 18/9/19.
  */
-public class ApiDto extends ApiZkStorage {
+public class ApiDto implements Serializable {
 
     private List<ComponentDto> componentList;
+
+//////////////////////////////////////////////////////
+// 上面为辅助变量, 下面为ZK 存储
+//////////////////////////////////////////////////////
+
+    /**
+     * component ids.
+     */
+    private List<Long> compIds;
+
+    /**
+     * parameters.
+     */
+    private List<ApiParamDto> params;
+
+    /**
+     * parameter mappings.
+     */
+    private List<ApiParamMapDto> mappings;
+
 
     /**
      * 主键ID.
@@ -115,5 +136,29 @@ public class ApiDto extends ApiZkStorage {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public List<Long> getCompIds() {
+        return compIds;
+    }
+
+    public void setCompIds(List<Long> compIds) {
+        this.compIds = compIds;
+    }
+
+    public List<ApiParamMapDto> getMappings() {
+        return mappings;
+    }
+
+    public void setMappings(List<ApiParamMapDto> mappings) {
+        this.mappings = mappings;
+    }
+
+    public List<ApiParamDto> getParams() {
+        return params;
+    }
+
+    public void setParams(List<ApiParamDto> params) {
+        this.params = params;
     }
 }

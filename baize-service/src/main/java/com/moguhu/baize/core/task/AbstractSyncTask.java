@@ -2,7 +2,8 @@ package com.moguhu.baize.core.task;
 
 import com.alibaba.fastjson.JSON;
 import com.moguhu.baize.client.constants.ZookeeperKey;
-import com.moguhu.baize.client.model.ApiZkStorage;
+import com.moguhu.baize.client.model.ApiDto;
+import com.moguhu.baize.client.model.ApiGroupDto;
 import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.utils.curator.CuratorClient;
 import com.moguhu.baize.core.ZookeeperModelConvert;
@@ -167,13 +168,14 @@ public abstract class AbstractSyncTask implements Callable<Long> {
                     param1.setApiId(api.getApiId());
                     List<ApiParamMapResponse> apiParamMapList = apiParamMapService.all(param1);
 
-                    ApiZkStorage apiZkStorage = new ApiZkStorage();
-                    apiZkStorage.setCompIds(compIds);
-                    apiZkStorage.setParams(modelConvert.convertParams(apiParamList));
-                    apiZkStorage.setMappings(modelConvert.convertMappings(apiParamMapList));
-                    String storageStr = URLEncoder.encode(JSON.toJSONString(apiZkStorage), "UTF-8");
+                    ApiDto apiDto = new ApiDto();
+                    apiDto.setCompIds(compIds);
+                    apiDto.setParams(modelConvert.convertParams(apiParamList));
+                    apiDto.setMappings(modelConvert.convertMappings(apiParamMapList));
+                    modelConvert.convertApi(apiDto, api);
 
-                    client.createNode(apiPath, storageStr, CreateMode.PERSISTENT);
+                    String apiStr = URLEncoder.encode(JSON.toJSONString(apiDto), "UTF-8");
+                    client.createNode(apiPath, apiStr, CreateMode.PERSISTENT);
                 } catch (Exception e) {
                     logger.info(" /baize/zuul/${serviceCode}/apigroup/${group}/${api} node has exists. ");
                     // do nothing
@@ -198,8 +200,9 @@ public abstract class AbstractSyncTask implements Callable<Long> {
             try {
                 // 存入 Group 组件信息
                 List<Long> compIds = componentService.queryByApiGroup(apiGroup.getGroupId());
-                String compIdsStr = URLEncoder.encode(JSON.toJSONString(compIds), "UTF-8");
-                client.createNode(apiGroupPath, compIdsStr, CreateMode.PERSISTENT);
+                ApiGroupDto apiGroupDto = modelConvert.convertApiGroup(apiGroup, compIds);
+                String apiGroupStr = URLEncoder.encode(JSON.toJSONString(apiGroupDto), "UTF-8");
+                client.createNode(apiGroupPath, apiGroupStr, CreateMode.PERSISTENT);
             } catch (Exception e) {
                 logger.warn(" /baize/zuul/${serviceCode}/apigroup/${group} node has exists. ");
                 // do nothing

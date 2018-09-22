@@ -13,7 +13,11 @@ public class ApiGroupDto {
 
     private List<ApiDto> apiList;
 
-    private List<String> compIds;
+//////////////////////////////////////////////////////
+// 上面为辅助变量, 下面为ZK 存储
+//////////////////////////////////////////////////////
+
+    private List<Long> compIds;
 
     /**
      * 主键ID.
@@ -48,11 +52,11 @@ public class ApiGroupDto {
         this.apiList = apiList;
     }
 
-    public List<String> getCompIds() {
+    public List<Long> getCompIds() {
         return compIds;
     }
 
-    public void setCompIds(List<String> compIds) {
+    public void setCompIds(List<Long> compIds) {
         this.compIds = compIds;
     }
 
