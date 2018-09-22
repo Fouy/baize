@@ -38,6 +38,7 @@ function saveAdd() {
     data.name = $('#name').val();
     data.position = $('#position').val();
     data.type = $('#type').val();
+    data.defaultValue = $('#defaultValue').val();
     data.info = $('#info').val();
     // 是否缓存转换
     if (needCheck.isChecked()) {

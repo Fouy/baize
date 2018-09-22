@@ -59,6 +59,11 @@ public class ApiParamEntity implements Serializable {
     private String need;
 
     /**
+     * 默认值.
+     */
+    private String defaultValue;
+
+    /**
      * 描述说明.
      */
     private String info;
@@ -163,5 +168,13 @@ public class ApiParamEntity implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 }

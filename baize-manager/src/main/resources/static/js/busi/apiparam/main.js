@@ -83,6 +83,10 @@
                 }
             }
         }, {
+            field: 'defaultValue',
+            title: '默认值',
+            align: 'left'
+        }, {
             field: 'info',
             title: '描述说明',
             align: 'left'
@@ -187,6 +191,10 @@
                 }
             }
         }, {
+            field: 'defaultValue',
+            title: '默认值',
+            align: 'left'
+        }, {
             field: 'info',
             title: '描述说明',
             align: 'left'
@@ -219,7 +227,7 @@
         pageNumber:1,      //初始化加载第一页，默认第一页
         pageSize: 10,      //每页的记录行数（*）
         pageList: [50, 100],  //可供选择的每页的行数（*）
-        url: "/apiparammap/list?mapType=CUSTOM&apiId="+apiId,
+        url: "/apiparammap/list?mapType=CONSTANT&apiId="+apiId,
         queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
                             // 设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
         //queryParams: queryParams,//前端调用服务时，会默认传递上边提到的参数，如果需要添加自定义参数，可以自定义一个函数返回请求参数
@@ -279,6 +287,10 @@
                     return '否';
                 }
             }
+        }, {
+            field: 'defaultValue',
+            title: '默认值',
+            align: 'left'
         }, {
             field: 'info',
             title: '描述说明',

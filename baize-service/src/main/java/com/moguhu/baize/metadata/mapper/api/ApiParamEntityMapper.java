@@ -7,6 +7,7 @@ import com.moguhu.baize.metadata.request.api.ApiParamSearchRequest;
 import java.util.List;
 
 public interface ApiParamEntityMapper {
+
     /**
      * 通过id物理删除api_param的数据.
      */

@@ -38,7 +38,7 @@ function initBaseParamList() {
     paramId.empty();
     var optAll = $('<option></option>');
     optAll.attr('value', '');
-    optAll.append('--新参数--');
+    optAll.append('--请选择--');
     optAll.appendTo(paramId);
 
     $.get("/apiparam/all", {apiId : $('#apiId').val()}, function (result) {
@@ -70,6 +70,7 @@ function initFormData() {
         $('#name').val(entity.name);
         $('#position').val(entity.position);
         $('#type').val(entity.type);
+        $('#defaultValue').val(entity.defaultValue);
         $('#info').val(entity.info);
 
         // 设置是否必须
@@ -93,6 +94,7 @@ function saveEdit() {
     data.paramId = $('#paramId').val();
     data.name = $('#name').val();
     data.position = $('#position').val();
+    data.defaultValue = $('#defaultValue').val();
     data.info = $('#info').val();
 
     $.post("/apiparammap/update", data, function (result) {

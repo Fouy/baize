@@ -13,11 +13,13 @@ $().ready(function () {
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#addForm").validate({
         rules: {
+            paramId: "required",
             name: "required",
             position: "required",
             type: "required"
         },
         messages: {
+            paramId: icon + "请选择映射参数",
             name: icon + "请输入参数名",
             position: icon + "请选择参数位置",
             type: icon + "请选择类型"
@@ -36,7 +38,7 @@ function initBaseParamList() {
     paramId.empty();
     var optAll = $('<option></option>');
     optAll.attr('value', '');
-    optAll.append('--新参数--');
+    optAll.append('--请选择--');
     optAll.appendTo(paramId);
 
     $.get("/apiparam/allunbind", {apiId : $('#apiId').val()}, function (result) {
@@ -58,6 +60,7 @@ function initBaseParamList() {
                 $('#name').val(entity.name);
                 $('#position').val(entity.position);
                 $('#type').val(entity.type);
+                $('#defaultValue').val(entity.defaultValue);
                 $('#info').val(entity.info);
                 // 设置是否缓存
                 if ('YES' == entity.need) {
@@ -80,6 +83,7 @@ function saveAdd() {
     data.paramId = $('#paramId').val();
     data.name = $('#name').val();
     data.position = $('#position').val();
+    data.defaultValue = $('#defaultValue').val();
     data.info = $('#info').val();
     data.mapType = 'MAP';
 

@@ -6,13 +6,13 @@ import java.util.Map;
 /**
  * API Param 映射类型
  * <p>
- * 映射 MAP  自定义 CUSTOM
+ * 映射 MAP  常量 CONSTANT  自定义 CUSTOM (自定义表达式, 暂不支持)
  *
  * @author xuefeihu
  */
 public enum ParamMapTypeEnum {
 
-    MAP, CUSTOM;
+    MAP, CONSTANT, CUSTOM;
 
     private static final Map<String, ParamMapTypeEnum> mappings = new HashMap<>(2);
 

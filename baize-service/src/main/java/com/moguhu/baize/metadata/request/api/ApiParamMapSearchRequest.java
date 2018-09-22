@@ -1,6 +1,6 @@
 package com.moguhu.baize.metadata.request.api;
 
-import com.moguhu.baize.common.constants.api.ParamMapTypeEnum;
+import com.moguhu.baize.client.constants.ParamMapTypeEnum;
 import com.moguhu.baize.metadata.request.BasePageRequest;
 
 /**
@@ -16,7 +16,7 @@ public class ApiParamMapSearchRequest extends BasePageRequest {
     private Long apiId;
 
     /**
-     * 映射类型： 映射 MAP  自定义 CUSTOM
+     * 映射类型： 映射 MAP  常量 CONSTANT  自定义 CUSTOM
      *
      * @see ParamMapTypeEnum
      */

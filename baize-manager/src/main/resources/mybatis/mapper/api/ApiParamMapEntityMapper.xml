@@ -11,13 +11,14 @@
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="need" property="need" jdbcType="VARCHAR" />
+    <result column="default_value" property="defaultValue" jdbcType="VARCHAR" />
     <result column="info" property="info" jdbcType="VARCHAR" />
     <result column="map_type" property="mapType" jdbcType="VARCHAR" />
     <result column="ext_info" property="extInfo" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    map_id, create_time, modify_time, api_id, param_id, `position`, `type`, `name`, need, info, map_type,
+    map_id, create_time, modify_time, api_id, param_id, `position`, `type`, `name`, need, default_value, info, map_type,
     ext_info
   </sql>
 
@@ -56,6 +57,9 @@
       <if test="need != null" >
         need,
       </if>
+      <if test="defaultValue != null" >
+        default_value,
+      </if>
       <if test="info != null" >
         info,
       </if>
@@ -86,6 +90,9 @@
       </if>
       <if test="need != null" >
         #{need,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultValue != null" >
+        #{defaultValue,jdbcType=VARCHAR},
       </if>
       <if test="info != null" >
         #{info,jdbcType=VARCHAR},
@@ -120,6 +127,9 @@
       </if>
       <if test="need != null" >
         need = #{need,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultValue != null" >
+        default_value = #{defaultValue,jdbcType=VARCHAR},
       </if>
       <if test="info != null" >
         info = #{info,jdbcType=VARCHAR},

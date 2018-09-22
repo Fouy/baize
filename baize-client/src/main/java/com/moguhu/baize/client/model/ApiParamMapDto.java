@@ -56,7 +56,12 @@ public class ApiParamMapDto implements Serializable {
     private String need;
 
     /**
-     * 映射类型： 映射 MAP  自定义 CUSTOM.
+     * 默认值.
+     */
+    private String defaultValue;
+
+    /**
+     * 映射类型： 映射 MAP  常量 CONSTANT  自定义 CUSTOM (自定义表达式, 暂不支持)
      *
      * @see ParamMapTypeEnum
      */
@@ -124,5 +129,13 @@ public class ApiParamMapDto implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 }

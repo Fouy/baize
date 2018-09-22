@@ -1,8 +1,8 @@
 package com.moguhu.baize.metadata.entity.api;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.moguhu.baize.client.constants.ParamMapTypeEnum;
 import com.moguhu.baize.common.constants.BooleanEnum;
-import com.moguhu.baize.common.constants.api.ParamMapTypeEnum;
 import com.moguhu.baize.common.constants.api.ParamTypeEnum;
 import com.moguhu.baize.common.constants.api.PositionEnum;
 
@@ -64,12 +64,17 @@ public class ApiParamMapEntity implements Serializable {
     private String need;
 
     /**
+     * 默认值.
+     */
+    private String defaultValue;
+
+    /**
      * 描述说明.
      */
     private String info;
 
     /**
-     * 映射类型： 映射 MAP  自定义 CUSTOM.
+     * 映射类型： 映射 MAP  常量 CONSTANT  自定义 CUSTOM
      *
      * @see ParamMapTypeEnum
      */
@@ -176,5 +181,13 @@ public class ApiParamMapEntity implements Serializable {
 
     public void setMapType(String mapType) {
         this.mapType = mapType;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 }

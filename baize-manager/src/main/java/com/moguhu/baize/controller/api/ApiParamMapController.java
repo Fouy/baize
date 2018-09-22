@@ -1,8 +1,8 @@
 package com.moguhu.baize.controller.api;
 
 import com.alibaba.fastjson.JSON;
+import com.moguhu.baize.client.constants.ParamMapTypeEnum;
 import com.moguhu.baize.common.constants.BooleanEnum;
-import com.moguhu.baize.common.constants.api.ParamMapTypeEnum;
 import com.moguhu.baize.common.constants.api.ParamTypeEnum;
 import com.moguhu.baize.common.constants.api.PositionEnum;
 import com.moguhu.baize.common.vo.AjaxResult;
@@ -102,11 +102,18 @@ public class ApiParamMapController extends BaseController {
                     || StringUtils.isEmpty(request.getName()) || ParamMapTypeEnum.resolve(request.getMapType()) == null) {
                 return AjaxResult.error("参数有误");
             }
-            // MAP类型: type need 以原参数为准, 自定义需要非空
+            // 1 映射参数 type need 以原参数为准; 2 常量需要非空; 3 自定暂不支持
             ParamMapTypeEnum mapTypeEnum = ParamMapTypeEnum.resolve(request.getMapType());
-            if (mapTypeEnum.matches(ParamMapTypeEnum.CUSTOM.name())
-                    && (ParamTypeEnum.resolve(request.getType()) == null || BooleanEnum.resolve(request.getNeed()) == null)) {
+            if (mapTypeEnum.matches(ParamMapTypeEnum.MAP.name()) && request.getParamId() == null) {
                 return AjaxResult.error("参数有误");
+            }
+            if (mapTypeEnum.matches(ParamMapTypeEnum.CONSTANT.name())
+                    && (ParamTypeEnum.resolve(request.getType()) == null || BooleanEnum.resolve(request.getNeed()) == null
+                    || StringUtils.isEmpty(request.getDefaultValue()))) {
+                return AjaxResult.error("参数有误");
+            }
+            if (mapTypeEnum.matches(ParamMapTypeEnum.CUSTOM.name())) {
+                return AjaxResult.error("暂不支持自定义类型");
             }
 
             apiParamMapService.save(request);
@@ -121,6 +128,10 @@ public class ApiParamMapController extends BaseController {
     @ResponseBody
     public AjaxResult update(ApiParamMapUpdateRequest request) {
         try {
+            if (request.getMapId() == null) {
+                return AjaxResult.error("参数有误");
+            }
+
             apiParamMapService.updateById(request);
             return AjaxResult.success();
         } catch (Exception e) {

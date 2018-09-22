@@ -15,12 +15,14 @@ $().ready(function () {
         rules: {
             name: "required",
             position: "required",
-            type: "required"
+            type: "required",
+            defaultValue: "required"
         },
         messages: {
             name: icon + "请输入参数名",
             position: icon + "请选择参数位置",
-            type: icon + "请选择类型"
+            type: icon + "请选择类型",
+            defaultValue: icon + "请输入默认值"
         }
     });
 
@@ -38,14 +40,11 @@ function saveAdd() {
     data.name = $('#name').val();
     data.position = $('#position').val();
     data.type = $('#type').val();
+    data.defaultValue = $('#defaultValue').val();
     data.info = $('#info').val();
     data.mapType = 'CUSTOM';
-    // 是否必须转换
-    if (needCheck.isChecked()) {
-        data.need = 'YES';
-    } else {
-        data.need = 'NO';
-    }
+    // 常量都为必须
+    data.need = 'YES';
 
     $.post("/apiparammap/save", data, function (result) {
         if (result.code == '1000') {
