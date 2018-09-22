@@ -35,6 +35,11 @@ public class ApiGroupDto {
      */
     private String gateServiceCode;
 
+    /**
+     * 后端服务HOSTS
+     */
+    private String hosts;
+
     public List<ApiDto> getApiList() {
         return apiList;
     }
@@ -89,5 +94,13 @@ public class ApiGroupDto {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getHosts() {
+        return hosts;
+    }
+
+    public void setHosts(String hosts) {
+        this.hosts = hosts;
     }
 }
