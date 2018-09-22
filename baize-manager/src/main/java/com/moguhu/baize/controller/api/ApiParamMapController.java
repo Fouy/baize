@@ -44,15 +44,15 @@ public class ApiParamMapController extends BaseController {
         return mav;
     }
 
-    @RequestMapping("/customadd")
-    public ModelAndView customadd() {
-        ModelAndView mav = new ModelAndView("apiparammap/custom-add");
+    @RequestMapping("/constantadd")
+    public ModelAndView constantadd() {
+        ModelAndView mav = new ModelAndView("apiparammap/constant-add");
         return mav;
     }
 
-    @RequestMapping("/customedit")
-    public ModelAndView customedit() {
-        ModelAndView mav = new ModelAndView("apiparammap/custom-edit");
+    @RequestMapping("/constantedit")
+    public ModelAndView constantedit() {
+        ModelAndView mav = new ModelAndView("apiparammap/constant-edit");
         return mav;
     }
 

@@ -42,7 +42,7 @@ function saveAdd() {
     data.type = $('#type').val();
     data.defaultValue = $('#defaultValue').val();
     data.info = $('#info').val();
-    data.mapType = 'CUSTOM';
+    data.mapType = 'CONSTANT';
     // 常量都为必须
     data.need = 'YES';
 

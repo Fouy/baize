@@ -216,9 +216,9 @@
     });
 
     // 初始化 后端自定义 表格
-    $('#backCustomParamTable').bootstrapTable({
+    $('#backConstantParamTable').bootstrapTable({
         method: 'get',
-        toolbar: '#backCustomParamToolbar',    //工具按钮用哪个容器
+        toolbar: '#backConstantParamToolbar',    //工具按钮用哪个容器
         striped: true,      //是否显示行间隔色
         cache: false,      //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
         pagination: true,
@@ -303,7 +303,7 @@
                 var a = '<div class="btn-group">';
                 a = a +     '<button data-toggle="dropdown" class="btn btn-success btn-outline btn-xs dropdown-toggle">操作 <span class="caret"></span></button>';
                 a = a +     '<ul class="dropdown-menu">';
-                a = a +         '<li><a href="javascript:void(0)" onclick=editBackCustomWin('+value+',"' + $('#apiId').val() + '")>编辑</a></li>';
+                a = a +         '<li><a href="javascript:void(0)" onclick=editBackConstantWin('+value+',"' + $('#apiId').val() + '")>编辑</a></li>';
                 a = a +         '<li><a href="javascript:void(0)" onclick=delBackParamWin('+value+')>删除</a></li>';
                 a = a +     '</ul>';
                 a = a + '</div>';
@@ -384,15 +384,15 @@ function addBackParamWin(){
     });
 }
 
-// 新增 back custom 窗口
-function addBackCustomParamWin(){
+// 新增 back Constant 窗口
+function addBackConstantParamWin(){
   //页面层
     parent.layer.open({
         type: 2,
         title: '新增',
         skin: 'layui-layer-rim', //加上边框
         area: ['1000px', '650px'], //宽高
-        content: '/apiparammap/customadd?apiId=' + $('#apiId').val(),
+        content: '/apiparammap/constantadd?apiId=' + $('#apiId').val(),
         end: function () {
             searchAll();
         }
@@ -427,14 +427,14 @@ function editBackWin(mapId, apiId){
     });
 }
 
-// 编辑 back custom 窗口
-function editBackCustomWin(mapId, apiId){
+// 编辑 back constant 窗口
+function editBackConstantWin(mapId, apiId){
     parent.layer.open({
         type: 2,
         title: '编辑',
         skin: 'layui-layer-rim', //加上边框
         area: ['1000px', '650px'], //宽高
-        content: '/apiparammap/customedit.html?mapId='+mapId+'&apiId='+apiId,
+        content: '/apiparammap/constantedit.html?mapId='+mapId+'&apiId='+apiId,
         end: function () {
             searchAll();
         }
@@ -507,7 +507,7 @@ function delBackParamWin(mapId){
 function searchAll() {
     searchBaseParam();
     searchBackParam();
-    searchBackCustomParam();
+    searchBackConstantParam();
 }
 
 // 搜索 base param
@@ -524,10 +524,10 @@ function searchBackParam(){
     $('#backParamTable').bootstrapTable('refresh',{query : param});
 }
 
-// 搜索 back custom
-function searchBackCustomParam(){
+// 搜索 back constant
+function searchBackConstantParam(){
     var param = {};
     param.apiId = $('#apiId').val();
-    $('#backCustomParamTable').bootstrapTable('refresh',{query : param});
+    $('#backConstantParamTable').bootstrapTable('refresh',{query : param});
 }
 
