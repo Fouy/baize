@@ -1,8 +1,8 @@
 package com.moguhu.baize.metadata.entity.api;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.moguhu.baize.client.constants.BooleanEnum;
 import com.moguhu.baize.client.constants.ParamMapTypeEnum;
-import com.moguhu.baize.common.constants.BooleanEnum;
 import com.moguhu.baize.common.constants.api.ParamTypeEnum;
 import com.moguhu.baize.common.constants.api.PositionEnum;
 

@@ -1,7 +1,7 @@
 package com.moguhu.baize.controller.api;
 
 import com.alibaba.fastjson.JSON;
-import com.moguhu.baize.common.constants.BooleanEnum;
+import com.moguhu.baize.client.constants.BooleanEnum;
 import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.vo.AjaxResult;
 import com.moguhu.baize.common.vo.PageListDto;
