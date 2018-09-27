@@ -14,9 +14,14 @@ import com.moguhu.baize.metadata.mapper.backend.ComponentEntityMapper;
 import com.moguhu.baize.metadata.request.backend.ComponentSaveRequest;
 import com.moguhu.baize.metadata.request.backend.ComponentSearchRequest;
 import com.moguhu.baize.metadata.request.backend.ComponentUpdateRequest;
+import com.moguhu.baize.metadata.response.api.ApiCompResponse;
+import com.moguhu.baize.metadata.response.api.ApiGroupCompResponse;
 import com.moguhu.baize.metadata.response.backend.ComponentResponse;
+import com.moguhu.baize.service.api.ApiGroupService;
+import com.moguhu.baize.service.api.ApiService;
 import com.moguhu.baize.service.backend.ComponentService;
 import com.moguhu.baize.service.common.RichContentService;
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +31,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 组件 管理
@@ -42,6 +48,12 @@ public class ComponentServiceImpl implements ComponentService {
 
     @Autowired
     private RichContentService richContentService;
+
+    @Autowired
+    private ApiService apiService;
+
+    @Autowired
+    private ApiGroupService apiGroupService;
 
     @Override
     public PageListDto<ComponentResponse> pageList(ComponentSearchRequest request) {
@@ -138,9 +150,15 @@ public class ComponentServiceImpl implements ComponentService {
     @Override
     public List<Long> queryByApiGroup(Long groupId) {
         List<Long> result = new ArrayList<>();
-        List<ComponentEntity> componentEntities = componentEntityMapper.queryByApiGroup(groupId);
-        if (!CollectionUtils.isEmpty(componentEntities)) {
-            componentEntities.forEach(componentEntity -> result.add(componentEntity.getCompId()));
+        ApiGroupCompResponse complist = apiGroupService.complist(groupId);
+        if (null != complist && MapUtils.isNotEmpty(complist.getComponentMap())) {
+            Map<String, List<ComponentResponse>> map = complist.getComponentMap();
+            map.entrySet().forEach(entry -> {
+                List<ComponentResponse> value = entry.getValue();
+                value.forEach(componentResponse -> {
+                    result.add(componentResponse.getCompId());
+                });
+            });
         }
         return result;
     }
@@ -148,9 +166,15 @@ public class ComponentServiceImpl implements ComponentService {
     @Override
     public List<Long> queryByApi(Long apiId) {
         List<Long> result = new ArrayList<>();
-        List<ComponentEntity> componentEntities = componentEntityMapper.queryByApi(apiId);
-        if (!CollectionUtils.isEmpty(componentEntities)) {
-            componentEntities.forEach(componentEntity -> result.add(componentEntity.getCompId()));
+        ApiCompResponse compResponse = apiService.complist(apiId);
+        if (null != compResponse && MapUtils.isNotEmpty(compResponse.getComponentMap())) {
+            Map<String, List<ComponentResponse>> map = compResponse.getComponentMap();
+            map.entrySet().forEach(entry -> {
+                List<ComponentResponse> value = entry.getValue();
+                value.forEach(componentResponse -> {
+                    result.add(componentResponse.getCompId());
+                });
+            });
         }
         return result;
     }

@@ -98,7 +98,7 @@ public class GateServiceServiceImpl implements GateServiceService {
     @Transactional
     public void option(Long serviceId, String status) {
         // 创建 sync task
-        SingleServiceSyncTask task = new SingleServiceSyncTask(serviceId, status);
+        SingleServiceSyncTask task = new SingleServiceSyncTask(serviceId, status, null);
         autowireCapableBeanFactory.autowireBean(task);
         commonThreadService.submit(task);
 

@@ -1,6 +1,5 @@
 package com.moguhu.baize.core.task;
 
-import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.metadata.entity.api.ApiGroupEntity;
 import com.moguhu.baize.metadata.entity.backend.GateServiceEntity;
 import com.moguhu.baize.metadata.request.api.ApiSearchRequest;
@@ -48,6 +47,8 @@ public class ApiGroupSyncTask extends AbstractSyncTask {
                 logger.warn("未找到 网关服务, 同步API Group 结束!");
                 return -1L;
             }
+
+            this.syncGroupOnly(gateService, apiGroup);
 
             ApiSearchRequest param = new ApiSearchRequest();
             param.setGroupId(groupId);

@@ -103,6 +103,16 @@ public class CuratorClient {
      *
      * @param path
      * @param data
+     */
+    public void updateNode(String path, String data) {
+        this.updateNode(path, data, -1);
+    }
+
+    /**
+     * update node
+     *
+     * @param path
+     * @param data
      * @param version
      */
     public void updateNode(String path, String data, int version) {

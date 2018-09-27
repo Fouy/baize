@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.moguhu.baize.client.constants.ZookeeperKey;
 import com.moguhu.baize.client.model.ApiDto;
 import com.moguhu.baize.client.model.ApiGroupDto;
+import com.moguhu.baize.client.utils.ZookeeperPathBuilder;
 import com.moguhu.baize.common.constants.StatusEnum;
 import com.moguhu.baize.common.utils.curator.CuratorClient;
 import com.moguhu.baize.core.ZookeeperModelConvert;
@@ -17,14 +18,13 @@ import com.moguhu.baize.metadata.response.api.ApiParamResponse;
 import com.moguhu.baize.service.api.ApiParamMapService;
 import com.moguhu.baize.service.api.ApiParamService;
 import com.moguhu.baize.service.backend.ComponentService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,55 +59,18 @@ public abstract class AbstractSyncTask implements Callable<Long> {
     private ZookeeperModelConvert modelConvert;
 
     /**
-     * Gate service zookeeper path
+     * synchronize Gate Service, it will delete oldService if needed.
      */
-    private String servicePath;
-    /**
-     * Gate service entity
-     */
-    private GateServiceEntity gateService;
-    /**
-     * API zookeeper path
-     */
-    private String apiPath;
-    /**
-     * API entity
-     */
-    private ApiEntity api;
-    /**
-     * API Group zookeeper path
-     */
-    private String apiGroupPath;
-    /**
-     * API Group entity
-     */
-    private ApiGroupEntity apiGroup;
-
-    /**
-     * delete path from zookeeper (contains children paths)
-     *
-     * @param path
-     */
-    protected void deletePath(String path) {
-        if (client.checkExists(path)) {
-            List<String> children = client.getChildren(path);
-            if (CollectionUtils.isEmpty(children)) {
-                client.deleteNode(path);
-                return;
+    protected void syncService(GateServiceEntity gateService, String oldService) {
+        // 删除原服务
+        if (StringUtils.isNoneEmpty(oldService)) {
+            String oldServicePath = ZookeeperPathBuilder.buildServicePath(oldService);
+            if (client.checkExists(oldServicePath)) {
+                client.deleteNode(oldServicePath);
             }
-            children.forEach(child -> {
-                deletePath(path + "/" + child);
-            });
-            client.deleteNode(path);
         }
-    }
 
-    /**
-     * synchronize Gate Service
-     */
-    protected void syncService(GateServiceEntity gateService) {
-        this.gateService = gateService;
-        this.servicePath = ZookeeperKey.BAIZE_ZUUL + "/" + gateService.getServiceCode();
+        String servicePath = ZookeeperPathBuilder.buildServicePath(gateService.getServiceCode());
 
         if (!client.checkExists(servicePath)) {
             try {
@@ -127,11 +90,11 @@ public abstract class AbstractSyncTask implements Callable<Long> {
                 // backhosts 写入后端服务HOSTS
                 if (ZookeeperKey.SERVICECODE_BACKHOSTS.equals(childNode)) {
                     try {
-                        String backHostsPath = servicePath + "/" + childNode + "/" + URLEncoder.encode(gateService.getHosts(), "UTF-8");
+                        String backHostsPath = ZookeeperPathBuilder.buildBackhostsPath(gateService.getServiceCode(), gateService.getHosts());
                         if (!client.checkExists(backHostsPath)) {
                             client.createNode(backHostsPath, "", CreateMode.PERSISTENT);
                         }
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (Exception e) {
                         logger.error("创建 backhosts 失败, e={}", e);
                         throw new RuntimeException("create backhosts failed", e);
                     }
@@ -146,69 +109,66 @@ public abstract class AbstractSyncTask implements Callable<Long> {
      * this method will synchronize GateService first, and then synchronize Group info (group only).
      */
     protected void syncApi(ApiEntity api, ApiGroupEntity apiGroup, GateServiceEntity gateService) {
-        this.api = api;
-        this.apiGroup = apiGroup;
-        this.gateService = gateService;
 
-        // first synchronize GateService info
-        this.syncService(gateService);
-
-        // then synchronize only Group info
-        apiGroupPath = this.syncGroupOnly(apiGroup);
-        apiPath = apiGroupPath + "/" + api.getApiId();
+        String apiGroupPath = ZookeeperPathBuilder.buildGroupPath(gateService.getServiceCode(), apiGroup.getGroupId());
+        String apiPath = apiGroupPath + "/" + api.getApiId();
 
         if (StatusEnum.ON.name().equals(api.getStatus())) {
+            // 准备 ZK 参数
+            List<Long> compIds = componentService.queryByApi(api.getApiId());
+            ApiParamSearchRequest param = new ApiParamSearchRequest();
+            param.setApiId(api.getApiId());
+            List<ApiParamResponse> apiParamList = apiParamService.all(param);
+            ApiParamMapSearchRequest param1 = new ApiParamMapSearchRequest();
+            param1.setApiId(api.getApiId());
+            List<ApiParamMapResponse> apiParamMapList = apiParamMapService.all(param1);
+
+            ApiDto apiDto = new ApiDto();
+            apiDto.setCompIds(compIds);
+            apiDto.setParams(modelConvert.convertParams(apiParamList));
+            apiDto.setMappings(modelConvert.convertMappings(apiParamMapList));
+            modelConvert.convertApi(apiDto, api);
+            String apiStr = JSON.toJSONString(apiDto);
+
             if (!client.checkExists(apiPath)) {
                 try {
-                    List<Long> compIds = componentService.queryByApi(api.getApiId());
-                    ApiParamSearchRequest param = new ApiParamSearchRequest();
-                    param.setApiId(api.getApiId());
-                    List<ApiParamResponse> apiParamList = apiParamService.all(param);
-                    ApiParamMapSearchRequest param1 = new ApiParamMapSearchRequest();
-                    param1.setApiId(api.getApiId());
-                    List<ApiParamMapResponse> apiParamMapList = apiParamMapService.all(param1);
-
-                    ApiDto apiDto = new ApiDto();
-                    apiDto.setCompIds(compIds);
-                    apiDto.setParams(modelConvert.convertParams(apiParamList));
-                    apiDto.setMappings(modelConvert.convertMappings(apiParamMapList));
-                    modelConvert.convertApi(apiDto, api);
-
-                    String apiStr = URLEncoder.encode(JSON.toJSONString(apiDto), "UTF-8");
                     client.createNode(apiPath, apiStr, CreateMode.PERSISTENT);
                 } catch (Exception e) {
                     logger.info(" /baize/zuul/${serviceCode}/apigroup/${group}/${api} node has exists. ");
                     // do nothing
                 }
+            } else {
+                client.updateNode(apiPath, apiStr);
             }
-        } else {
-            this.deletePath(apiPath);
+        } else if (StatusEnum.OFF.name().equals(api.getStatus()) && client.checkExists(apiPath)) {
+            client.deleteNode(apiPath);
         }
     }
 
     /**
      * synchronize Group info only
      *
+     * @param gateService
      * @param apiGroup
      * @return apiGroupPath
      */
-    private String syncGroupOnly(ApiGroupEntity apiGroup) {
-        this.apiGroup = apiGroup;
+    protected void syncGroupOnly(GateServiceEntity gateService, ApiGroupEntity apiGroup) {
+        String apiGroupPath = ZookeeperPathBuilder.buildGroupPath(gateService.getServiceCode(), apiGroup.getGroupId());
+        // 准备Group信息
+        List<Long> compIds = componentService.queryByApiGroup(apiGroup.getGroupId());
+        ApiGroupDto apiGroupDto = modelConvert.convertApiGroup(apiGroup, compIds);
+        String apiGroupStr = JSON.toJSONString(apiGroupDto);
 
-        apiGroupPath = ZookeeperKey.BAIZE_ZUUL + "/" + gateService.getServiceCode() + "/" + ZookeeperKey.SERVICECODE_APIGROUP + "/" + apiGroup.getGroupId();
         if (!client.checkExists(apiGroupPath)) {
             try {
-                // 存入 Group 组件信息
-                List<Long> compIds = componentService.queryByApiGroup(apiGroup.getGroupId());
-                ApiGroupDto apiGroupDto = modelConvert.convertApiGroup(apiGroup, compIds);
-                String apiGroupStr = URLEncoder.encode(JSON.toJSONString(apiGroupDto), "UTF-8");
                 client.createNode(apiGroupPath, apiGroupStr, CreateMode.PERSISTENT);
             } catch (Exception e) {
                 logger.warn(" /baize/zuul/${serviceCode}/apigroup/${group} node has exists. ");
                 // do nothing
             }
+        } else {
+            client.updateNode(apiGroupPath, apiGroupStr);
         }
-        return apiGroupPath;
     }
 
 

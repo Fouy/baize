@@ -18,10 +18,12 @@ public class SingleServiceSyncTask extends AbstractSyncTask {
 
     private Long serviceId;
     private String status;
+    private String oldServiceCode;
 
-    public SingleServiceSyncTask(Long serviceId, String status) {
+    public SingleServiceSyncTask(Long serviceId, String status, String oldServiceCode) {
         this.serviceId = serviceId;
         this.status = status;
+        this.oldServiceCode = oldServiceCode;
     }
 
     @Override
@@ -33,9 +35,9 @@ public class SingleServiceSyncTask extends AbstractSyncTask {
             String servicePath = ZookeeperKey.BAIZE_ZUUL + "/" + gateService.getServiceCode();
 
             if (StatusEnum.ON.name().equals(status)) {
-                this.syncService(gateService);
+                this.syncService(gateService, oldServiceCode);
             } else if (StatusEnum.OFF.name().equals(status)) {
-                this.deletePath(servicePath);
+                client.deleteNode(servicePath);
             }
 
             logger.info("single GateService sync task execute SUCCESSFUL，serviceId={}", serviceId);
