@@ -69,7 +69,7 @@ public interface ApiGroupService {
     List<ApiGroupResponse> all();
 
     /**
-     * 查询组件列表
+     * 查询组件列表 (包含了所有组件/ 标识了 check/uncheck)
      *
      * @param groupId
      * @return

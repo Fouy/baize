@@ -156,7 +156,9 @@ public class ComponentServiceImpl implements ComponentService {
             map.entrySet().forEach(entry -> {
                 List<ComponentResponse> value = entry.getValue();
                 value.forEach(componentResponse -> {
-                    result.add(componentResponse.getCompId());
+                    if (componentResponse.isChecked()) {
+                        result.add(componentResponse.getCompId());
+                    }
                 });
             });
         }
@@ -172,7 +174,9 @@ public class ComponentServiceImpl implements ComponentService {
             map.entrySet().forEach(entry -> {
                 List<ComponentResponse> value = entry.getValue();
                 value.forEach(componentResponse -> {
-                    result.add(componentResponse.getCompId());
+                    if (componentResponse.isChecked()) {
+                        result.add(componentResponse.getCompId());
+                    }
                 });
             });
         }

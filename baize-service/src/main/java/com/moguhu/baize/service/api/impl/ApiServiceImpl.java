@@ -205,7 +205,9 @@ public class ApiServiceImpl implements ApiService {
                 relaEntity.setCompId(Long.parseLong(compId));
                 batchList.add(relaEntity);
             });
-            apiCompRelaEntityMapper.batchInsert(batchList);
+            if (!CollectionUtils.isEmpty(batchList)) {
+                apiCompRelaEntityMapper.batchInsert(batchList);
+            }
         }
     }
 

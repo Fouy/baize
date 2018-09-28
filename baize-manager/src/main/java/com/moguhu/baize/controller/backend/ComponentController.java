@@ -112,6 +112,7 @@ public class ComponentController extends BaseController {
             String headerKey = "Content-Disposition";
             String headerValue = String.format("attachment; filename=\"%s\"", filterInfo.getGroovyFileName() + ".groovy");
             response.setHeader(headerKey, headerValue);
+            response.setContentType("application/octet-stream;charset=UTF-8");
 
             this.writeResponse(response, content);
         } catch (Exception e) {

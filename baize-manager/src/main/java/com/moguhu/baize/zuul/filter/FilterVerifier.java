@@ -2,6 +2,7 @@ package com.moguhu.baize.zuul.filter;
 
 import com.moguhu.baize.common.constants.Constants;
 import com.moguhu.baize.zuul.common.FilterInfo;
+import com.moguhu.zuul.ZuulFilter;
 import groovy.lang.GroovyClassLoader;
 import org.codehaus.groovy.control.CompilationFailedException;
 
