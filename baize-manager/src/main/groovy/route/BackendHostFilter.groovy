@@ -8,8 +8,10 @@ import com.moguhu.baize.client.utils.WebClient
 import com.moguhu.zuul.ZuulFilter
 import com.moguhu.zuul.component.ApiParamParser
 import com.moguhu.zuul.context.NFRequestContext
+import com.moguhu.zuul.exception.ZuulException
 import com.moguhu.zuul.util.HostsUtil
 import org.apache.commons.lang.StringUtils
+import org.apache.http.HttpStatus
 import org.apache.http.NameValuePair
 import org.apache.http.message.BasicNameValuePair
 import org.slf4j.Logger
@@ -53,7 +55,7 @@ public class BackendHostFilter extends ZuulFilter {
                 host = HostsUtil.getRandomNode(hosts);
             }
             if (StringUtils.isEmpty(host)) {
-                throw new RuntimeException("Host was empty!");
+                throw new ZuulException("Host was empty", HttpStatus.SC_OK, "");
             }
 
             ApiDto api = ctx.getBackendApi();
@@ -95,6 +97,7 @@ public class BackendHostFilter extends ZuulFilter {
 
         } catch (Exception e) {
             logger.error("API Mapping check error, {}", e);
+            throw new RuntimeException(e);
         }
         return null;
     }

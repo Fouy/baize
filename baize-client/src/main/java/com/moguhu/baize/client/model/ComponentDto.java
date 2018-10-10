@@ -107,12 +107,23 @@ public class ComponentDto implements Serializable {
 
         ComponentDto that = (ComponentDto) o;
 
-        return compId.equals(that.compId);
+        if (compId != null ? !compId.equals(that.compId) : that.compId != null) return false;
+        if (compCode != null ? !compCode.equals(that.compCode) : that.compCode != null) return false;
+        if (version != null ? !version.equals(that.version) : that.version != null) return false;
+        if (execPosition != null ? !execPosition.equals(that.execPosition) : that.execPosition != null) return false;
+        if (priority != null ? !priority.equals(that.priority) : that.priority != null) return false;
+        return !(compContent != null ? !compContent.equals(that.compContent) : that.compContent != null);
 
     }
 
     @Override
     public int hashCode() {
-        return compId.hashCode();
+        int result = compId != null ? compId.hashCode() : 0;
+        result = 31 * result + (compCode != null ? compCode.hashCode() : 0);
+        result = 31 * result + (version != null ? version.hashCode() : 0);
+        result = 31 * result + (execPosition != null ? execPosition.hashCode() : 0);
+        result = 31 * result + (priority != null ? priority.hashCode() : 0);
+        result = 31 * result + (compContent != null ? compContent.hashCode() : 0);
+        return result;
     }
 }
